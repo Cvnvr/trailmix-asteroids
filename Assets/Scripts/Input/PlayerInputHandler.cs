@@ -16,33 +16,38 @@ namespace Input
             playerInput = new PlayerInput();
             playerInput.Enable();
 
-            playerInput.Player.ForwardThrust.performed += OnForwardThrustPressed;
-            playerInput.Player.Rotate.performed += OnRotatePressed;
-            playerInput.Player.Rotate.canceled += OnRotatePressed;
-            playerInput.Player.Shoot.performed += OnShootPressed;
+            playerInput.Player.ForwardThrust.performed += OnForwardThrustInput;
+            playerInput.Player.ForwardThrust.canceled += OnForwardThrustInput;
+            playerInput.Player.Rotate.performed += OnRotateInput;
+            playerInput.Player.Rotate.canceled += OnRotateInput;
+            playerInput.Player.Shoot.performed += OnShootInput;
         }
         
-        private void OnForwardThrustPressed(InputAction.CallbackContext context)
+        private void OnForwardThrustInput(InputAction.CallbackContext context)
         {
             if (context.performed)
             {
-                signalBus.TryFire<ThrustInputEvent>();
-            }
-        }
-        
-        private void OnRotatePressed(InputAction.CallbackContext context)
-        {
-            if (context.performed)
-            {
-                signalBus.TryFire(new RotateInputEvent { Value = context.ReadValue<float>() });
+                signalBus.TryFire(new ThrustInputEvent { thrustValue = context.ReadValue<float>() });
             }
             else if (context.canceled)
             {
-                signalBus.TryFire(new RotateInputEvent { Value = 0 });
+                signalBus.TryFire(new ThrustInputEvent { thrustValue = 0 });
+            }
+        }
+        
+        private void OnRotateInput(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                signalBus.TryFire(new RotateInputEvent { rotationalValue = context.ReadValue<float>() });
+            }
+            else if (context.canceled)
+            {
+                signalBus.TryFire(new RotateInputEvent { rotationalValue = 0 });
             }
         }
 
-        private void OnShootPressed(InputAction.CallbackContext context)
+        private void OnShootInput(InputAction.CallbackContext context)
         {
             if (context.performed)
             {
@@ -57,9 +62,9 @@ namespace Input
                 return;
             }
 
-            playerInput.Player.ForwardThrust.performed -= OnForwardThrustPressed;
-            playerInput.Player.Rotate.performed -= OnRotatePressed;
-            playerInput.Player.Shoot.performed -= OnShootPressed;
+            playerInput.Player.ForwardThrust.performed -= OnForwardThrustInput;
+            playerInput.Player.Rotate.performed -= OnRotateInput;
+            playerInput.Player.Shoot.performed -= OnShootInput;
             
             playerInput.Disable();
         }
