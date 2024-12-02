@@ -26,19 +26,19 @@ namespace Systems.Projectiles
         
         private void TryShoot()
         {
-            if (canShoot)
+            if (!canShoot)
+                return;
+            
+            Pop();
+            
+            if (shootDelayCoroutine != null)
             {
-                Pop();
-                
-                if (shootDelayCoroutine != null)
-                {
-                    StopCoroutine(shootDelayCoroutine);
-                }
-                shootDelayCoroutine = StartCoroutine(ShootDelayCoroutine());
+                StopCoroutine(shootDelayCoroutine);
             }
+            shootDelayCoroutine = StartCoroutine(SetShootDelayCoroutine());
         }
         
-        private IEnumerator ShootDelayCoroutine()
+        private IEnumerator SetShootDelayCoroutine()
         {
             canShoot = false;
             yield return new WaitForSeconds(defaultShipProjectileData.Delay);
@@ -75,6 +75,7 @@ namespace Systems.Projectiles
             if (shootDelayCoroutine != null)
             {
                 StopCoroutine(shootDelayCoroutine);
+                shootDelayCoroutine = null;
             }
         }
     }
