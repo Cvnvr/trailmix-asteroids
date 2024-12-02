@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Systems.Projectiles
 {
-    public class ShipProjectilePooler : BasePooler<Projectile>
+    public class PlayerShooterController : BasePooler<Projectile>
     {
         [SerializeField] private Projectile projectile;
         [SerializeField] private Transform shipNozzle;
@@ -71,6 +71,11 @@ namespace Systems.Projectiles
             {
                 StopCoroutine(shootDelayCoroutine);
                 shootDelayCoroutine = null;
+            }
+            
+            if (pool is { CountAll: > 0 })
+            {
+                pool.Dispose();
             }
         }
     }

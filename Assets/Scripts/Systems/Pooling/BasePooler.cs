@@ -9,7 +9,7 @@ namespace Systems.Pooling
     {
         [SerializeField] private PoolData poolData;
 
-        private ObjectPool<T> pool;
+        protected ObjectPool<T> pool;
 
         protected virtual void Awake()
         {
@@ -40,7 +40,10 @@ namespace Systems.Pooling
 
         protected virtual void OnDestroyItem(T item)
         {
-            Destroy(item.gameObject);
+            if (item != null)
+            {
+                Destroy(item.gameObject);
+            }
         }
 
         public virtual T Pop()
