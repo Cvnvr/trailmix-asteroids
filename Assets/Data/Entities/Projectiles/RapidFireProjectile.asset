@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e1801de080bf4c51948cf94b6817e1a9, type: 3}
-  m_Name: DefaultProjectile
+  m_Name: RapidFireProjectile
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 8899047977407940404, guid: de0f51c944c9c466fa91b6f49ed24e79, type: 3}
   speed: 8
