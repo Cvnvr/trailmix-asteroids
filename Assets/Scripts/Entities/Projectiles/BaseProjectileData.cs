@@ -8,9 +8,11 @@ namespace Entities.Projectiles
         [SerializeField] private GameObject prefab;
         [SerializeField] private float speed;
         [SerializeField] private float lifetime;
+        [SerializeField] private float delay;
 
         public GameObject Prefab => prefab;
         public float Speed => speed;
         public float Lifetime => lifetime;
+        public float Delay => delay;
     }
 }

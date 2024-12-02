@@ -1,3 +1,4 @@
+using System.Collections;
 using Entities.Projectiles;
 using Events.Input;
 using Systems.Pooling;
@@ -12,21 +13,36 @@ namespace Systems.Projectiles
         [SerializeField] private Transform shipNozzle;
         
         [Inject] private SignalBus signalBus;
+
+        private bool canShoot = true;
+        
+        private Coroutine shootDelayCoroutine;
         
         [Inject]
         private void OnInject()
         {
-            signalBus.Subscribe<ShootInputEvent>(SpawnProjectile);
+            signalBus.Subscribe<ShootInputEvent>(TryShoot);
         }
-
-        private void SpawnProjectile()
+        
+        private void TryShoot()
         {
-            var projectile = Pop();
-            if (projectile)
+            if (canShoot)
             {
-                projectile.transform.position = shipNozzle.position;
-                projectile.transform.rotation = shipNozzle.rotation;
+                Pop();
+                
+                if (shootDelayCoroutine != null)
+                {
+                    StopCoroutine(shootDelayCoroutine);
+                }
+                shootDelayCoroutine = StartCoroutine(ShootDelayCoroutine());
             }
+        }
+        
+        private IEnumerator ShootDelayCoroutine()
+        {
+            canShoot = false;
+            yield return new WaitForSeconds(defaultShipProjectileData.Delay);
+            canShoot = true;
         }
 
         protected override Projectile CreateItem()
@@ -46,12 +62,20 @@ namespace Systems.Projectiles
         {
             base.OnGet(item);
             
+            item.transform.position = shipNozzle.position;
+            item.transform.rotation = shipNozzle.rotation;
+            
             item.Fire(shipNozzle.up);
         }
 
         private void OnDisable()
         {
-            signalBus.TryUnsubscribe<ShootInputEvent>(SpawnProjectile);
+            signalBus.TryUnsubscribe<ShootInputEvent>(TryShoot);
+            
+            if (shootDelayCoroutine != null)
+            {
+                StopCoroutine(shootDelayCoroutine);
+            }
         }
     }
 }
