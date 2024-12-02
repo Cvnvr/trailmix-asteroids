@@ -3,16 +3,13 @@ using UnityEngine;
 
 namespace Entities.Projectiles
 {
-    public class ProjectileDestroySelfAfterTime : BaseProjectileBehaviour
+    public class ProjectileDestroySelfAfterTimeComponent : BaseProjectileBehaviour
     {
-        [SerializeField] private float lifetime;
-
         private Coroutine destroySelfCoroutine;
 
-        public override void Init(Projectile projectile)
+        public void Setup(Projectile projectile, float lifetime)
         {
-            base.Init(projectile);
-            
+            Init(projectile);
             destroySelfCoroutine = StartCoroutine(DestroySelfAfterDelay(lifetime));
         }
 

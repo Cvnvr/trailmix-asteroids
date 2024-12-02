@@ -10,8 +10,11 @@ namespace Systems.Projectiles
     public class PlayerShooterController : BasePooler<Projectile>
     {
         [SerializeField] private Projectile projectile;
-        [SerializeField] private Transform shipNozzle;
+        [SerializeField] private ProjectileData projectileData;
         
+        [SerializeField] private Transform shipNozzle;
+
+        [Inject] private DiContainer container;
         [Inject] private SignalBus signalBus;
 
         private bool canShoot = true;
@@ -41,14 +44,13 @@ namespace Systems.Projectiles
         private IEnumerator SetShootDelayCoroutine()
         {
             canShoot = false;
-            //yield return new WaitForSeconds(defaultShipProjectileData.Delay);
-            yield return null;
+            yield return new WaitForSeconds(projectileData.Delay);
             canShoot = true;
         }
 
         protected override Projectile CreateItem()
         {
-            return Instantiate(projectile, shipNozzle.position, Quaternion.identity);
+            return container.InstantiatePrefab(projectile, shipNozzle.position, Quaternion.identity, transform).GetComponent<Projectile>();
         }
 
         protected override void OnGet(Projectile item)
@@ -58,6 +60,7 @@ namespace Systems.Projectiles
             item.transform.position = shipNozzle.position;
             item.transform.rotation = shipNozzle.rotation;
             
+            item.SetData(projectileData);
             item.Initialise(_ => Push(item));
             
             item.Fire(shipNozzle.up);

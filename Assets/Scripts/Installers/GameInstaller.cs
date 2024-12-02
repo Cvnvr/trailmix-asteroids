@@ -1,5 +1,6 @@
 using Events.Input;
 using Input;
+using Systems.Projectiles;
 using UnityEngine;
 using Zenject;
 
@@ -7,15 +8,13 @@ namespace DefaultNamespace
 {
 	public class GameInstaller : MonoInstaller
 	{
-		//[SerializeField] private GridManager gridManager;
-
 		public override void InstallBindings()
 		{
 			Debug.Log($"[{nameof(GameInstaller)}.{nameof(InstallBindings)}]");
 
-			// Container.Bind<GridManager>().FromInstance(gridManager).AsSingle();
-			
 			Container.BindInterfacesAndSelfTo<PlayerInputHandler>().AsSingle();
+
+			Container.Bind<IProjectileBehaviourFactory>().To<ProjectileBehaviourFactory>().AsSingle();
 
 			InstallSignals(Container);
 
