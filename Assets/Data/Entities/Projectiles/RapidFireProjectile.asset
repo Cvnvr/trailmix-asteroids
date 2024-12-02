@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: RapidFireProjectile
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 8899047977407940404, guid: de0f51c944c9c466fa91b6f49ed24e79, type: 3}
-  speed: 8
-  delay: 0.2
+  speed: 10
+  delay: 0.1
   behaviours:
   - {fileID: 11400000, guid: e0aae3535cecc42bfb952a02ef9fd613, type: 2}
   - {fileID: 11400000, guid: c49ece9ce36004fa38d4d8aab61fb3c3, type: 2}

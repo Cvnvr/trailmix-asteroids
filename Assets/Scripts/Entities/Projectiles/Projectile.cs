@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Components;
 using Systems.Projectiles;
 using UnityEngine;
@@ -18,17 +16,17 @@ namespace Entities.Projectiles
         
         private Rigidbody2D rigidbody2d;
 
-        private Action<IPoolable> returnEvent;
+        private Action<IPoolable> pushEvent;
 
         public void SetData(ProjectileData projectileData)
         {
             this.projectileData = projectileData;
         }
         
-        public void Initialise(Action<IPoolable> returnToPool)
+        public void Initialise(Action<IPoolable> pushCallback)
         {
-            returnEvent = returnToPool;
-
+            pushEvent = pushCallback;
+            
             foreach (var behaviour in projectileData.Behaviours)
             {
                 projectileBehaviourFactory.BindTo(this, behaviour);
@@ -51,7 +49,7 @@ namespace Entities.Projectiles
 
         public void ReturnToPool()
         {
-            returnEvent?.Invoke(this);
+            pushEvent?.Invoke(this);
         }
         
         public void Fire(Vector2 velocity)

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Entities.Projectiles
 {
-    public abstract class BaseProjectileBehaviour : MonoBehaviour, IProjectileBehaviour
+    public abstract class BaseProjectileBehaviour : MonoBehaviour
     {
         protected Projectile projectile;
         
