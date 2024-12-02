@@ -8,7 +8,7 @@ namespace Systems.Projectiles
 {
     public class ShipProjectilePooler : BasePooler<Projectile>
     {
-        [SerializeField] private ProjectileData projectileData;
+        [SerializeField] private DefaultShipProjectileData defaultShipProjectileData;
         [SerializeField] private Transform shipNozzle;
         
         [Inject] private SignalBus signalBus;
@@ -21,17 +21,22 @@ namespace Systems.Projectiles
 
         private void SpawnProjectile()
         {
-            Pop();
+            var projectile = Pop();
+            if (projectile)
+            {
+                projectile.transform.position = shipNozzle.position;
+                projectile.transform.rotation = shipNozzle.rotation;
+            }
         }
 
         protected override Projectile CreateItem()
         {
-            var projectile = Instantiate(projectileData.Prefab, shipNozzle.position, Quaternion.identity);
+            var projectile = Instantiate(defaultShipProjectileData.Prefab, shipNozzle.position, Quaternion.identity);
             
             var projectileComponent = projectile.GetComponent<Projectile>();
             if (projectileComponent)
             {
-                projectileComponent.Initialise(_ => Push(projectileComponent));
+                projectileComponent.Init(defaultShipProjectileData, _ => Push(projectileComponent));
             }
             
             return projectileComponent;
@@ -41,7 +46,7 @@ namespace Systems.Projectiles
         {
             base.OnGet(item);
             
-            item.Fire(shipNozzle.up * projectileData.Speed);
+            item.Fire(shipNozzle.up);
         }
 
         private void OnDisable()

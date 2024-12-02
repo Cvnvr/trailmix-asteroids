@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 83d48d079cfc48c1a74dd791070ad542, type: 3}
-  m_Name: ShipDefaultData
+  m_Name: ShipDefaultProjectile
   m_EditorClassIdentifier: 
   prefab: {fileID: 8899047977407940404, guid: de0f51c944c9c466fa91b6f49ed24e79, type: 3}
-  speed: 8
+  speed: 10
+  lifetime: 0.8
