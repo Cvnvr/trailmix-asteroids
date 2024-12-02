@@ -1,4 +1,3 @@
-using System;
 using Entities.Player;
 using Events.Input;
 using UnityEngine;
@@ -32,12 +31,12 @@ namespace Systems.Movement
 
         private void OnThrustInput(ThrustInputEvent evt)
         {
-            thrustInput = evt.thrustValue;
+            thrustInput = evt.ThrustValue;
         }
         
         private void OnRotateInput(RotateInputEvent evt)
         {
-            rotationalInput = evt.rotationalValue;
+            rotationalInput = evt.RotationalValue;
         }
 
         private void FixedUpdate()
@@ -62,9 +61,11 @@ namespace Systems.Movement
             if (rigidbody2d == null)
                 return;
             
-            var rotation = rotationalInput * data.RotationalThrust * Time.deltaTime;
-            rotation = Mathf.Clamp(rotation, -data.MaxRotationalSpeed, data.MaxRotationalSpeed);
-            rigidbody2d.AddTorque(-rotation);
+            var rotation = Mathf.Clamp(
+                -rotationalInput * data.RotationalThrust * Time.deltaTime, 
+                -data.MaxRotationalSpeed, 
+                data.MaxRotationalSpeed);
+            rigidbody2d.AddTorque(rotation);
         }
 
         private void OnDisable()

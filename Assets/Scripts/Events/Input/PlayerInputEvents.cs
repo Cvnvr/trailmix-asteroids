@@ -2,12 +2,12 @@ namespace Events.Input
 {
     public struct ThrustInputEvent
     {
-        public float thrustValue;
+        public float ThrustValue;
     }
     
     public struct RotateInputEvent
     {
-        public float rotationalValue;
+        public float RotationalValue;
     }
     
     public struct ShootInputEvent

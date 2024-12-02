@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4644955710de4e0bb728d05851156e9a, type: 3}
-  m_Name: PlayerMovementDefault
+  m_Script: {fileID: 11500000, guid: b6fa00481c7b4199a4b0236983060e4c, type: 3}
+  m_Name: ShipProjectileDefault
   m_EditorClassIdentifier: 
-  forwardThrust: 2000
-  maxForwardSpeed: 6
-  rotationalThrust: 90
-  maxRotationalSpeed: 4
+  collectionCheck: 0
+  initialPoolSize: 4
+  maxPoolSize: 10

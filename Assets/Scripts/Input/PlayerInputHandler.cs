@@ -18,8 +18,10 @@ namespace Input
 
             playerInput.Player.ForwardThrust.performed += OnForwardThrustInput;
             playerInput.Player.ForwardThrust.canceled += OnForwardThrustInput;
+            
             playerInput.Player.Rotate.performed += OnRotateInput;
             playerInput.Player.Rotate.canceled += OnRotateInput;
+            
             playerInput.Player.Shoot.performed += OnShootInput;
         }
         
@@ -27,11 +29,11 @@ namespace Input
         {
             if (context.performed)
             {
-                signalBus.TryFire(new ThrustInputEvent { thrustValue = context.ReadValue<float>() });
+                signalBus.TryFire(new ThrustInputEvent { ThrustValue = context.ReadValue<float>() });
             }
             else if (context.canceled)
             {
-                signalBus.TryFire(new ThrustInputEvent { thrustValue = 0 });
+                signalBus.TryFire(new ThrustInputEvent { ThrustValue = 0 });
             }
         }
         
@@ -39,11 +41,11 @@ namespace Input
         {
             if (context.performed)
             {
-                signalBus.TryFire(new RotateInputEvent { rotationalValue = context.ReadValue<float>() });
+                signalBus.TryFire(new RotateInputEvent { RotationalValue = context.ReadValue<float>() });
             }
             else if (context.canceled)
             {
-                signalBus.TryFire(new RotateInputEvent { rotationalValue = 0 });
+                signalBus.TryFire(new RotateInputEvent { RotationalValue = 0 });
             }
         }
 
