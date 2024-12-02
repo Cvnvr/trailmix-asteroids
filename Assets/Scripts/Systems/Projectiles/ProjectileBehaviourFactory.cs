@@ -4,21 +4,23 @@ namespace Systems.Projectiles
 {
     public class ProjectileBehaviourFactory : IProjectileBehaviourFactory
     {
-        public void BindTo(Projectile projectile, ProjectileBehaviourData projectileBehaviourData)
+        public BaseProjectileBehaviourComponent BindTo(Projectile projectile, ProjectileBehaviourData projectileBehaviourData)
         {
             if (projectile == null)
-                return;
+                return null;
             
             switch (projectileBehaviourData)
             {
                 case ProjectileDestroySelfAfterTimeData destroySelfAfterTime:
-                    var timeComponent = projectile.gameObject.AddComponent<ProjectileDestroySelfAfterTimeComponent>();
+                    var timeComponent = new ProjectileDestroySelfAfterTimeComponent();
                     timeComponent.Setup(projectile, destroySelfAfterTime.Lifetime);
-                    break;
+                    return timeComponent;
                 case ProjectileDestroySelfAfterCollisionData:
-                    var collisionComponent = projectile.gameObject.AddComponent<ProjectileDestroySelfAfterCollisionComponent>();
+                    var collisionComponent = new ProjectileDestroySelfAfterCollisionComponent();
                     collisionComponent.Init(projectile);
-                    break;
+                    return collisionComponent;
+                default:
+                    return null;
             }
         }
     }

@@ -2,10 +2,13 @@ using UnityEngine;
 
 namespace Entities.Projectiles
 {
-    [RequireComponent(typeof(Collider2D))]
-    public class ProjectileDestroySelfAfterCollisionComponent : BaseProjectileBehaviour
+    public class ProjectileDestroySelfAfterCollisionComponent : BaseProjectileBehaviourComponent
     {
-        private void OnTriggerEnter2D(Collider2D collision)
+        public override void Update()
+        {
+        }
+
+        public override void OnCollision(GameObject collision)
         {
             if (projectile != null)
             {

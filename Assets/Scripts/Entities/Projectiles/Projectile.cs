@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Components;
 using Systems.Projectiles;
 using UnityEngine;
@@ -12,11 +13,12 @@ namespace Entities.Projectiles
     {
         [Inject] private IProjectileBehaviourFactory projectileBehaviourFactory;
 
-        private ProjectileData projectileData;
-        
         private Rigidbody2D rigidbody2d;
 
+        private ProjectileData projectileData;
         private Action<IPoolable> pushEvent;
+        
+        private Dictionary<ProjectileBehaviourData, BaseProjectileBehaviourComponent> behaviours;
 
         public void SetData(ProjectileData projectileData)
         {
@@ -26,16 +28,32 @@ namespace Entities.Projectiles
         public void Initialise(Action<IPoolable> pushCallback)
         {
             pushEvent = pushCallback;
-            
-            foreach (var behaviour in projectileData.Behaviours)
+
+            behaviours = new();
+            foreach (var behaviourData in projectileData.Behaviours)
             {
-                projectileBehaviourFactory.BindTo(this, behaviour);
+                if (behaviours.ContainsKey(behaviourData))
+                    continue;
+
+                var behaviourComponent = projectileBehaviourFactory.BindTo(this, behaviourData);
+                if (behaviourComponent == null)
+                    continue;
+                
+                behaviours.Add(behaviourData, behaviourComponent);
             }
         }
         
         private void Awake()
         {
             rigidbody2d = GetComponent<Rigidbody2D>();
+        }
+        
+        private void Update()
+        {
+            foreach (var behaviour in behaviours)
+            {
+                behaviour.Value.Update();
+            }
         }
 
         public void OnObjectSpawned()
@@ -50,6 +68,14 @@ namespace Entities.Projectiles
         public void ReturnToPool()
         {
             pushEvent?.Invoke(this);
+        }
+        
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            foreach (var behaviour in behaviours)
+            {
+                behaviour.Value.OnCollision(collision.gameObject);
+            }
         }
         
         public void Fire(Vector2 velocity)

@@ -1,37 +1,28 @@
-using System.Collections;
 using UnityEngine;
 
 namespace Entities.Projectiles
 {
-    public class ProjectileDestroySelfAfterTimeComponent : BaseProjectileBehaviour
+    public class ProjectileDestroySelfAfterTimeComponent : BaseProjectileBehaviourComponent
     {
-        private Coroutine destroySelfCoroutine;
-
+        private float lifetime;
+        
         public void Setup(Projectile projectile, float lifetime)
         {
             Init(projectile);
-            destroySelfCoroutine = StartCoroutine(DestroySelfAfterDelay(lifetime));
+            this.lifetime = lifetime;
         }
 
-        private IEnumerator DestroySelfAfterDelay(float delay)
+        public override void Update()
         {
-            yield return new WaitForSeconds(delay);
-            
-            if (projectile != null)
+            lifetime -= Time.deltaTime;
+            if (lifetime <= 0)
             {
                 projectile.ReturnToPool();
             }
         }
 
-        private void OnDisable()
+        public override void OnCollision(GameObject other)
         {
-            if (destroySelfCoroutine != null)
-            {
-                StopCoroutine(destroySelfCoroutine);
-                destroySelfCoroutine = null;
-            }
-
-            projectile = null;
         }
     }
 }

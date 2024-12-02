@@ -1,8 +1,9 @@
+using Components;
 using UnityEngine;
 
 namespace Entities.Projectiles
 {
-    public abstract class BaseProjectileBehaviour : MonoBehaviour
+    public abstract class BaseProjectileBehaviourComponent : IProjectileBehaviour
     {
         protected Projectile projectile;
         
@@ -10,5 +11,9 @@ namespace Entities.Projectiles
         {
             this.projectile = projectile;
         }
+
+        public abstract void Update();
+
+        public abstract void OnCollision(GameObject collision);
     }
 }
