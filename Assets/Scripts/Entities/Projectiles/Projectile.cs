@@ -1,27 +1,30 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Components;
-using Entities.Pooling;
 using UnityEngine;
 
 namespace Entities.Projectiles
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class Projectile : BasePoolable, IProjectile
+    public sealed class Projectile : MonoBehaviour, IPoolable, IProjectile
     {
-        private BaseProjectileData data;
+        [SerializeField] private float speed;
+        
         private Rigidbody2D rigidbody2d;
+        private List<IProjectileBehaviour> behaviours;
+
         private Action<IPoolable> returnEvent;
         
-        public void Init(BaseProjectileData projectileData, Action<IPoolable> returnToPool)
-        {
-            data = projectileData;
-            Initialise(returnToPool);
-        }
-        
-        public override void Initialise(Action<IPoolable> returnToPool)
+        public void Initialise(Action<IPoolable> returnToPool)
         {
             returnEvent = returnToPool;
+
+            behaviours = GetComponents<IProjectileBehaviour>().ToList();
+            foreach (var behaviour in behaviours)
+            {
+                behaviour.Init(this);
+            }
         }
 
         private void Awake()
@@ -29,21 +32,16 @@ namespace Entities.Projectiles
             rigidbody2d = GetComponent<Rigidbody2D>();
         }
 
-        public override void OnObjectSpawned()
+        public void OnObjectSpawned()
         {
             // TODO fireSound.Play();
-
-            if (data.Lifetime > 0)
-            {
-                StartCoroutine(DestroySelfAfterDelay());
-            }
         }
 
-        public override void OnObjectDespawned()
+        public void OnObjectDespawned()
         {
         }
 
-        public override void ReturnToPool()
+        public void ReturnToPool()
         {
             returnEvent?.Invoke(this);
         }
@@ -53,25 +51,7 @@ namespace Entities.Projectiles
             if (rigidbody2d == null)
                 return;
             
-            rigidbody2d.velocity = velocity * data.Speed;
-        }
-        
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            var damageable = collision.gameObject.GetComponent<IDamageable>();
-
-            if (damageable != null)
-            {
-                damageable.TakeDamage();
-
-                ReturnToPool();
-            }
-        }
-        
-        private IEnumerator DestroySelfAfterDelay()
-        {
-            yield return new WaitForSeconds(data.Lifetime);
-            ReturnToPool();
+            rigidbody2d.velocity = velocity * speed;
         }
     }
 }

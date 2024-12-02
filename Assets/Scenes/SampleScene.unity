@@ -423,5 +423,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolData: {fileID: 11400000, guid: cd108a4ca62204b5b864a244ee442eb3, type: 2}
-  defaultShipProjectileData: {fileID: 11400000, guid: b672aabd91f2e420f88723972ec4a3d2, type: 2}
+  projectile: {fileID: 3316245005317385061, guid: de0f51c944c9c466fa91b6f49ed24e79, type: 3}
   shipNozzle: {fileID: 197973136}
