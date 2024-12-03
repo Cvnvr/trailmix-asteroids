@@ -1,8 +1,8 @@
 namespace Components
 {
-    public interface IPooler<T> where T : IPoolable
+    public interface IPooler<T>
     {
         T Pop();
-        void Push(T poolable);
+        void Push(T obj);
     }
 }

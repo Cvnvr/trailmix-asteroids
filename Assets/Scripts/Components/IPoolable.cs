@@ -1,10 +1,10 @@
 namespace Components
 {
-    public interface IPoolable
+    public interface IPoolable<T>
     {
-        void Initialise(System.Action popCallback, System.Action<IPoolable> pushCallback);
-        void OnObjectSpawned();
-        void OnObjectDespawned();
+        void InitPoolable(System.Action<T> pushCallback);
+        void OnPoolableActivated();
+        void OnPoolableDeactivated();
         void ReturnToPool();
     }
 }

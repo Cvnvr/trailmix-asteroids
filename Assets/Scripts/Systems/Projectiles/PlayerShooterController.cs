@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Entities.Projectiles;
 using Events.Input;
@@ -26,13 +27,13 @@ namespace Systems.Projectiles
         {
             signalBus.Subscribe<ShootInputEvent>(TryShoot);
         }
-        
+
         private void TryShoot()
         {
             if (!canShoot)
                 return;
             
-            Pop();
+            Pop(shipNozzle.position, shipNozzle.rotation);
             
             if (shootDelayCoroutine != null)
             {
@@ -53,16 +54,11 @@ namespace Systems.Projectiles
             return container.InstantiatePrefab(projectile, shipNozzle.position, shipNozzle.rotation, transform).GetComponent<Projectile>();
         }
 
-        protected override void OnGet(Projectile item)
+        protected override void ActivateObject(Projectile item)
         {
-            base.OnGet(item);
+            base.ActivateObject(item);
             
-            item.transform.position = shipNozzle.position;
-            item.transform.rotation = shipNozzle.rotation;
-            
-            item.SetData(projectileData);
-            item.Initialise(() => Pop(), _ => Push(item));
-            
+            item.SetProjectileData(projectileData);
             item.Fire(shipNozzle.up);
         }
         
@@ -75,11 +71,8 @@ namespace Systems.Projectiles
                 StopCoroutine(shootDelayCoroutine);
                 shootDelayCoroutine = null;
             }
-            
-            if (pool is { CountAll: > 0 })
-            {
-                pool.Dispose();
-            }
+
+            Clear();
         }
     }
 }

@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19f0865c31594f82953ac9155aaad43a, type: 3}
   m_Name: DefaultSpawnAdditionalShotgun
   m_EditorClassIdentifier: 
-  spawnedProjectileData: {fileID: 11400000, guid: 2e66020f120a449d6a1015f99f5e7859, type: 2}
+  spawnedProjectileData: {fileID: 11400000, guid: b9c92b0ebe77d4941a8332723a456fda, type: 2}
   numberToSpawn: 2
+  spawnOffset: {x: 0, y: 0, z: 0}
+  spawnDelay: 0

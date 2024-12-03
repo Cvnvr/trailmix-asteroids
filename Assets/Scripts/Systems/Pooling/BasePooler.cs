@@ -1,59 +1,137 @@
+using System.Collections.Generic;
 using Components;
 using Entities.Pooling;
 using UnityEngine;
-using UnityEngine.Pool;
 
 namespace Systems.Pooling
 {
-    public abstract class BasePooler<T> : MonoBehaviour, IPooler<T> where T : MonoBehaviour, IPoolable
+    public abstract class BasePooler<T> : MonoBehaviour, IPooler<T> where T : MonoBehaviour, IPoolable<T>
     {
+        public int PooledCount => pooledObjects.Count;
+        public int PushedCount => pushedObjects.Count;
+        public int TotalCount => PooledCount + PushedCount;
+        
         [SerializeField] private PoolData poolData;
 
-        protected ObjectPool<T> pool;
+        /// <summary>
+        /// List of active items in the pool.
+        /// </summary>
+        private List<T> pooledObjects;
+        
+        /// <summary>
+        /// List of inactive items in the pool.
+        /// </summary>
+        private List<T> pushedObjects;
 
         protected virtual void Awake()
         {
-            pool = new ObjectPool<T>(
-                CreateItem,
-                OnGet,
-                OnRelease,
-                OnDestroyItem,
-                poolData.CollectionCheck,
-                poolData.InitialPoolSize,
-                poolData.MaxPoolSize
-            );
+            pooledObjects = new List<T>();
+        }
+
+        protected virtual void Start()
+        {
+            Prefill();
+        }
+
+        private void Prefill()
+        {
+            if (pooledObjects == null || pooledObjects.Count != poolData.InitialPoolSize)
+            {
+                pooledObjects = new List<T>(poolData.InitialPoolSize);
+                pushedObjects = new List<T>(poolData.InitialPoolSize);
+            }
+            else
+            {
+                var newCapacity = pooledObjects.Count + poolData.InitialPoolSize;
+                pooledObjects.Capacity = newCapacity;
+                pushedObjects.Capacity = newCapacity;
+            }
+            
+            for (int i = 0; i < poolData.InitialPoolSize; i++)
+            {
+                T item = CreateItem();
+                Push(item);
+            }
+        }
+        
+        public T Pop()
+        {
+            T obj;
+            var count = PooledCount;
+            if (count > 0)
+            {
+                obj = pooledObjects[count - 1];
+                ActivateObject(obj);
+                pooledObjects.RemoveAt(count - 1);
+            }
+            else if (TotalCount < poolData.MaxPoolSize)
+            {
+                // Create new object if there are no more left in the pool
+                obj = CreateItem();
+            }
+            else
+            {
+                // Reached max pool count
+                return null;
+            }
+    
+            obj.InitPoolable(Push);
+            pushedObjects.Add(obj);
+            return obj;
+        }
+
+        public T Pop(Vector3 position, Quaternion rotation)
+        {
+            T obj = Pop();
+            if (obj != null)
+            {
+                obj.transform.position = position;
+                obj.transform.rotation = rotation;
+            }
+            return obj;
+        }
+
+        public virtual void Push(T obj)
+        {
+            DeactivateObject(obj);
+            pooledObjects.Add(obj);
         }
 
         protected abstract T CreateItem();
 
-        protected virtual void OnGet(T item)
+        protected virtual void ActivateObject(T obj)
         {
-            item.gameObject.SetActive(true);
-            item.OnObjectSpawned();
+            obj.gameObject.SetActive(true);
+            obj.OnPoolableActivated();
         }
 
-        protected virtual void OnRelease(T item)
+        protected virtual void DeactivateObject(T obj)
         {
-            item.OnObjectDespawned();
-            item.gameObject.SetActive(false);
+            obj.OnPoolableDeactivated();
+            obj.gameObject.SetActive(false);
         }
-
-        protected virtual void OnDestroyItem(T item)
+        
+        public void Clear()
         {
-            if (item != null)
+            foreach (T obj in pooledObjects)
             {
-                Destroy(item.gameObject);
+                DestroyObject(obj);
             }
+            foreach (T obj in pushedObjects)
+            {
+                DestroyObject(obj);
+            }
+    
+            pooledObjects.Clear();
+            pushedObjects.Clear();
         }
 
-        public virtual T Pop()
+        protected virtual void DestroyObject(T obj)
         {
-            return pool.Get();
-        }
-
-        public virtual void Push(T poolable)
-        {
-            pool.Release(poolable);
+            if (obj != null)
+            {
+                Destroy(obj.gameObject);
+            }
         }
     }
 }

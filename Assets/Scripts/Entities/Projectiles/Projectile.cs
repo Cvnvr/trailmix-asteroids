@@ -4,12 +4,11 @@ using Components;
 using Systems.Projectiles;
 using UnityEngine;
 using Zenject;
-using IPoolable = Components.IPoolable;
 
 namespace Entities.Projectiles
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public sealed class Projectile : MonoBehaviour, IPoolable, IProjectile
+    public sealed class Projectile : MonoBehaviour, Components.IPoolable<Projectile>, IProjectile
     {
         [Inject] private IProjectileBehaviourFactory projectileBehaviourFactory;
 
@@ -17,17 +16,17 @@ namespace Entities.Projectiles
         private Dictionary<ProjectileBehaviourData, BaseProjectileBehaviourComponent> behaviours;
 
         private ProjectileData projectileData;
-        private Action<IPoolable> pushEvent;
+        private Action<Projectile> pushEvent;
         
-        public void SetData(ProjectileData projectileData)
-        {
-            this.projectileData = projectileData;
-        }
-        
-        public void Initialise(Action popCallback, Action<IPoolable> pushCallback)
+        public void InitPoolable(Action<Projectile> pushCallback)
         {
             pushEvent = pushCallback;
-
+        }
+        
+        public void SetProjectileData(ProjectileData projectileData)
+        {
+            this.projectileData = projectileData;
+            
             behaviours = new();
             foreach (var behaviourData in projectileData.Behaviours)
             {
@@ -55,12 +54,12 @@ namespace Entities.Projectiles
             }
         }
 
-        public void OnObjectSpawned()
+        public void OnPoolableActivated()
         {
             // TODO fireSound.Play();
         }
 
-        public void OnObjectDespawned()
+        public void OnPoolableDeactivated()
         {
         }
 
