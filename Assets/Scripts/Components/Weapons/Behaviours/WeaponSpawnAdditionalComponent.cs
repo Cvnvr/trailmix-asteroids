@@ -4,42 +4,42 @@ namespace Asteroids
 {
     public class WeaponSpawnAdditionalComponent : IWeaponBehaviour
     {
-        private ProjectileData spawnedProjectileData;
-        private int numberToSpawn;
-        private Vector3 spawnOffset;
-        private float spawnDelay;
+        private float angleOffset;
+        private float originalSpawnDelay;
 
         private bool canSpawn;
         private bool hasSpawned;
-        
-        public void Init()
-        {
-        }
-        
-        public void Setup(ProjectileData spawnedProjectileData, 
-            int numberToSpawn, Vector3 spawnOffset, float spawnDelay)
-        {
-            this.spawnedProjectileData = spawnedProjectileData;
-            this.numberToSpawn = numberToSpawn;
-            this.spawnOffset = spawnOffset;
-            this.spawnDelay = spawnDelay;
+        private float delay;
 
-            canSpawn = true;
-            hasSpawned = false;
+        private WeaponSpawnData spawnData;
+        
+        public void Setup(WeaponSpawnData spawnData, float angleOffset, float spawnDelay)
+        {
+            this.spawnData = spawnData;
+            this.angleOffset = angleOffset;
+            originalSpawnDelay = spawnDelay;
 
-            if (numberToSpawn == 0)
-            {
-                Debug.LogWarning($"[{nameof(WeaponSpawnAdditionalComponent)}] numberToSpawn set to zero, so nothing will happen! Disabling component.");
-                canSpawn = false;
-            }
+            Reset();
         }
 
         private void SpawnAdditionalProjectiles()
         {
-            for (int i = 0; i < numberToSpawn; i++)
-            {
-                // TODO do something
-            }
+            canSpawn = false;
+            hasSpawned = true;
+
+            var leftRotation = Quaternion.Euler(0, 0, spawnData.SpawnTransform.rotation.eulerAngles.z - angleOffset);
+            var rightRotation = Quaternion.Euler(0, 0, spawnData.SpawnTransform.rotation.eulerAngles.z + angleOffset);
+
+            spawnData.PopCallback?.Invoke(spawnData.SpawnTransform.position, leftRotation);
+            spawnData.PopCallback?.Invoke(spawnData.SpawnTransform.position, rightRotation);
+
+            Reset();
+        }
+        
+        public void OnFire()
+        {
+            // Begin counting down from the initial delay
+            canSpawn = true;
         }
 
         public void Update()
@@ -47,12 +47,18 @@ namespace Asteroids
             if (!canSpawn || hasSpawned)
                 return;
             
-            spawnDelay -= Time.deltaTime;
-            if (spawnDelay <= 0)
+            delay -= Time.deltaTime;
+            if (delay <= 0)
             {
                 SpawnAdditionalProjectiles();
-                hasSpawned = true;
             }
+        }
+
+        public void Reset()
+        {
+            canSpawn = false;
+            hasSpawned = false;
+            delay = originalSpawnDelay;
         }
     }
 }

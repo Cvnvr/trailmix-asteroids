@@ -17,11 +17,6 @@ namespace Asteroids
                     var collisionComponent = new ProjectileDestroySelfAfterCollisionComponent();
                     collisionComponent.Init(projectile);
                     return collisionComponent;
-                /*case WeaponSpawnAdditionalData spawnAdditionalData:
-                    var spawnComponent = new ProjectileSpawnAdditionalComponent();
-                    spawnComponent.Setup(projectile, spawnAdditionalData.SpawnedProjectileData, 
-                        spawnAdditionalData.NumberToSpawn, spawnAdditionalData.SpawnOffset, spawnAdditionalData.SpawnDelay);
-                    return spawnComponent;*/
                 default:
                     return null;
             }

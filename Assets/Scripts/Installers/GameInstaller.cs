@@ -1,3 +1,4 @@
+using Systems.Weapons;
 using UnityEngine;
 using Zenject;
 
@@ -15,6 +16,7 @@ namespace Asteroids
 
 			Container.BindInterfacesAndSelfTo<PlayerInputHandler>().AsSingle();
 
+			Container.Bind<IWeaponBehaviourFactory>().To<WeaponBehaviourFactory>().AsSingle();
 			Container.Bind<IProjectileBehaviourFactory>().To<ProjectileBehaviourFactory>().AsSingle();
 
 			InstallSignals(Container);

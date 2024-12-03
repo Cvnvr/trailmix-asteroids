@@ -46,6 +46,9 @@ namespace Asteroids
         
         private void Update()
         {
+            if (behaviours == null || behaviours.Count == 0)
+                return;
+            
             foreach (var behaviour in behaviours)
             {
                 behaviour.Value.Update();
@@ -68,6 +71,9 @@ namespace Asteroids
         
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            if (behaviours == null || behaviours.Count == 0)
+                return;
+            
             foreach (var behaviour in behaviours)
             {
                 behaviour.Value.OnCollision(collision.gameObject);
@@ -78,7 +84,7 @@ namespace Asteroids
         {
             if (rigidbody2d != null)
             {
-                rigidbody2d.velocity = velocity * projectileData.Speed;
+                rigidbody2d.velocity = velocity;
             }            
         }
     }

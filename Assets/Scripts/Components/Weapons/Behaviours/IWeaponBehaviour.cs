@@ -2,7 +2,8 @@ namespace Asteroids
 {
     public interface IWeaponBehaviour
     {
-        void Init();
+        void OnFire();
         void Update();
+        void Reset();
     }
 }

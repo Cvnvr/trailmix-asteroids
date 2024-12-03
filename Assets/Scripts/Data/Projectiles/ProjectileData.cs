@@ -8,14 +8,10 @@ namespace Asteroids
         [Tooltip("The prefab of the projectile.")]
         [SerializeField] private GameObject projectilePrefab;
 
-        [Tooltip("The speed that the projectile accelerates at.")]
-        [SerializeField] private float speed;
-
         [Tooltip("Custom behaviours for the projectile.")]
         [SerializeField] private ProjectileBehaviourData[] behaviours;
         
         public GameObject ProjectilePrefab => projectilePrefab;
-        public float Speed => speed;
         public ProjectileBehaviourData[] Behaviours => behaviours;
     }
 }

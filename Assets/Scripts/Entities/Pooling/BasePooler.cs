@@ -5,18 +5,19 @@ namespace Asteroids
 {
     public abstract class BasePooler<T> : MonoBehaviour, IPooler<T> where T : MonoBehaviour, IPoolable<T>
     {
-        public int PooledCount => pooledObjects.Count;
-        public int PushedCount => pushedObjects.Count;
+        public int PooledCount => inactiveObjects.Count;
+        public int PushedCount => activeObjects.Count;
         public int TotalCount => PooledCount + PushedCount;
         
         [SerializeField] private PoolData poolData;
 
-        private List<T> pooledObjects;
-        private List<T> pushedObjects;
+        private List<T> inactiveObjects;
+        private List<T> activeObjects;
 
         protected virtual void Awake()
         {
-            pooledObjects = new List<T>();
+            inactiveObjects = new List<T>();
+            activeObjects = new List<T>();
         }
 
         protected virtual void Start()
@@ -26,18 +27,6 @@ namespace Asteroids
 
         private void Prefill()
         {
-            if (pooledObjects == null || pooledObjects.Count != poolData.InitialPoolSize)
-            {
-                pooledObjects = new List<T>(poolData.InitialPoolSize);
-                pushedObjects = new List<T>(poolData.InitialPoolSize);
-            }
-            else
-            {
-                var newCapacity = pooledObjects.Count + poolData.InitialPoolSize;
-                pooledObjects.Capacity = newCapacity;
-                pushedObjects.Capacity = newCapacity;
-            }
-            
             for (int i = 0; i < poolData.InitialPoolSize; i++)
             {
                 T obj = CreateObject();
@@ -48,26 +37,19 @@ namespace Asteroids
         public T Pop()
         {
             T obj;
-            var count = PooledCount;
-            if (count > 0)
+            if (PooledCount > 0)
             {
-                obj = pooledObjects[count - 1];
-                ActivateObject(obj);
-                pooledObjects.RemoveAt(count - 1);
-            }
-            else if (TotalCount < poolData.MaxPoolSize)
-            {
-                // Create new object if there are no more left in the pool
-                obj = CreateObject();
+                obj = inactiveObjects[inactiveObjects.Count - 1];
+                inactiveObjects.RemoveAt(inactiveObjects.Count - 1);
             }
             else
             {
-                // Reached max pool count
-                return null;
+                obj = CreateObject();
             }
     
             obj.InitPoolable(Push);
-            pushedObjects.Add(obj);
+            activeObjects.Add(obj);
+            ActivateObject(obj);
             return obj;
         }
 
@@ -85,7 +67,8 @@ namespace Asteroids
         public virtual void Push(T obj)
         {
             DeactivateObject(obj);
-            pooledObjects.Add(obj);
+            activeObjects.Remove(obj);
+            inactiveObjects.Add(obj);
         }
 
         protected abstract T CreateObject();
@@ -104,17 +87,17 @@ namespace Asteroids
         
         public void Clear()
         {
-            foreach (T obj in pooledObjects)
+            foreach (T obj in inactiveObjects)
             {
                 DestroyObject(obj);
             }
-            foreach (T obj in pushedObjects)
+            foreach (T obj in activeObjects)
             {
                 DestroyObject(obj);
             }
     
-            pooledObjects.Clear();
-            pushedObjects.Clear();
+            inactiveObjects.Clear();
+            activeObjects.Clear();
         }
 
         protected virtual void DestroyObject(T obj)

@@ -7,6 +7,9 @@ namespace Asteroids
     {
         [Tooltip("The data for the projectile that this weapon fires.")]
         [SerializeField] private ProjectileData projectileData;
+
+        [Tooltip("The speed of the projectile that gets fired.")]
+        [SerializeField] private float speed;
         
         [Tooltip("Delay before another projectile can be fired.")]
         [SerializeField] private float delay;
@@ -15,6 +18,7 @@ namespace Asteroids
         [SerializeField] private WeaponBehaviourData[] behaviourData;
         
         public ProjectileData ProjectileData => projectileData;
+        public float Speed => speed;
         public float Delay => delay;
         public WeaponBehaviourData[] BehaviourData => behaviourData;
     }

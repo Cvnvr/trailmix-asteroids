@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 347108cd57c940709be462a86af39815, type: 3}
   m_Name: DefaultDestroySelfAfterCollision
   m_EditorClassIdentifier: 
+  tagsToIgnore:
+  - Projectile
