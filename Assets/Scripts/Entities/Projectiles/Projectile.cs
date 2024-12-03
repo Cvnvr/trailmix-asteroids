@@ -23,9 +23,9 @@ namespace Entities.Projectiles
             pushEvent = pushCallback;
         }
         
-        public void SetProjectileData(ProjectileData projectileData)
+        public void SetProjectileData(ProjectileData data)
         {
-            this.projectileData = projectileData;
+            projectileData = data;
             
             behaviours = new();
             foreach (var behaviourData in projectileData.Behaviours)

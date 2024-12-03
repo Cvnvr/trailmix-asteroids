@@ -2,8 +2,8 @@ using UnityEngine;
 
 namespace Entities.Projectiles
 {
-    [CreateAssetMenu(menuName = "Data/Entities/Projectiles/Behaviours/SpawnAdditional", fileName = "SpawnAdditional")]
-    public class ProjectileSpawnAdditionalData : ProjectileBehaviourData
+    [CreateAssetMenu(menuName = "Data/Entities/Weapons/Behaviours/SpawnAdditional", fileName = "SpawnAdditional")]
+    public class WeaponSpawnAdditionalData : WeaponBehaviourData
     {
         [Tooltip("Settings for the additional spawned projectiles.")]
         [SerializeField] private ProjectileData spawnedProjectileData;

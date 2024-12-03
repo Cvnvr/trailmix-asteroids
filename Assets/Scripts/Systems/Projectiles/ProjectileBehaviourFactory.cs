@@ -19,11 +19,11 @@ namespace Systems.Projectiles
                     var collisionComponent = new ProjectileDestroySelfAfterCollisionComponent();
                     collisionComponent.Init(projectile);
                     return collisionComponent;
-                case ProjectileSpawnAdditionalData spawnAdditionalData:
+                /*case WeaponSpawnAdditionalData spawnAdditionalData:
                     var spawnComponent = new ProjectileSpawnAdditionalComponent();
                     spawnComponent.Setup(projectile, spawnAdditionalData.SpawnedProjectileData, 
                         spawnAdditionalData.NumberToSpawn, spawnAdditionalData.SpawnOffset, spawnAdditionalData.SpawnDelay);
-                    return spawnComponent;
+                    return spawnComponent;*/
                 default:
                     return null;
             }

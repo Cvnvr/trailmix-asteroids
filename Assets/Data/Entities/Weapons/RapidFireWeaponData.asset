@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11033555135a4c8da048176e05ddafc7, type: 3}
+  m_Name: RapidFireWeaponData
+  m_EditorClassIdentifier: 
+  projectileData: {fileID: 11400000, guid: b9c92b0ebe77d4941a8332723a456fda, type: 2}
+  delay: 0.2
+  behaviourData: []

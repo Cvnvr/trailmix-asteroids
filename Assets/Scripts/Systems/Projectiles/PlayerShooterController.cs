@@ -1,6 +1,6 @@
-using System;
 using System.Collections;
 using Entities.Projectiles;
+using Entities.Weapons;
 using Events.Input;
 using Systems.Pooling;
 using UnityEngine;
@@ -10,9 +10,8 @@ namespace Systems.Projectiles
 {
     public class PlayerShooterController : BasePooler<Projectile>
     {
-        [SerializeField] private Projectile projectile;
-        [SerializeField] private ProjectileData projectileData;
-        
+        [SerializeField] private WeaponData weaponData;
+
         [SerializeField] private Transform shipNozzle;
 
         [Inject] private DiContainer container;
@@ -45,20 +44,20 @@ namespace Systems.Projectiles
         private IEnumerator SetShootDelayCoroutine()
         {
             canShoot = false;
-            yield return new WaitForSeconds(projectileData.Delay);
+            yield return new WaitForSeconds(weaponData.Delay);
             canShoot = true;
         }
 
-        protected override Projectile CreateItem()
+        protected override Projectile CreateObject()
         {
-            return container.InstantiatePrefab(projectile, shipNozzle.position, shipNozzle.rotation, transform).GetComponent<Projectile>();
+            return container.InstantiatePrefab(weaponData.ProjectileData.ProjectilePrefab, shipNozzle.position, shipNozzle.rotation, transform).GetComponent<Projectile>();
         }
 
         protected override void ActivateObject(Projectile item)
         {
             base.ActivateObject(item);
             
-            item.SetProjectileData(projectileData);
+            item.SetProjectileData(weaponData.ProjectileData);
             item.Fire(shipNozzle.up);
         }
         

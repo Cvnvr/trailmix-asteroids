@@ -13,14 +13,7 @@ namespace Systems.Pooling
         
         [SerializeField] private PoolData poolData;
 
-        /// <summary>
-        /// List of active items in the pool.
-        /// </summary>
         private List<T> pooledObjects;
-        
-        /// <summary>
-        /// List of inactive items in the pool.
-        /// </summary>
         private List<T> pushedObjects;
 
         protected virtual void Awake()
@@ -49,8 +42,8 @@ namespace Systems.Pooling
             
             for (int i = 0; i < poolData.InitialPoolSize; i++)
             {
-                T item = CreateItem();
-                Push(item);
+                T obj = CreateObject();
+                Push(obj);
             }
         }
         
@@ -67,7 +60,7 @@ namespace Systems.Pooling
             else if (TotalCount < poolData.MaxPoolSize)
             {
                 // Create new object if there are no more left in the pool
-                obj = CreateItem();
+                obj = CreateObject();
             }
             else
             {
@@ -97,7 +90,7 @@ namespace Systems.Pooling
             pooledObjects.Add(obj);
         }
 
-        protected abstract T CreateItem();
+        protected abstract T CreateObject();
 
         protected virtual void ActivateObject(T obj)
         {
