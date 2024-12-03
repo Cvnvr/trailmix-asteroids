@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DefaultProjectile
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 8899047977407940404, guid: de0f51c944c9c466fa91b6f49ed24e79, type: 3}
-  speed: 8
+  speed: 12
   delay: 0.4
   behaviours:
   - {fileID: 11400000, guid: e0aae3535cecc42bfb952a02ef9fd613, type: 2}

@@ -14,12 +14,11 @@ namespace Entities.Projectiles
         [Inject] private IProjectileBehaviourFactory projectileBehaviourFactory;
 
         private Rigidbody2D rigidbody2d;
+        private Dictionary<ProjectileBehaviourData, BaseProjectileBehaviourComponent> behaviours;
 
         private ProjectileData projectileData;
         private Action<IPoolable> pushEvent;
         
-        private Dictionary<ProjectileBehaviourData, BaseProjectileBehaviourComponent> behaviours;
-
         public void SetData(ProjectileData projectileData)
         {
             this.projectileData = projectileData;

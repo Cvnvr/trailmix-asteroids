@@ -72,6 +72,7 @@ GameObject:
   - component: {fileID: 4428095690128823454}
   - component: {fileID: 8752703293363794078}
   - component: {fileID: 2575046604881013851}
+  - component: {fileID: 7757551244497125267}
   m_Layer: 0
   m_Name: PlayerDefault
   m_TagString: Player
@@ -185,7 +186,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 2
+  m_Mass: 0.8
   m_LinearDrag: 3.5
   m_AngularDrag: 3
   m_GravityScale: 0
@@ -223,3 +224,15 @@ MonoBehaviour:
   projectile: {fileID: 3316245005317385061, guid: de0f51c944c9c466fa91b6f49ed24e79, type: 3}
   projectileData: {fileID: 11400000, guid: b9c92b0ebe77d4941a8332723a456fda, type: 2}
   shipNozzle: {fileID: 1266020247652902970}
+--- !u!114 &7757551244497125267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4428095690128823452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3349692e191d4a72af3253c911651689, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

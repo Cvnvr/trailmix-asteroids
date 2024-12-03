@@ -1,6 +1,7 @@
 using Events.Input;
 using Input;
 using Systems.Projectiles;
+using Systems.Utilities;
 using UnityEngine;
 using Zenject;
 
@@ -8,9 +9,13 @@ namespace DefaultNamespace
 {
 	public class GameInstaller : MonoInstaller
 	{
+		[SerializeField] private ScreenBoundsCalculator screenBoundsCalculator;
+		
 		public override void InstallBindings()
 		{
 			Debug.Log($"[{nameof(GameInstaller)}.{nameof(InstallBindings)}]");
+			
+			Container.Bind<ScreenBoundsCalculator>().FromInstance(screenBoundsCalculator).AsSingle();
 
 			Container.BindInterfacesAndSelfTo<PlayerInputHandler>().AsSingle();
 

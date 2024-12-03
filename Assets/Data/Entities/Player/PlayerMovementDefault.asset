@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: PlayerMovementDefault
   m_EditorClassIdentifier: 
   forwardThrust: 2000
-  maxForwardSpeed: 6
-  rotationalThrust: 90
-  maxRotationalSpeed: 4
+  maxForwardSpeed: 3
+  rotationalThrust: 35
+  maxRotationalSpeed: 1
