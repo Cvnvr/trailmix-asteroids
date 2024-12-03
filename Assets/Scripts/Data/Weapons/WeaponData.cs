@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Asteroids
 {
-    [CreateAssetMenu(menuName = "Data/Entities/Weapons/WeaponData", fileName = "WeaponData")]
+    [CreateAssetMenu(menuName = "Data/Weapons/WeaponData", fileName = "WeaponData")]
     public class WeaponData : ScriptableObject
     {
         [Tooltip("The data for the projectile that this weapon fires.")]

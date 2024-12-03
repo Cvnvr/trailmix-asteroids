@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Asteroids
 {
-    [CreateAssetMenu(menuName = "Data/Entities/Projectiles/ProjectileData", fileName = "ProjectileData")]
+    [CreateAssetMenu(menuName = "Data/Projectiles/ProjectileData", fileName = "ProjectileData")]
     public class ProjectileData : ScriptableObject
     {
         [Tooltip("The prefab of the projectile.")]

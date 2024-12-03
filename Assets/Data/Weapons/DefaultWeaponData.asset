@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 11033555135a4c8da048176e05ddafc7, type: 3}
-  m_Name: ShotgunWeaponData
+  m_Name: DefaultWeaponData
   m_EditorClassIdentifier: 
   projectileData: {fileID: 11400000, guid: b9c92b0ebe77d4941a8332723a456fda, type: 2}
+  speed: 8
   delay: 0.4
-  behaviourData:
-  - {fileID: 11400000, guid: fdb4279257e0948daab26c29de66c19c, type: 2}
+  behaviourData: []

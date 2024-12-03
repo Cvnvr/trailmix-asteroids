@@ -6,6 +6,7 @@ using Zenject;
 
 namespace Asteroids
 {
+    // TODO change this
     public struct WeaponSpawnData
     {
         public Transform SpawnTransform;
@@ -26,11 +27,14 @@ namespace Asteroids
         
         private bool canShoot = true;
         private Coroutine shootDelayCoroutine;
+
+        private bool areBehavioursSet;
         
         [Inject]
         private void OnInject()
         {
             signalBus.Subscribe<ShootInputEvent>(TryShoot);
+            signalBus.Subscribe<PowerUpCollectedEvent>(OnPowerUpCollected);
         }
 
         protected override void Start()
@@ -42,15 +46,22 @@ namespace Asteroids
 
         private void Update()
         {
+            if (!areBehavioursSet)
+                return;
+            
+            if (additionalComponents == null || additionalComponents.Count == 0)
+                return;
+            
             foreach (var component in additionalComponents)
             {
                 component.Value.Update();
             }
         }
         
-        // TODO convert to event
-        public void UpdateWeaponSetup(WeaponData weaponData)
+        private void UpdateWeaponSetup(WeaponData weaponData)
         {
+            areBehavioursSet = false;
+            
             this.weaponData = weaponData;
 
             additionalComponents = new();
@@ -61,6 +72,8 @@ namespace Asteroids
                     behaviourData);
                 additionalComponents.Add(behaviourData, behaviourComponent);
             }
+
+            areBehavioursSet = true;
         }
 
         private WeaponSpawnData GetWeaponSpawnData()
@@ -96,10 +109,21 @@ namespace Asteroids
 
         private void OnFire()
         {
+            if (!areBehavioursSet)
+                return;
+            
+            if (additionalComponents == null || additionalComponents.Count == 0)
+                return;
+            
             foreach (var component in additionalComponents)
             {
                 component.Value.OnFire();
             }
+        }
+
+        private void OnPowerUpCollected(PowerUpCollectedEvent evt)
+        {
+            UpdateWeaponSetup(evt.PowerUp);
         }
 
         protected override Projectile CreateObject()
@@ -123,6 +147,7 @@ namespace Asteroids
         private void OnDisable()
         {
             signalBus.TryUnsubscribe<ShootInputEvent>(TryShoot);
+            signalBus.TryUnsubscribe<PowerUpCollectedEvent>(OnPowerUpCollected);
             
             if (shootDelayCoroutine != null)
             {

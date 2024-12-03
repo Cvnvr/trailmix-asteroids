@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Asteroids
 {
-    [CreateAssetMenu(menuName = "Data/Entities/Projectiles/Behaviours/DestroySelfAfterTime", fileName = "DestroySelfAfterTime")]
+    [CreateAssetMenu(menuName = "Data/Projectiles/Behaviours/DestroySelfAfterTime", fileName = "DestroySelfAfterTime")]
     public class ProjectileDestroySelfAfterTimeData : ProjectileBehaviourData
     {
         [Tooltip("The amount of time that needs to expire before the projectile is destroyed.")]

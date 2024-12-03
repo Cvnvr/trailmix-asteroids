@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: RapidFireWeaponData
   m_EditorClassIdentifier: 
   projectileData: {fileID: 11400000, guid: b9c92b0ebe77d4941a8332723a456fda, type: 2}
-  delay: 0.1
+  speed: 14
+  delay: 0
   behaviourData: []

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Asteroids
 {
-    [CreateAssetMenu(menuName = "Data/Entities/Player/Movement Data", order = 1, fileName = "New Movement Data")]
+    [CreateAssetMenu(menuName = "Data/Player/Movement Data", order = 1, fileName = "New Movement Data")]
     public class PlayerMovementData : ScriptableObject
     {
         [SerializeField] private float forwardThrust;

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Asteroids
 {
-    [CreateAssetMenu(menuName = "Data/Entities/Weapons/Behaviours/SpawnAdditional", fileName = "SpawnAdditional")]
+    [CreateAssetMenu(menuName = "Data/Weapons/Behaviours/SpawnAdditional", fileName = "SpawnAdditional")]
     public class WeaponSpawnAdditionalData : WeaponBehaviourData
     {
         [Tooltip("The angle offset for the additional projectiles.")]

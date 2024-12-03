@@ -31,6 +31,8 @@ namespace Asteroids
 			diContainer.DeclareSignal<ThrustInputEvent>();
 			diContainer.DeclareSignal<RotateInputEvent>();
 			diContainer.DeclareSignal<ShootInputEvent>();
+			
+			diContainer.DeclareSignal<PowerUpCollectedEvent>();
 		}
 	}
 }
