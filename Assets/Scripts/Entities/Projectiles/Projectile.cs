@@ -24,7 +24,7 @@ namespace Entities.Projectiles
             this.projectileData = projectileData;
         }
         
-        public void Initialise(Action<IPoolable> pushCallback)
+        public void Initialise(Action popCallback, Action<IPoolable> pushCallback)
         {
             pushEvent = pushCallback;
 
@@ -34,11 +34,11 @@ namespace Entities.Projectiles
                 if (behaviours.ContainsKey(behaviourData))
                     continue;
 
-                var behaviourComponent = projectileBehaviourFactory.BindTo(this, behaviourData);
-                if (behaviourComponent == null)
-                    continue;
-                
-                behaviours.Add(behaviourData, behaviourComponent);
+                var behaviourComponent = projectileBehaviourFactory.GetBoundComponent(this, behaviourData);
+                if (behaviourComponent != null)
+                {
+                    behaviours.Add(behaviourData, behaviourComponent);
+                }
             }
         }
         
@@ -79,10 +79,10 @@ namespace Entities.Projectiles
         
         public void Fire(Vector2 velocity)
         {
-            if (rigidbody2d == null)
-                return;
-            
-            rigidbody2d.velocity = velocity * projectileData.Speed;
+            if (rigidbody2d != null)
+            {
+                rigidbody2d.velocity = velocity * projectileData.Speed;
+            }            
         }
     }
 }

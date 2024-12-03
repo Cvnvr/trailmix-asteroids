@@ -50,7 +50,7 @@ namespace Systems.Projectiles
 
         protected override Projectile CreateItem()
         {
-            return container.InstantiatePrefab(projectile, shipNozzle.position, Quaternion.identity, transform).GetComponent<Projectile>();
+            return container.InstantiatePrefab(projectile, shipNozzle.position, shipNozzle.rotation, transform).GetComponent<Projectile>();
         }
 
         protected override void OnGet(Projectile item)
@@ -61,11 +61,11 @@ namespace Systems.Projectiles
             item.transform.rotation = shipNozzle.rotation;
             
             item.SetData(projectileData);
-            item.Initialise(_ => Push(item));
+            item.Initialise(() => Pop(), _ => Push(item));
             
             item.Fire(shipNozzle.up);
         }
-
+        
         private void OnDisable()
         {
             signalBus.TryUnsubscribe<ShootInputEvent>(TryShoot);

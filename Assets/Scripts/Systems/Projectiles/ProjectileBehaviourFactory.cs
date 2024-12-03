@@ -4,7 +4,7 @@ namespace Systems.Projectiles
 {
     public class ProjectileBehaviourFactory : IProjectileBehaviourFactory
     {
-        public BaseProjectileBehaviourComponent BindTo(Projectile projectile, ProjectileBehaviourData projectileBehaviourData)
+        public BaseProjectileBehaviourComponent GetBoundComponent(Projectile projectile, ProjectileBehaviourData projectileBehaviourData)
         {
             if (projectile == null)
                 return null;
@@ -19,6 +19,11 @@ namespace Systems.Projectiles
                     var collisionComponent = new ProjectileDestroySelfAfterCollisionComponent();
                     collisionComponent.Init(projectile);
                     return collisionComponent;
+                case ProjectileSpawnAdditionalData spawnAdditionalData:
+                    var spawnComponent = new ProjectileSpawnAdditionalComponent();
+                    spawnComponent.Setup(projectile, spawnAdditionalData.SpawnedProjectileData, 
+                        spawnAdditionalData.NumberToSpawn, spawnAdditionalData.SpawnOffset, spawnAdditionalData.SpawnDelay);
+                    return spawnComponent;
                 default:
                     return null;
             }

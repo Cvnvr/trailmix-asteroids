@@ -4,6 +4,6 @@ namespace Systems.Projectiles
 {
     public interface IProjectileBehaviourFactory
     {
-        BaseProjectileBehaviourComponent BindTo(Projectile projectile, ProjectileBehaviourData projectileBehaviourData);
+        BaseProjectileBehaviourComponent GetBoundComponent(Projectile projectile, ProjectileBehaviourData projectileBehaviourData);
     }
 }
