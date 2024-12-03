@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-namespace Systems.Utilities
+namespace Asteroids
 {
     public class AutoScreenWrapper : MonoBehaviour
     {

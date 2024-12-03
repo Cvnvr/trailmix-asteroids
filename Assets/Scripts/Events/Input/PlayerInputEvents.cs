@@ -1,4 +1,4 @@
-namespace Events.Input
+namespace Asteroids
 {
     public struct ThrustInputEvent
     {

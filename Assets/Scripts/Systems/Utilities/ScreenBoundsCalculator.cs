@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Systems.Utilities
+namespace Asteroids
 {
     public class ScreenBoundsCalculator : MonoBehaviour
     {

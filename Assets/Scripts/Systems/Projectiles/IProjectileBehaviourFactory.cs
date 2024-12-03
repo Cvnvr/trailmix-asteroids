@@ -1,6 +1,4 @@
-using Entities.Projectiles;
-
-namespace Systems.Projectiles
+namespace Asteroids
 {
     public interface IProjectileBehaviourFactory
     {

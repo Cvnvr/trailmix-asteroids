@@ -1,11 +1,7 @@
-using Events.Input;
-using Input;
-using Systems.Projectiles;
-using Systems.Utilities;
 using UnityEngine;
 using Zenject;
 
-namespace DefaultNamespace
+namespace Asteroids
 {
 	public class GameInstaller : MonoInstaller
 	{

@@ -1,14 +1,12 @@
 using System;
 using System.Collections.Generic;
-using Components;
-using Systems.Projectiles;
 using UnityEngine;
 using Zenject;
 
-namespace Entities.Projectiles
+namespace Asteroids
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public sealed class Projectile : MonoBehaviour, Components.IPoolable<Projectile>, IProjectile
+    public sealed class Projectile : MonoBehaviour, IPoolable<Projectile>, IProjectile
     {
         [Inject] private IProjectileBehaviourFactory projectileBehaviourFactory;
 

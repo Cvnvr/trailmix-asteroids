@@ -1,9 +1,7 @@
-using Entities.Player;
-using Events.Input;
 using UnityEngine;
 using Zenject;
 
-namespace Systems.Movement
+namespace Asteroids
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerMovementController : MonoBehaviour

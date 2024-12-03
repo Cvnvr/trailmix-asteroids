@@ -1,12 +1,8 @@
 using System.Collections;
-using Entities.Projectiles;
-using Entities.Weapons;
-using Events.Input;
-using Systems.Pooling;
 using UnityEngine;
 using Zenject;
 
-namespace Systems.Projectiles
+namespace Asteroids
 {
     public class PlayerShooterController : BasePooler<Projectile>
     {
