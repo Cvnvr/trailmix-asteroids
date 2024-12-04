@@ -16,7 +16,8 @@ namespace Asteroids
 
         private float movementSpeed;
         
-        private bool canSpawnMore;
+        private bool doesSpawnMoreOnDestruction;
+        private int numberToSpawn;
         private AsteroidData spawnedAsteroidData;
 
         private bool isInitialised;
@@ -32,10 +33,9 @@ namespace Asteroids
             if (!isInitialised)
                 return;
 
-            if (rigidbody2d != null)
-            {
-                rigidbody2d.velocity = transform.up * movementSpeed;
-            }
+            rigidbody2d.velocity = rigidbody2d.velocity.normalized * movementSpeed;
+            var direction = transform.up * movementSpeed;
+            rigidbody2d.AddForce(direction, ForceMode2D.Force);
         }
 
         public void Setup(AsteroidData data)
@@ -45,7 +45,8 @@ namespace Asteroids
             spriteRenderer.sprite = data.Sprites[UnityEngine.Random.Range(0, data.Sprites.Count)];
             movementSpeed = data.MovementSpeed;
             
-            canSpawnMore = data.CanSpawnMore;
+            doesSpawnMoreOnDestruction = data.DoesSpawnMoreOnDestruction;
+            numberToSpawn = data.NumberToSpawn;
             spawnedAsteroidData = data.SpawnedAsteroidData;
             
             isInitialised = true;
@@ -73,15 +74,13 @@ namespace Asteroids
         {
             pushEvent?.Invoke(this);
         }
-
-        public void Destroy()
+        
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (canSpawnMore)
+            if (collision.gameObject.CompareTag(EntityTags.Projectile))
             {
-                signalBus.TryFire(new AsteroidSpawnMoreEvent() { AsteroidData = spawnedAsteroidData });
+                Destroy();
             }
-            
-            ReturnToPool();
         }
 
         public void OnPlayerCollision(GameObject player)
@@ -90,6 +89,21 @@ namespace Asteroids
             signalBus.TryFire<PlayerDestroyedEvent>();
             
             Destroy();
+        }
+        
+        public void Destroy()
+        {
+            if (doesSpawnMoreOnDestruction)
+            {
+                signalBus.TryFire(new AsteroidSpawnEvent()
+                {
+                    AsteroidData = spawnedAsteroidData,
+                    NumberToSpawn = numberToSpawn,
+                    Position = transform.position
+                });
+            }
+            
+            ReturnToPool();
         }
     }
 }

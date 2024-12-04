@@ -12,10 +12,13 @@ namespace Asteroids
 		{
 			Debug.Log($"[{nameof(GameInstaller)}.{nameof(InstallBindings)}]");
 			
+			// Game
 			Container.Bind<ScreenBoundsCalculator>().FromInstance(screenBoundsCalculator).AsSingle();
-
+			
+			// Player
 			Container.BindInterfacesAndSelfTo<PlayerInputHandler>().AsSingle();
-
+			
+			// Projectiles
 			Container.Bind<IWeaponBehaviourFactory>().To<WeaponBehaviourFactory>().AsSingle();
 			Container.Bind<IProjectileBehaviourFactory>().To<ProjectileBehaviourFactory>().AsSingle();
 
@@ -37,7 +40,7 @@ namespace Asteroids
 			diContainer.DeclareSignal<PlayerDestroyedEvent>();
 			
 			// Enemies
-			diContainer.DeclareSignal<AsteroidSpawnMoreEvent>();
+			diContainer.DeclareSignal<AsteroidSpawnEvent>();
 			
 			// Power-ups
 			diContainer.DeclareSignal<PowerUpCollectedEvent>();

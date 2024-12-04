@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Asteroids
 {
@@ -13,7 +14,8 @@ namespace Asteroids
         [SerializeField] private float movementSpeed;
 
         [Header("Spawn Behaviour")]
-        [SerializeField] private bool canSpawnMore;
+        [SerializeField] private bool doesSpawnMoreOnDestruction;
+        [SerializeField] private int numberToSpawn;
         [SerializeField] private AsteroidData spawnedAsteroidData;
         
         public AsteroidType AsteroidType => asteroidType;
@@ -21,7 +23,8 @@ namespace Asteroids
         public List<Sprite> Sprites => sprites;
         public float MovementSpeed => movementSpeed;
         
-        public bool CanSpawnMore => canSpawnMore;
+        public bool DoesSpawnMoreOnDestruction => doesSpawnMoreOnDestruction;
+        public int NumberToSpawn => numberToSpawn;
         public AsteroidData SpawnedAsteroidData => spawnedAsteroidData;
     }
 }

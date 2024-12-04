@@ -11,6 +11,8 @@ namespace Asteroids
         
         [SerializeField] private PoolData poolData;
 
+        private PoolData cachedPoolData;
+        
         private List<T> inactiveObjects;
         private List<T> activeObjects;
 
@@ -22,12 +24,25 @@ namespace Asteroids
 
         protected virtual void Start()
         {
+            InitPoolData();
+            Prefill();
+        }
+
+        protected void InitPoolData()
+        {
+            cachedPoolData = poolData;
+        }
+
+        protected void SetPoolData(PoolData data)
+        {
+            cachedPoolData = data;
+            Clear();
             Prefill();
         }
 
         protected void Prefill()
         {
-            for (int i = 0; i < poolData.InitialPoolSize; i++)
+            for (var i = 0; i < cachedPoolData.InitialPoolSize; i++)
             {
                 T obj = CreateObject();
                 Push(obj);

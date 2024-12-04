@@ -39,6 +39,7 @@ namespace Asteroids
 
         protected override void Start()
         {
+            InitPoolData();
             UpdateWeaponSetup(defaultWeaponData);
         }
 
