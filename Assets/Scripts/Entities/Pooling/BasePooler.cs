@@ -25,7 +25,7 @@ namespace Asteroids
             Prefill();
         }
 
-        private void Prefill()
+        protected void Prefill()
         {
             for (int i = 0; i < poolData.InitialPoolSize; i++)
             {

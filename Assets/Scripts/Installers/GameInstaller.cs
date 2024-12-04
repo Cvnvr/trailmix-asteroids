@@ -28,11 +28,20 @@ namespace Asteroids
 		{
 			SignalBusInstaller.Install(diContainer);
 
+			// Input
 			diContainer.DeclareSignal<ThrustInputEvent>();
 			diContainer.DeclareSignal<RotateInputEvent>();
 			diContainer.DeclareSignal<ShootInputEvent>();
 			
+			// Player
+			diContainer.DeclareSignal<PlayerDestroyedEvent>();
+			
+			// Enemies
+			diContainer.DeclareSignal<AsteroidSpawnMoreEvent>();
+			
+			// Power-ups
 			diContainer.DeclareSignal<PowerUpCollectedEvent>();
+			diContainer.DeclareSignal<PowerUpSpawnEvent>();
 		}
 	}
 }

@@ -1,19 +1,27 @@
+using System;
 using UnityEngine;
 
 namespace Asteroids
 {
-    public class ProjectileDestroySelfAfterCollisionComponent : BaseProjectileBehaviourComponent
+    public class ProjectileDestroySelfAfterCollisionComponent : IProjectileBehaviour
     {
-        public override void Update()
+        private Action pushEvent;
+        
+        public void Init(Action pushCallback)
+        {
+            pushEvent = pushCallback;
+        }
+
+        public void Update()
         {
         }
 
-        public override void OnCollision(GameObject collision)
+        public void OnCollision(GameObject collision)
         {
-            if (projectile != null)
-            {
-                projectile.ReturnToPool();
-            }
+            if (collision.CompareTag(EntityTags.Projectile))
+                return;
+            
+            pushEvent?.Invoke();
         }
     }
 }

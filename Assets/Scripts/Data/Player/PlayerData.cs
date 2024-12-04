@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Asteroids
 {
-    [CreateAssetMenu(menuName = "Data/Player/Data", order = 1, fileName = "New Data")]
+    [CreateAssetMenu(menuName = "Data/Player/PlayerData", order = 1, fileName = "PlayerData")]
     public class PlayerData : ScriptableObject
     {
         [SerializeField] private PlayerMovementData movementData;

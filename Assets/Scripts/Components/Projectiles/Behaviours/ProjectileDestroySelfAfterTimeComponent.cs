@@ -1,27 +1,34 @@
+using System;
 using UnityEngine;
 
 namespace Asteroids
 {
-    public class ProjectileDestroySelfAfterTimeComponent : BaseProjectileBehaviourComponent
+    public class ProjectileDestroySelfAfterTimeComponent : IProjectileBehaviour
     {
+        private Action pushEvent;
         private float lifetime;
         
-        public void Setup(Projectile projectile, float lifetime)
+        public void Setup(Action pushCallback, float lifetime)
         {
-            Init(projectile);
+            Init(pushCallback);
             this.lifetime = lifetime;
         }
 
-        public override void Update()
+        public void Init(Action pushCallback)
+        {
+            pushEvent = pushCallback;
+        }
+
+        public void Update()
         {
             lifetime -= Time.deltaTime;
             if (lifetime <= 0)
             {
-                projectile.ReturnToPool();
+                pushEvent?.Invoke();
             }
         }
 
-        public override void OnCollision(GameObject other)
+        public void OnCollision(GameObject other)
         {
         }
     }

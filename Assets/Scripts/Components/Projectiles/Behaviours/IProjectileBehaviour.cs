@@ -1,11 +1,9 @@
-using UnityEngine;
-
 namespace Asteroids
 {
     public interface IProjectileBehaviour
     {
-        void Init(Projectile projectile);
+        void Init(System.Action pushCallback);
         void Update();
-        void OnCollision(GameObject other);
+        void OnCollision(UnityEngine.GameObject other);
     }
 }

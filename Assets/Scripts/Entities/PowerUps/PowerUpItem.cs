@@ -4,21 +4,21 @@ using Zenject;
 namespace Asteroids
 {
     [RequireComponent(typeof(SpriteRenderer), typeof(Collider2D))]
-    public class PowerUpItem : MonoBehaviour
+    public class PowerUpItem : MonoBehaviour, IPlayerCollideable
     { 
         [Inject] private SignalBus signalBus;
 
-        private SpriteRenderer renderer;
+        private SpriteRenderer spriteRenderer;
 
         private WeaponData powerUp;
-        private float timer;
-
         private bool isTimerEnabled;
+        private float timer;
+        
         private bool isInitialised;
         
         private void Awake()
         {
-            renderer = GetComponent<SpriteRenderer>();
+            spriteRenderer = GetComponent<SpriteRenderer>();
         }
         
         public void Init(PowerUpData data)
@@ -27,7 +27,7 @@ namespace Asteroids
             
             gameObject.name = data.PowerUpName;
             powerUp = data.WeaponData;
-            renderer.sprite = data.Sprite;
+            spriteRenderer.sprite = data.Sprite;
             isTimerEnabled = data.TimerEnabled;
             timer = data.Timer;
 
@@ -49,9 +49,9 @@ namespace Asteroids
             }
         }
 
-        private void OnCollisionEnter2D(Collision2D other)
+        public void OnPlayerCollision(GameObject player)
         {
-            if (!other.gameObject.CompareTag("Player"))
+            if (!isInitialised)
                 return;
 
             signalBus.TryFire(new PowerUpCollectedEvent() { PowerUp = powerUp });

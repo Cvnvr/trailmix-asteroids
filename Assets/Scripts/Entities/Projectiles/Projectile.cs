@@ -11,7 +11,7 @@ namespace Asteroids
         [Inject] private IProjectileBehaviourFactory projectileBehaviourFactory;
 
         private Rigidbody2D rigidbody2d;
-        private Dictionary<ProjectileBehaviourData, BaseProjectileBehaviourComponent> behaviours;
+        private Dictionary<ProjectileBehaviourData, IProjectileBehaviour> behaviours;
 
         private ProjectileData projectileData;
         private Action<Projectile> pushEvent;
@@ -31,7 +31,7 @@ namespace Asteroids
                 if (behaviours.ContainsKey(behaviourData))
                     continue;
 
-                var behaviourComponent = projectileBehaviourFactory.GetBoundComponent(this, behaviourData);
+                var behaviourComponent = projectileBehaviourFactory.GetBoundComponent(ReturnToPool, behaviourData);
                 if (behaviourComponent != null)
                 {
                     behaviours.Add(behaviourData, behaviourComponent);

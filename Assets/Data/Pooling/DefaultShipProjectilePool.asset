@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6fa00481c7b4199a4b0236983060e4c, type: 3}
-  m_Name: ShipProjectilePoolDefault
+  m_Name: DefaultShipProjectilePool
   m_EditorClassIdentifier: 
   initialPoolSize: 5
   maxPoolSize: 20

@@ -15,14 +15,14 @@ namespace Asteroids
     
     public class PlayerShooterController : BasePooler<Projectile>
     {
-        [SerializeField] private WeaponData weaponData;
-
+        [SerializeField] private WeaponData defaultWeaponData;
         [SerializeField] private Transform shipNozzle;
 
         [Inject] private DiContainer container;
         [Inject] private SignalBus signalBus;
         [Inject] private IWeaponBehaviourFactory weaponBehaviourFactory;
 
+        private WeaponData activeWeaponData;
         private Dictionary<WeaponBehaviourData, IWeaponBehaviour> additionalComponents = new();
         
         private bool canShoot = true;
@@ -39,9 +39,7 @@ namespace Asteroids
 
         protected override void Start()
         {
-            base.Start();
-
-            UpdateWeaponSetup(weaponData);
+            UpdateWeaponSetup(defaultWeaponData);
         }
 
         private void Update()
@@ -62,7 +60,11 @@ namespace Asteroids
         {
             areBehavioursSet = false;
             
-            this.weaponData = weaponData;
+            activeWeaponData = weaponData;
+
+            // Reset the weapon pooling
+            Clear();
+            Prefill();
 
             additionalComponents = new();
             foreach (var behaviourData in weaponData.BehaviourData)
@@ -89,6 +91,9 @@ namespace Asteroids
         {
             if (!canShoot)
                 return;
+
+            if (activeWeaponData == null)
+                return;
             
             Pop(shipNozzle.position, shipNozzle.rotation);
             OnFire();
@@ -103,7 +108,7 @@ namespace Asteroids
         private IEnumerator SetShootDelayCoroutine()
         {
             canShoot = false;
-            yield return new WaitForSeconds(weaponData.Delay);
+            yield return new WaitForSeconds(activeWeaponData.Delay);
             canShoot = true;
         }
 
@@ -129,19 +134,19 @@ namespace Asteroids
         protected override Projectile CreateObject()
         {
             return container.InstantiatePrefab(
-                weaponData.ProjectileData.ProjectilePrefab, 
+                activeWeaponData.ProjectileData.ProjectilePrefab, 
                 shipNozzle.position, 
                 shipNozzle.rotation, 
                 transform
-            ).GetComponent<Projectile>();
+            ).GetComponent<Projectile>(); 
         }
 
         protected override void ActivateObject(Projectile item)
         {
             base.ActivateObject(item);
             
-            item.SetProjectileData(weaponData.ProjectileData);
-            item.Fire(shipNozzle.up * weaponData.Speed);
+            item.SetProjectileData(activeWeaponData.ProjectileData);
+            item.Fire(shipNozzle.up * activeWeaponData.Speed);
         }
         
         private void OnDisable()

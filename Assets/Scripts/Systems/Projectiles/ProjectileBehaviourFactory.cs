@@ -1,21 +1,20 @@
+using System;
+
 namespace Asteroids
 {
     public class ProjectileBehaviourFactory : IProjectileBehaviourFactory
     {
-        public BaseProjectileBehaviourComponent GetBoundComponent(Projectile projectile, ProjectileBehaviourData projectileBehaviourData)
+        public IProjectileBehaviour GetBoundComponent(Action pushCallback, ProjectileBehaviourData projectileBehaviourData)
         {
-            if (projectile == null)
-                return null;
-            
             switch (projectileBehaviourData)
             {
                 case ProjectileDestroySelfAfterTimeData destroySelfAfterTime:
                     var timeComponent = new ProjectileDestroySelfAfterTimeComponent();
-                    timeComponent.Setup(projectile, destroySelfAfterTime.Lifetime);
+                    timeComponent.Setup(pushCallback, destroySelfAfterTime.Lifetime);
                     return timeComponent;
                 case ProjectileDestroySelfAfterCollisionData:
                     var collisionComponent = new ProjectileDestroySelfAfterCollisionComponent();
-                    collisionComponent.Init(projectile);
+                    collisionComponent.Init(pushCallback);
                     return collisionComponent;
                 default:
                     return null;

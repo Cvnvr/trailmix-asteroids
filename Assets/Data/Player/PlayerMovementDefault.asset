@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4644955710de4e0bb728d05851156e9a, type: 3}
   m_Name: PlayerMovementDefault
   m_EditorClassIdentifier: 
-  forwardThrust: 2000
+  forwardThrust: 1500
   maxForwardSpeed: 3
-  rotationalThrust: 35
+  rotationalThrust: 15
   maxRotationalSpeed: 1
