@@ -1,9 +1,8 @@
-using Asteroids;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
 
-namespace Systems.PowerUps
+namespace Asteroids
 {
     public class PowerUpSpawner : MonoBehaviour
     {

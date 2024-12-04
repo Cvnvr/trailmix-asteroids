@@ -1,4 +1,3 @@
-using Systems.Weapons;
 using UnityEngine;
 using Zenject;
 

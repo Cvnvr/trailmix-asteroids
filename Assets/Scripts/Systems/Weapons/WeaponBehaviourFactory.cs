@@ -1,6 +1,4 @@
-using Asteroids;
-
-namespace Systems.Weapons
+namespace Asteroids
 {
     public class WeaponBehaviourFactory : IWeaponBehaviourFactory
     {

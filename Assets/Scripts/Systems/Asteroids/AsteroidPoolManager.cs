@@ -44,12 +44,12 @@ namespace Asteroids
 
         private void OnAsteroidSpawn(AsteroidSpawnEvent evt)
         {
-            if (!pools[evt.AsteroidData.AsteroidType])
+            if (!pools.TryGetValue(evt.AsteroidData.AsteroidType, out var pool)) 
                 return;
-
+            
             for (var i = 0; i < evt.NumberToSpawn; i++)
             {
-                pools[evt.AsteroidData.AsteroidType].Pop(evt.Position, Quaternion.identity);
+                pool.Pop(evt.Position, Quaternion.identity);
             }
         }
 
