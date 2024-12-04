@@ -55,6 +55,15 @@ namespace Asteroids
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Hyperspace"",
+                    ""type"": ""Button"",
+                    ""id"": ""ac9419f5-96c6-4c25-a904-ca776a8eb5c7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -167,6 +176,28 @@ namespace Asteroids
                     ""action"": ""Rotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6bf404a9-0f95-4862-92ba-d6f91eccebee"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Hyperspace"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ce90d6e3-e29f-4ccd-89b3-2720012af510"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Hyperspace"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -178,6 +209,7 @@ namespace Asteroids
             m_Player_ForwardThrust = m_Player.FindAction("ForwardThrust", throwIfNotFound: true);
             m_Player_Rotate = m_Player.FindAction("Rotate", throwIfNotFound: true);
             m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
+            m_Player_Hyperspace = m_Player.FindAction("Hyperspace", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -242,6 +274,7 @@ namespace Asteroids
         private readonly InputAction m_Player_ForwardThrust;
         private readonly InputAction m_Player_Rotate;
         private readonly InputAction m_Player_Shoot;
+        private readonly InputAction m_Player_Hyperspace;
         public struct PlayerActions
         {
             private @PlayerInput m_Wrapper;
@@ -249,6 +282,7 @@ namespace Asteroids
             public InputAction @ForwardThrust => m_Wrapper.m_Player_ForwardThrust;
             public InputAction @Rotate => m_Wrapper.m_Player_Rotate;
             public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
+            public InputAction @Hyperspace => m_Wrapper.m_Player_Hyperspace;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -267,6 +301,9 @@ namespace Asteroids
                 @Shoot.started += instance.OnShoot;
                 @Shoot.performed += instance.OnShoot;
                 @Shoot.canceled += instance.OnShoot;
+                @Hyperspace.started += instance.OnHyperspace;
+                @Hyperspace.performed += instance.OnHyperspace;
+                @Hyperspace.canceled += instance.OnHyperspace;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -280,6 +317,9 @@ namespace Asteroids
                 @Shoot.started -= instance.OnShoot;
                 @Shoot.performed -= instance.OnShoot;
                 @Shoot.canceled -= instance.OnShoot;
+                @Hyperspace.started -= instance.OnHyperspace;
+                @Hyperspace.performed -= instance.OnHyperspace;
+                @Hyperspace.canceled -= instance.OnHyperspace;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -302,6 +342,7 @@ namespace Asteroids
             void OnForwardThrust(InputAction.CallbackContext context);
             void OnRotate(InputAction.CallbackContext context);
             void OnShoot(InputAction.CallbackContext context);
+            void OnHyperspace(InputAction.CallbackContext context);
         }
     }
 }

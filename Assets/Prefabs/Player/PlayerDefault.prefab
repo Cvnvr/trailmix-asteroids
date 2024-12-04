@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 8752703293363794078}
   - component: {fileID: 6812888973987058507}
   - component: {fileID: 2575046604881013851}
+  - component: {fileID: 5224549299424809014}
   - component: {fileID: 7757551244497125267}
   m_Layer: 7
   m_Name: PlayerDefault
@@ -222,6 +223,19 @@ MonoBehaviour:
   poolData: {fileID: 11400000, guid: cd108a4ca62204b5b864a244ee442eb3, type: 2}
   defaultWeaponData: {fileID: 11400000, guid: 3297c678a77284feca8b3a629c0fc221, type: 2}
   shipNozzle: {fileID: 1266020247652902970}
+--- !u!114 &5224549299424809014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4428095690128823452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f64edfbc5913423f8bcb06654ba6a1a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hyperspaceData: {fileID: 11400000, guid: 78d13949a81e942c2980e32b95327ca9, type: 2}
 --- !u!114 &7757551244497125267
 MonoBehaviour:
   m_ObjectHideFlags: 0

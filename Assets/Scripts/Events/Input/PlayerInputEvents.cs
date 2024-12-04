@@ -13,4 +13,8 @@ namespace Asteroids
     public struct ShootInputEvent
     {
     }
+    
+    public struct HyperspaceInputEvent
+    {
+    }
 }

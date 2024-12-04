@@ -2,8 +2,8 @@ using UnityEngine;
 
 namespace Asteroids
 {
-    [CreateAssetMenu(menuName = "Data/Game/LevelData", fileName = "LevelData")]
-    public class LevelData : ScriptableObject
+    [CreateAssetMenu(menuName = "Data/Game/LevelSetupData", fileName = "LevelSetupData")]
+    public class LevelSetupData : ScriptableObject
     {
         [Tooltip("The type of Asteroid that spawns each wave")]
         [SerializeField] private AsteroidData asteroidToSpawn;

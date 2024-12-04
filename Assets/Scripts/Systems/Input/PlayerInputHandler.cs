@@ -22,6 +22,8 @@ namespace Asteroids
             playerInput.Player.Rotate.canceled += OnRotateInput;
             
             playerInput.Player.Shoot.performed += OnShootInput;
+            
+            playerInput.Player.Hyperspace.performed += OnHyperspaceInput;
         }
         
         private void OnForwardThrustInput(InputAction.CallbackContext context)
@@ -55,6 +57,14 @@ namespace Asteroids
                 signalBus.TryFire<ShootInputEvent>();
             }
         }
+        
+        private void OnHyperspaceInput(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                signalBus.TryFire<HyperspaceInputEvent>();
+            }
+        }
 
         public void Dispose()
         {
@@ -66,6 +76,7 @@ namespace Asteroids
             playerInput.Player.ForwardThrust.performed -= OnForwardThrustInput;
             playerInput.Player.Rotate.performed -= OnRotateInput;
             playerInput.Player.Shoot.performed -= OnShootInput;
+            playerInput.Player.Hyperspace.performed -= OnHyperspaceInput;
             
             playerInput.Disable();
         }

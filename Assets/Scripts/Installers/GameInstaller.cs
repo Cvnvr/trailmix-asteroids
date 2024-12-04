@@ -34,6 +34,7 @@ namespace Asteroids
 			diContainer.DeclareSignal<ThrustInputEvent>();
 			diContainer.DeclareSignal<RotateInputEvent>();
 			diContainer.DeclareSignal<ShootInputEvent>();
+			diContainer.DeclareSignal<HyperspaceInputEvent>();
 			
 			// Player
 			diContainer.DeclareSignal<PlayerDestroyedEvent>();
