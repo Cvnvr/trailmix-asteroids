@@ -34,6 +34,9 @@ namespace Asteroids
 			diContainer.DeclareSignal<SpawnNewWaveEvent>();
 			diContainer.DeclareSignal<GameOverEvent>();
 			
+			// Score
+			diContainer.DeclareSignal<ScoreAwardedEvent>();
+			
 			// Input
 			diContainer.DeclareSignal<ThrustInputEvent>();
 			diContainer.DeclareSignal<RotateInputEvent>();

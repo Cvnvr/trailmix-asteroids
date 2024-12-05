@@ -25,7 +25,7 @@ namespace Asteroids
             currentLivesCount = lifeData.NumberOfLives;
             
             // Init the lives UI
-            signalBus.Fire(new PlayerLivesCountUpdatedEvent()
+            signalBus.TryFire(new PlayerLivesCountUpdatedEvent()
             {
                 PreviousLivesCount = currentLivesCount,
                 NewLivesCount = currentLivesCount
@@ -49,7 +49,7 @@ namespace Asteroids
             
             Debug.Log($"[{nameof(PlayerLifeHandler)}.{nameof(OnPlayerDestroyed)}] Player destroyed. Remaining lives: {currentLivesCount}");
 
-            signalBus.Fire(new PlayerLivesCountUpdatedEvent()
+            signalBus.TryFire(new PlayerLivesCountUpdatedEvent()
             {
                 PreviousLivesCount = currentLivesCount + 1,
                 NewLivesCount = currentLivesCount
@@ -64,7 +64,7 @@ namespace Asteroids
             }
             else
             {
-                signalBus.Fire<GameOverEvent>();
+                signalBus.TryFire<GameOverEvent>();
             }
         }
 

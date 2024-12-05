@@ -5,7 +5,7 @@ using Zenject;
 namespace Asteroids
 {
     [RequireComponent(typeof(SpriteRenderer), typeof(Rigidbody2D), typeof(Collider2D))]
-    public class Asteroid : MonoBehaviour, IPoolable<Asteroid>, IMoveable, IDestructible, IPlayerCollideable
+    public class Asteroid : MonoBehaviour, IPoolable<Asteroid>, IMoveable, IDestructible, IPlayerCollideable, IScoreGiver
     {
         [Inject] private SignalBus signalBus;
         
@@ -75,6 +75,16 @@ namespace Asteroids
                 AsteroidData = data,
                 Position = transform.position
             });
+
+            if (data.Score > 0)
+            {
+                GiveScore(data.Score);
+            }
+        }
+
+        public void GiveScore(int score)
+        {
+            signalBus.TryFire(new ScoreAwardedEvent() { Score = score });
         }
     }
 }

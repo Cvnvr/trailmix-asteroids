@@ -37,7 +37,7 @@ namespace Asteroids
         {
             for (var i = 0; i < numberToSpawn; i++)
             {
-                signalBus.Fire(new AsteroidSpawnEvent()
+                signalBus.TryFire(new AsteroidSpawnEvent()
                 {
                     AsteroidData = levelSetupData.AsteroidToSpawn,
                     NumberToSpawn = 1,

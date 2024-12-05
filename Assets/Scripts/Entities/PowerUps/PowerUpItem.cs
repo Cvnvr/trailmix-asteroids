@@ -39,6 +39,7 @@ namespace Asteroids
 
         public void InitPoolable(Action<PowerUpItem> pushCallback)
         {
+            pushEvent = pushCallback;
         }
         
         private void Update()
@@ -52,7 +53,7 @@ namespace Asteroids
             timer -= Time.deltaTime;
             if (timer <= 0)
             {
-                Destroy(gameObject);
+                ReturnToPool();
             }
         }
 
