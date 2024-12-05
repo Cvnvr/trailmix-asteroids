@@ -45,7 +45,7 @@ namespace Asteroids
             pushEvent?.Invoke(this);
         }
         
-        public void Move(Vector3 direction)
+        public void Move(Vector2 direction)
         {
             rigidbody2d.velocity = direction * data.MovementSpeed;
         }

@@ -1,6 +1,6 @@
 namespace Asteroids
 {
-    public interface IShootable
+    public struct GameOverEvent
     {
     }
 }

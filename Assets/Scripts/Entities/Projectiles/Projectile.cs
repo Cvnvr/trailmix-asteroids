@@ -6,7 +6,7 @@ using Zenject;
 namespace Asteroids
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public sealed class Projectile : MonoBehaviour, IPoolable<Projectile>, IProjectile
+    public sealed class Projectile : MonoBehaviour, IPoolable<Projectile>, IMoveable
     {
         [Inject] private IProjectileBehaviourFactory projectileBehaviourFactory;
 
@@ -80,7 +80,7 @@ namespace Asteroids
             }
         }
         
-        public void Fire(Vector2 velocity)
+        public void Move(Vector2 velocity)
         {
             rigidbody2d.velocity = velocity;
         }

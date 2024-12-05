@@ -32,7 +32,8 @@ namespace Asteroids
 			
 			// Game
 			diContainer.DeclareSignal<SpawnNewWaveEvent>();
-
+			diContainer.DeclareSignal<GameOverEvent>();
+			
 			// Input
 			diContainer.DeclareSignal<ThrustInputEvent>();
 			diContainer.DeclareSignal<RotateInputEvent>();
@@ -41,6 +42,7 @@ namespace Asteroids
 			
 			// Player
 			diContainer.DeclareSignal<PlayerDestroyedEvent>();
+			diContainer.DeclareSignal<PlayerLivesCountUpdatedEvent>();
 			
 			// Enemies
 			diContainer.DeclareSignal<AsteroidSpawnEvent>();

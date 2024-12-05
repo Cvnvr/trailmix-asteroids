@@ -2,6 +2,6 @@ namespace Asteroids
 {
     public interface IMoveable
     {
-        void Move(UnityEngine.Vector3 direction);
+        void Move(UnityEngine.Vector2 direction);
     }
 }
