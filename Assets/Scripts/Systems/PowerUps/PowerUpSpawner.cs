@@ -4,7 +4,7 @@ using Random = UnityEngine.Random;
 
 namespace Asteroids
 {
-    public class PowerUpSpawner : MonoBehaviour
+    public class PowerUpSpawner : BasePooler<PowerUpItem>
     {
         [SerializeField] private PowerUpItem prefab;
         [SerializeField] private PowerUpData[] powerUps;
@@ -21,15 +21,15 @@ namespace Asteroids
         private void OnPowerUpSpawned(PowerUpSpawnEvent evt)
         {
             var powerUp = powerUps[Random.Range(0, powerUps.Length)];
-            var powerUpItem = CreateItem(evt.SpawnPosition);
+            var powerUpItem = Pop(evt.SpawnPosition, Quaternion.identity);
             powerUpItem.Init(powerUp);
         }
         
-        private PowerUpItem CreateItem(Vector3 position)
+        protected override PowerUpItem CreateObject()
         {
             return container.InstantiatePrefab(
                 prefab, 
-                position, 
+                Vector3.zero, 
                 Quaternion.identity, 
                 transform
             ).GetComponent<PowerUpItem>(); 

@@ -57,7 +57,10 @@ namespace Asteroids
 
             if (currentLivesCount > 0)
             {
-                StartCoroutine(RespawnAfterTimer());
+                if (lifeData.RespawnDelay > 0)
+                {
+                    StartCoroutine(RespawnAfterTimer());
+                }
             }
             else
             {

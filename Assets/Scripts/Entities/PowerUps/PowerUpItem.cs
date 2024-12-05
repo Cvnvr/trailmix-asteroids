@@ -1,10 +1,11 @@
+using System;
 using UnityEngine;
 using Zenject;
 
 namespace Asteroids
 {
     [RequireComponent(typeof(SpriteRenderer), typeof(Collider2D))]
-    public class PowerUpItem : MonoBehaviour, IPlayerCollideable
+    public class PowerUpItem : MonoBehaviour, IPoolable<PowerUpItem>, IPlayerCollideable
     { 
         [Inject] private SignalBus signalBus;
 
@@ -15,6 +16,8 @@ namespace Asteroids
         private float timer;
         
         private bool isInitialised;
+        
+        private Action<PowerUpItem> pushEvent;
         
         private void Awake()
         {
@@ -34,6 +37,10 @@ namespace Asteroids
             isInitialised = true;
         }
 
+        public void InitPoolable(Action<PowerUpItem> pushCallback)
+        {
+        }
+        
         private void Update()
         {
             if (!isInitialised)
@@ -49,13 +56,26 @@ namespace Asteroids
             }
         }
 
+        public void OnPoolableActivated()
+        {
+        }
+
+        public void OnPoolableDeactivated()
+        {
+        }
+
+        public void ReturnToPool()
+        {
+            pushEvent?.Invoke(this);
+        }
+        
         public void OnPlayerCollision(GameObject player)
         {
             if (!isInitialised)
                 return;
 
             signalBus.TryFire(new PowerUpCollectedEvent() { PowerUp = powerUp });
-            Destroy(gameObject);
+            ReturnToPool();
         }
     }
 }

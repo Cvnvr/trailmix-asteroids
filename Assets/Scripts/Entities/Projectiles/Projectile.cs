@@ -57,7 +57,6 @@ namespace Asteroids
 
         public void OnPoolableActivated()
         {
-            // TODO fireSound.Play();
         }
 
         public void OnPoolableDeactivated()

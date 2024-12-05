@@ -1179,9 +1179,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b4defae4fd046c0af7d595dc2df6c17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  poolData: {fileID: 11400000, guid: 26b054bde0e9649a6962966526b6f108, type: 2}
   prefab: {fileID: 8817897773207089278, guid: 3ed653aae088d4684b3e99a2cf90906d, type: 3}
   powerUps:
   - {fileID: 11400000, guid: 4871afff8601d4ca789ff41bdf84511d, type: 2}
+  - {fileID: 11400000, guid: 448faa102e3be4adcb47df31855e9506, type: 2}
 --- !u!1 &1914849400
 GameObject:
   m_ObjectHideFlags: 0
