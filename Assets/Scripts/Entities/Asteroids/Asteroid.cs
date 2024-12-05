@@ -35,7 +35,7 @@ namespace Asteroids
 
             rigidbody2d.velocity = rigidbody2d.velocity.normalized * movementSpeed;
             var direction = transform.up * movementSpeed;
-            rigidbody2d.AddForce(direction, ForceMode2D.Force);
+            //rigidbody2d.AddForce(direction, ForceMode2D.Force);
         }
 
         public void Setup(AsteroidData data)

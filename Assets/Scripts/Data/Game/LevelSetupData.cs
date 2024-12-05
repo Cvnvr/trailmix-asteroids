@@ -26,6 +26,7 @@ namespace Asteroids
         public AsteroidData AsteroidToSpawn => asteroidToSpawn;
         public int InitialNumberToSpawn => initialNumberToSpawn;
         public int AdditionalNumberToSpawnEachWave => additionalNumberToSpawnEachWave;
+        public int MaxNumberToSpawn => maxNumberToSpawn;
         public float TimeBetweenWaves => timeBetweenWaves;
         public float ChanceToSpawnUfo => chanceToSpawnUfo;
     }

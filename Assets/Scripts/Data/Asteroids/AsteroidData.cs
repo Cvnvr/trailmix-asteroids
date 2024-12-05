@@ -11,7 +11,6 @@ namespace Asteroids
         [SerializeField] private GameObject prefab;
         [SerializeField] private List<Sprite> sprites;
         [SerializeField] private float movementSpeed;
-        [SerializeField] private int score;
 
         [Header("Spawn Behaviour")]
         [SerializeField] private bool doesSpawnMoreOnDestruction;
@@ -22,7 +21,6 @@ namespace Asteroids
         public GameObject Prefab => prefab;
         public List<Sprite> Sprites => sprites;
         public float MovementSpeed => movementSpeed;
-        public int Score => score;
         
         public bool DoesSpawnMoreOnDestruction => doesSpawnMoreOnDestruction;
         public int NumberToSpawn => numberToSpawn;

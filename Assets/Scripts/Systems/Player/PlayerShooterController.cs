@@ -138,7 +138,7 @@ namespace Asteroids
                 activeWeaponData.ProjectileData.ProjectilePrefab, 
                 shipNozzle.position, 
                 shipNozzle.rotation, 
-                transform
+                null
             ).GetComponent<Projectile>(); 
         }
 

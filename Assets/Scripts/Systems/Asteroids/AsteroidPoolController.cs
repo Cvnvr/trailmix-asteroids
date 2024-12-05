@@ -4,7 +4,7 @@ using Zenject;
 
 namespace Asteroids
 {
-    public class AsteroidPoolManager : MonoBehaviour
+    public class AsteroidPoolController : MonoBehaviour
     {
         [SerializeField] private PoolData poolData;
         [SerializeField] private AsteroidData[] asteroidData;
@@ -20,7 +20,7 @@ namespace Asteroids
             signalBus.Subscribe<AsteroidSpawnEvent>(OnAsteroidSpawn);
         }
         
-        private void Start()
+        private void Awake()
         {
             pools = new();
             foreach (var data in asteroidData)
@@ -29,21 +29,13 @@ namespace Asteroids
                 pool.Init(data, poolData);
                 pools.Add(data.AsteroidType, pool);
             }
-
-            // TODO delete me
-            for (int i = 0; i < 5; i++)
-            {
-                signalBus.Fire(new AsteroidSpawnEvent()
-                {
-                    AsteroidData = asteroidData[0],
-                    NumberToSpawn = 1,
-                    Position = new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), 0),
-                });
-            }
         }
 
         private void OnAsteroidSpawn(AsteroidSpawnEvent evt)
         {
+            if (evt.AsteroidData == null)
+                return;
+            
             if (!pools.TryGetValue(evt.AsteroidData.AsteroidType, out var pool)) 
                 return;
             

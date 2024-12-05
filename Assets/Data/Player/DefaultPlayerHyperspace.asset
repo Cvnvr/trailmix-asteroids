@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db54ae0822514d2b8a8ee74e34c33eb5, type: 3}
   m_Name: DefaultPlayerHyperspace
   m_EditorClassIdentifier: 
-  duration: 0
-  cooldown: 0
+  duration: 1
+  cooldown: 5

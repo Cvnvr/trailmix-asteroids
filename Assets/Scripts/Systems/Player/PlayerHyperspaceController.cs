@@ -9,13 +9,12 @@ namespace Asteroids
     public class PlayerHyperspaceController : MonoBehaviour
     {
         [SerializeField] private PlayerHyperspaceData hyperspaceData;
-        
+
+        [Inject] private ScreenBoundsCalculator screenBoundsCalculator;
         [Inject] private SignalBus signalBus;
 
         private SpriteRenderer spriteRenderer;
         private Collider2D collider2d;
-
-        private Camera mainCamera;
 
         private bool isOnCooldown;
         private float cooldown = 2f;
@@ -30,7 +29,6 @@ namespace Asteroids
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
             collider2d = GetComponent<Collider2D>();
-            mainCamera = Camera.main;
         }
 
         private void Start()
@@ -47,7 +45,7 @@ namespace Asteroids
             if (cooldown <= 0)
             {
                 isOnCooldown = false;
-                cooldown = 2f;
+                cooldown = hyperspaceData.Cooldown;
             }
         }
 
@@ -75,17 +73,8 @@ namespace Asteroids
         
         private void MoveToRandomLocationWithinBounds()
         {
-            if (mainCamera == null)
-                return;
-            
-            var screenBounds = mainCamera.ScreenToWorldPoint(new Vector3(
-                Screen.width, 
-                Screen.height, 
-                mainCamera.transform.position.z
-                )
-            );
-            var xPos = Random.Range(-screenBounds.x, screenBounds.x);
-            var yPos = Random.Range(-screenBounds.y, screenBounds.y);
+            var xPos = Random.Range(screenBoundsCalculator.LeftSide, screenBoundsCalculator.RightSide);
+            var yPos = Random.Range(screenBoundsCalculator.BottomSide, screenBoundsCalculator.TopSide);
 
             transform.position = new Vector3(xPos, yPos, transform.position.z);
         }
