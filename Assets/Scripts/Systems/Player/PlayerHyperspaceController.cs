@@ -19,6 +19,8 @@ namespace Asteroids
         private bool isOnCooldown;
         private float cooldown = 2f;
         
+        private bool isInHyperspace;
+        
         [Inject]
         private void OnInject()
         {
@@ -34,6 +36,7 @@ namespace Asteroids
         private void Start()
         {
             cooldown = hyperspaceData.Cooldown;
+            isInHyperspace = false;
         }
 
         private void Update()
@@ -51,18 +54,25 @@ namespace Asteroids
 
         private void OnHyperspaceInput(HyperspaceInputEvent evt)
         {
+            if (isInHyperspace)
+                return;
+            
             StartCoroutine(InitiateHyperspaceTravel());
         }
 
         private IEnumerator InitiateHyperspaceTravel()
         {
+            isInHyperspace = true;
+            
             TogglePlayerView(false);
 
             MoveToRandomLocationWithinBounds();
             yield return new WaitForSeconds(hyperspaceData.Duration);
             
             TogglePlayerView(true);
+            
             isOnCooldown = true;
+            isInHyperspace = false;
         }
         
         private void TogglePlayerView(bool value)
