@@ -19,6 +19,7 @@ MonoBehaviour:
   - {fileID: 21300002, guid: 2d6862bf50eadf14d8d7f66a82ade5bc, type: 3}
   - {fileID: 21300004, guid: 2d6862bf50eadf14d8d7f66a82ade5bc, type: 3}
   movementSpeed: 0.8
+  score: 20
   doesSpawnMoreOnDestruction: 1
   numberToSpawn: 2
   spawnedAsteroidData: {fileID: 11400000, guid: 327c497246b1e4454a56345439a1d14b, type: 2}
