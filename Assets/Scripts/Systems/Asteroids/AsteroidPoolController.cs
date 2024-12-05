@@ -64,12 +64,12 @@ namespace Asteroids
 
         private void ValidateIfEndOfWave()
         {
-            var isEmpty = false;
+            var isEmpty = true;
             foreach (var pool in pools)
             {
                 if (pool.Value.PushedCount > 0)
                 {
-                    isEmpty = true;
+                    isEmpty = false;
                     break;
                 }
             }

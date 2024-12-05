@@ -68,13 +68,13 @@ namespace Asteroids
         
         public void Destroy()
         {
+            ReturnToPool();
+
             signalBus.TryFire(new AsteroidDestroyedEvent()
             {
                 AsteroidData = data,
                 Position = transform.position
             });
-            
-            ReturnToPool();
         }
     }
 }
