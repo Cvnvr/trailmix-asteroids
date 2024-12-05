@@ -29,6 +29,9 @@ namespace Asteroids
 		private static void InstallSignals(DiContainer diContainer)
 		{
 			SignalBusInstaller.Install(diContainer);
+			
+			// Game
+			diContainer.DeclareSignal<SpawnNewWaveEvent>();
 
 			// Input
 			diContainer.DeclareSignal<ThrustInputEvent>();
@@ -41,6 +44,7 @@ namespace Asteroids
 			
 			// Enemies
 			diContainer.DeclareSignal<AsteroidSpawnEvent>();
+			diContainer.DeclareSignal<AsteroidDestroyedEvent>();
 			
 			// Power-ups
 			diContainer.DeclareSignal<PowerUpCollectedEvent>();

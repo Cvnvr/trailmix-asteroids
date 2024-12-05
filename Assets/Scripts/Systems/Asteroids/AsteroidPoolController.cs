@@ -18,6 +18,7 @@ namespace Asteroids
         private void OnInject()
         {
             signalBus.Subscribe<AsteroidSpawnEvent>(OnAsteroidSpawn);
+            signalBus.Subscribe<AsteroidDestroyedEvent>(OnAsteroidDestroyed);
         }
         
         private void Awake()
@@ -41,7 +42,41 @@ namespace Asteroids
             
             for (var i = 0; i < evt.NumberToSpawn; i++)
             {
-                pool.Pop(evt.Position, Quaternion.identity);
+                pool.Pop(evt.Position, Quaternion.Euler(0, 0, Random.Range(0f, 361f)));
+            }
+        }
+
+        private void OnAsteroidDestroyed(AsteroidDestroyedEvent evt)
+        {
+            if (evt.AsteroidData.DoesSpawnMoreOnDestruction)
+            {
+                OnAsteroidSpawn(new AsteroidSpawnEvent()
+                {
+                    AsteroidData = evt.AsteroidData.SpawnedAsteroidData,
+                    NumberToSpawn = evt.AsteroidData.NumberToSpawn,
+                    Position = evt.Position
+                });
+                return;
+            }
+
+            ValidateIfEndOfWave();
+        }
+
+        private void ValidateIfEndOfWave()
+        {
+            var isEmpty = false;
+            foreach (var pool in pools)
+            {
+                if (pool.Value.PushedCount > 0)
+                {
+                    isEmpty = true;
+                    break;
+                }
+            }
+
+            if (isEmpty)
+            {
+                signalBus.TryFire<SpawnNewWaveEvent>();
             }
         }
 

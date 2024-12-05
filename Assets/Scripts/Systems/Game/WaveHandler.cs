@@ -1,12 +1,9 @@
 using UnityEngine;
 using Zenject;
+using Random = UnityEngine.Random;
 
 namespace Asteroids
 {
-    public struct SpawnNewWaveEvent
-    {
-    }
-    
     public class WaveHandler : MonoBehaviour
     {
         [SerializeField] private LevelSetupData levelSetupData;
@@ -80,6 +77,11 @@ namespace Asteroids
             }
 
             return new Vector3(xPos, yPos, 0);
+        }
+
+        private void OnDisable()
+        {
+            signalBus.TryUnsubscribe<SpawnNewWaveEvent>(OnSpawnNewWave);
         }
     }
 }

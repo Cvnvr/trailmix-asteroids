@@ -82,10 +82,7 @@ namespace Asteroids
         
         public void Fire(Vector2 velocity)
         {
-            if (rigidbody2d != null)
-            {
-                rigidbody2d.velocity = velocity;
-            }            
+            rigidbody2d.velocity = velocity;
         }
     }
 }

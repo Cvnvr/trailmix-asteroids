@@ -34,6 +34,7 @@ namespace Asteroids
         {
             base.ActivateObject(asteroid);
             asteroid.Setup(asteroidData);
+            asteroid.Move(asteroid.transform.up);
         }
     }
 }

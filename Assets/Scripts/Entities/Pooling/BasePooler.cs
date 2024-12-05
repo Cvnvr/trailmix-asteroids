@@ -70,12 +70,23 @@ namespace Asteroids
 
         public T Pop(Vector3 position, Quaternion rotation)
         {
-            T obj = Pop();
-            if (obj != null)
+            T obj;
+            if (PooledCount > 0)
             {
-                obj.transform.position = position;
-                obj.transform.rotation = rotation;
+                obj = inactiveObjects[inactiveObjects.Count - 1];
+                inactiveObjects.RemoveAt(inactiveObjects.Count - 1);
             }
+            else
+            {
+                obj = CreateObject();
+            }
+            
+            obj.transform.position = position;
+            obj.transform.rotation = rotation;
+            
+            obj.InitPoolable(Push);
+            activeObjects.Add(obj);
+            ActivateObject(obj);
             return obj;
         }
 
