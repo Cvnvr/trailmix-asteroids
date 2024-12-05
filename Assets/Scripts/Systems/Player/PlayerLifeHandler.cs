@@ -43,8 +43,9 @@ namespace Asteroids
         {
             if (currentLivesCount == 0)
                 return;
-            
-            currentLivesCount = Mathf.Max(currentLivesCount--, 0);
+
+            currentLivesCount--;
+            currentLivesCount = Mathf.Max(currentLivesCount, 0);
             
             Debug.Log($"[{nameof(PlayerLifeHandler)}.{nameof(OnPlayerDestroyed)}] Player destroyed. Remaining lives: {currentLivesCount}");
 
