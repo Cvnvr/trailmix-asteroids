@@ -89,6 +89,15 @@ namespace Asteroids
             ActivateObject(obj);
             return obj;
         }
+        
+        public virtual void Push()
+        {
+            var obj = activeObjects[activeObjects.Count - 1];
+            if (obj)
+            {
+                Push(obj);
+            }
+        }
 
         public virtual void Push(T obj)
         {
