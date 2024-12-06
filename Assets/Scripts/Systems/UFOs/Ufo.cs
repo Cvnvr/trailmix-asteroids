@@ -5,13 +5,13 @@ using Zenject;
 namespace Asteroids
 {
     [RequireComponent(typeof(SpriteRenderer), typeof(Rigidbody2D), typeof(Collider2D))]
-    public class Ufo : MonoBehaviour, IPoolable<Ufo>, IMoveable, IDestructible, IPlayerCollideable, IScoreGiver
+    public class Ufo : MonoBehaviour, IPoolable<Ufo>, IDestructible, IPlayerCollideable
     {
         [Inject] private SignalBus signalBus;
 
-        private UfoData data;
         private Rigidbody2D rigidbody2d;
 
+        private UfoData data;
         private Action<Ufo> pushEvent;
 
         private bool isInitialised;
@@ -67,14 +67,6 @@ namespace Asteroids
             rigidbody2d.velocity = direction * data.MovementSpeed;
         }
         
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            if (collision.gameObject.CompareTag(EntityTags.Projectile))
-            {
-                Destroy();
-            }
-        }
-        
         public void OnPlayerCollision(GameObject player)
         {
             Destroy(player);
@@ -93,7 +85,7 @@ namespace Asteroids
             }
         }
 
-        public void GiveScore(int score)
+        public void GiveScore(uint score)
         {
             signalBus.TryFire(new ScoreAwardedEvent() { Score = score });
         }
