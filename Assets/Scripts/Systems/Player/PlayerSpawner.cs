@@ -10,6 +10,9 @@ namespace Asteroids
 
         [Inject] private DiContainer container;
         [Inject] private SignalBus signalBus;
+
+        private GameObject activePlayer;
+        private Coroutine respawnCoroutine;
         
         [Inject]
         private void OnInject()
@@ -26,7 +29,11 @@ namespace Asteroids
         {
             if (playerData.LifeData.RespawnDelay > 0)
             {
-                StartCoroutine(SpawnAfterTimer());
+                if (respawnCoroutine != null)
+                {
+                    StopCoroutine(respawnCoroutine);
+                }
+                respawnCoroutine = StartCoroutine(SpawnAfterTimer());
             }
             else
             {
@@ -36,7 +43,15 @@ namespace Asteroids
         
         private void SpawnPlayer()
         {
-            container.InstantiatePrefab(playerData.Prefab, Vector3.zero, Quaternion.identity, null);
+            if (activePlayer != null)
+            {
+                Debug.LogWarning($"[{nameof(PlayerSpawner)}.{nameof(SpawnPlayer)}] Player already exists!");
+                return;
+            }
+            
+            Debug.Log($"[{nameof(PlayerSpawner)}.{nameof(SpawnPlayer)}] Spawning new player");
+
+            activePlayer = container.InstantiatePrefab(playerData.Prefab, Vector3.zero, Quaternion.identity, null);
         }
         
         private IEnumerator SpawnAfterTimer()
@@ -44,6 +59,17 @@ namespace Asteroids
             yield return new WaitForSeconds(playerData.LifeData.RespawnDelay);
             
             SpawnPlayer();
+        }
+
+        private void OnDisable()
+        {
+            signalBus.TryUnsubscribe<PlayerSpawnEvent>(OnPlayerSpawn);
+            
+            if (respawnCoroutine != null)
+            {
+                StopCoroutine(respawnCoroutine);
+                respawnCoroutine = null;
+            }
         }
     }
 }
