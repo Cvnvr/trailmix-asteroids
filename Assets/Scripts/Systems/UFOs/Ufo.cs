@@ -78,16 +78,19 @@ namespace Asteroids
         public void Destroy()
         {
             ReturnToPool();
+
+            if (UnityEngine.Random.value <= data.ChanceOfDroppingPowerUp)
+            {
+                signalBus.TryFire(new PowerUpSpawnEvent()
+                {
+                    Position = transform.position
+                });
+            }
             
             if (data.Score > 0)
             {
-                GiveScore(data.Score);
+                signalBus.TryFire(new ScoreAwardedEvent() { Score = data.Score });
             }
-        }
-
-        public void GiveScore(uint score)
-        {
-            signalBus.TryFire(new ScoreAwardedEvent() { Score = score });
         }
     }
 }

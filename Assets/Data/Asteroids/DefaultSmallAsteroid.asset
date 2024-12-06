@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DefaultSmallAsteroid
   m_EditorClassIdentifier: 
   prefab: {fileID: 8720733016505894913, guid: e55349f12beeb4e2b90b9c98fd060f4e, type: 3}
-  movementSpeed: 2
+  movementSpeed: 2.5
   score: 100
   asteroidType: 0
   sprites:

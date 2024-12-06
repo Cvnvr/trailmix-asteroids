@@ -13,9 +13,13 @@ namespace Asteroids
 
         [Tooltip("How frequently the UFO changes direction")]
         [SerializeField] private float changeDirectionInterval;
+
+        [Tooltip("The chance of dropping a power-up after being destroyed (between 0 and 1)")]
+        [SerializeField] private float chanceOfDroppingPowerUp;
         
         public UfoType UfoType => ufoType;
         public float TimeBetweenShots => timeBetweenShots;
         public float ChangeDirectionInterval => changeDirectionInterval;
+        public float ChanceOfDroppingPowerUp => chanceOfDroppingPowerUp;
     }
 }

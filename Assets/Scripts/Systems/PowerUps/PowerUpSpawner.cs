@@ -21,7 +21,7 @@ namespace Asteroids
         private void OnPowerUpSpawned(PowerUpSpawnEvent evt)
         {
             var powerUp = powerUps[Random.Range(0, powerUps.Length)];
-            var powerUpItem = Pop(evt.SpawnPosition, Quaternion.identity);
+            var powerUpItem = Pop(evt.Position, Quaternion.identity);
             powerUpItem.Init(powerUp);
         }
         

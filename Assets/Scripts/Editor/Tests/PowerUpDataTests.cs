@@ -66,7 +66,7 @@ namespace Asteroids.Editor.Tests
             {
                 if (powerUp.TimerEnabled && powerUp.Timer <= 0f)
                 {
-                    Debug.LogError(powerUp.name);
+                    Debug.LogError($"{powerUp.Timer} - Timer is enabled but value is less than or equal to zero!");
                     isValid = false;
                 }
             }
