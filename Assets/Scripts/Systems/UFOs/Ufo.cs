@@ -5,7 +5,7 @@ using Zenject;
 namespace Asteroids
 {
     [RequireComponent(typeof(SpriteRenderer), typeof(Rigidbody2D), typeof(Collider2D))]
-    public class Ufo : MonoBehaviour, IPoolable<Ufo>, IDestructible, IPlayerCollideable
+    public class Ufo : BaseEnemy, IDestructible, IPlayerCollideable
     {
         [Inject] private SignalBus signalBus;
 
@@ -44,20 +44,20 @@ namespace Asteroids
             isInitialised = true;
         }
         
-        public void InitPoolable(Action<Ufo> pushCallback)
+        public override void InitPoolable(Action<BaseEnemy> pushCallback)
         {
             pushEvent = pushCallback;
         }
 
-        public void OnPoolableActivated()
+        public override void OnPoolableActivated()
         {
         }
 
-        public void OnPoolableDeactivated()
+        public override void OnPoolableDeactivated()
         {
         }
 
-        public void ReturnToPool()
+        public override void ReturnToPool()
         {
             pushEvent?.Invoke(this);
         }

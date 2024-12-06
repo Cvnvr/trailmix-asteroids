@@ -12,7 +12,7 @@ namespace Asteroids
         [Inject] private DiContainer container;
         [Inject] private SignalBus signalBus;
         
-        private Dictionary<AsteroidType, AsteroidPooler> pools;
+        private Dictionary<AsteroidType, EnemyPooler> pools;
 
         [Inject]
         private void OnInject()
@@ -26,7 +26,7 @@ namespace Asteroids
             pools = new();
             foreach (var data in asteroidData)
             {
-                var pool = container.InstantiateComponent<AsteroidPooler>(gameObject);
+                var pool = container.InstantiateComponent<EnemyPooler>(gameObject);
                 pool.Init(data, poolData);
                 pools.Add(data.AsteroidType, pool);
             }
@@ -42,7 +42,9 @@ namespace Asteroids
             
             for (var i = 0; i < evt.NumberToSpawn; i++)
             {
-                pool.Pop(evt.Position, Quaternion.Euler(0, 0, Random.Range(0f, 361f)));
+                var asteroid = pool.Pop(evt.Position, Quaternion.Euler(0, 0, Random.Range(0f, 361f))).GetComponent<Asteroid>();
+                asteroid.Setup(evt.AsteroidData);
+                asteroid.Move(asteroid.transform.up);
             }
         }
 

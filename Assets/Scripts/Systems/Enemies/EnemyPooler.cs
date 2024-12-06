@@ -3,38 +3,36 @@ using Zenject;
 
 namespace Asteroids
 {
-    public class UfoPooler : BasePooler<Ufo>
+    public class EnemyPooler : BasePooler<BaseEnemy>
     {
         [Inject] private DiContainer container;
 
-        private UfoData ufoData;
+        private EnemyData enemyData;
 
         protected override void Start()
         {
             // Do nothing as Init() handles prefilling
         }
 
-        public void Init(UfoData data, PoolData poolData)
+        public void Init(EnemyData data, PoolData poolData)
         {
-            ufoData = data;
+            enemyData = data;
             SetPoolData(poolData);
         }
         
-        protected override Ufo CreateObject()
+        protected override BaseEnemy CreateObject()
         {
             return container.InstantiatePrefab(
-                ufoData.Prefab, 
+                enemyData.Prefab, 
                 transform.position, 
                 Quaternion.identity, 
                 transform
-            ).GetComponent<Ufo>(); 
+            ).GetComponent<BaseEnemy>(); 
         }
 
-        protected override void ActivateObject(Ufo ufo)
+        protected override void ActivateObject(BaseEnemy enemy)
         {
-            base.ActivateObject(ufo);
-            ufo.Setup(ufoData);
-            ufo.Move(ufo.transform.up);
+            base.ActivateObject(enemy);
         }
     }
 }
