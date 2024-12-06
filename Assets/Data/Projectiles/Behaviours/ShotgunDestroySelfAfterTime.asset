@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a74074650ea6453482d563abb185d21e, type: 3}
   m_Name: ShotgunDestroySelfAfterTime
   m_EditorClassIdentifier: 
-  lifetime: 0.05
+  lifetime: 0.1

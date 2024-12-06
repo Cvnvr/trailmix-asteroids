@@ -24,7 +24,7 @@ namespace Asteroids
         public void Setup(AsteroidData data)
         {
             this.data = data;
-            spriteRenderer.sprite = data.Sprites[UnityEngine.Random.Range(0, data.Sprites.Count)];
+            spriteRenderer.sprite = data.Sprites[UnityEngine.Random.Range(0, data.Sprites.Length)];
         }
         
         public void InitPoolable(Action<Asteroid> pushCallback)

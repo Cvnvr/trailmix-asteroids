@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: DefaultPlayerHyperspace
   m_EditorClassIdentifier: 
   duration: 1
-  cooldown: 5
+  cooldown: 3

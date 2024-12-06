@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01d49f489f24426e968d6cf4805d00f3, type: 3}
   m_Name: DefaultLargeAsteroid
   m_EditorClassIdentifier: 
-  asteroidType: 2
   prefab: {fileID: 8720733016505894913, guid: 6c66e1e49ed9648e98d258f2479cd27b, type: 3}
+  movementSpeed: 0.8
+  score: 20
+  asteroidType: 2
   sprites:
   - {fileID: 21300000, guid: 2d6862bf50eadf14d8d7f66a82ade5bc, type: 3}
   - {fileID: 21300002, guid: 2d6862bf50eadf14d8d7f66a82ade5bc, type: 3}
   - {fileID: 21300004, guid: 2d6862bf50eadf14d8d7f66a82ade5bc, type: 3}
-  movementSpeed: 0.8
-  score: 20
   doesSpawnMoreOnDestruction: 1
   numberToSpawn: 2
   spawnedAsteroidData: {fileID: 11400000, guid: 327c497246b1e4454a56345439a1d14b, type: 2}

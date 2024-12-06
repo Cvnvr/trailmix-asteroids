@@ -6,9 +6,7 @@ namespace Asteroids
     public class PoolData : ScriptableObject
     {
         [SerializeField] private uint initialPoolSize;
-        [SerializeField] private uint maxPoolSize;
         
         public uint InitialPoolSize => initialPoolSize;
-        public uint MaxPoolSize => maxPoolSize;
     }
 }

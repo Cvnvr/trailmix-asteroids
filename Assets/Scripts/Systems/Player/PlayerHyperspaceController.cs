@@ -48,13 +48,15 @@ namespace Asteroids
             if (cooldown <= 0)
             {
                 isOnCooldown = false;
-                cooldown = hyperspaceData.Cooldown;
             }
         }
 
         private void OnHyperspaceInput(HyperspaceInputEvent evt)
         {
             if (isInHyperspace)
+                return;
+
+            if (isOnCooldown)
                 return;
             
             StartCoroutine(InitiateHyperspaceTravel());
@@ -72,6 +74,8 @@ namespace Asteroids
             TogglePlayerView(true);
             
             isOnCooldown = true;
+            cooldown = hyperspaceData.Cooldown;
+
             isInHyperspace = false;
         }
         

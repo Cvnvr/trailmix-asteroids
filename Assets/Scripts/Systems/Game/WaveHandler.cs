@@ -11,7 +11,7 @@ namespace Asteroids
         [Inject] private ScreenBoundsCalculator screenBoundsCalculator;
         [Inject] private SignalBus signalBus;
 
-        private int currentWave = 0;
+        private uint currentWave = 0;
 
         [Inject]
         private void OnInject()
@@ -28,7 +28,19 @@ namespace Asteroids
         private void OnSpawnNewWave()
         {
             var numberToSpawn = levelSetupData.InitialNumberToSpawn + (levelSetupData.AdditionalNumberToSpawnEachWave * currentWave);
-            var cappedNumberToSpawn = (uint)Mathf.Min(numberToSpawn, levelSetupData.MaxNumberToSpawn);
+            
+            uint cappedNumberToSpawn;
+            
+            // Treat 0 as no cap
+            if (levelSetupData.MaxNumberToSpawn == 0)
+            {
+                cappedNumberToSpawn = numberToSpawn;
+            }
+            else
+            {
+                cappedNumberToSpawn = (uint)Mathf.Min(numberToSpawn, levelSetupData.MaxNumberToSpawn);
+            }
+            
             SpawnWave(cappedNumberToSpawn);
             currentWave++;
         }

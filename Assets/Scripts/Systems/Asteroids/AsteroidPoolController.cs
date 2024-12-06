@@ -42,9 +42,13 @@ namespace Asteroids
             
             for (var i = 0; i < evt.NumberToSpawn; i++)
             {
-                var asteroid = pool.Pop(evt.Position, Quaternion.Euler(0, 0, Random.Range(0f, 361f))).GetComponent<Asteroid>();
-                asteroid.Setup(evt.AsteroidData);
-                asteroid.Move(asteroid.transform.up);
+                var randomRotation = Quaternion.Euler(0, 0, Random.Range(0f, 361f));
+                var asteroid = pool.Pop(evt.Position, randomRotation) as Asteroid;
+                if (asteroid)
+                {
+                    asteroid.Setup(evt.AsteroidData);
+                    asteroid.Move(asteroid.transform.up);
+                }
             }
         }
 
