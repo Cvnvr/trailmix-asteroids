@@ -9,15 +9,20 @@ namespace Asteroids
         
         private void Start()
         {
-            if (playerSpawner)
+            if (playerSpawner == null)
             {
-                playerSpawner.Setup();
+                Debug.LogError($"[{nameof(Game)}.{nameof(Start)}] No {nameof(PlayerSpawner)} reference found.");
+                return;
             }
 
             if (waveHandler)
             {
-                waveHandler.Setup();
+                Debug.LogError($"[{nameof(Game)}.{nameof(Start)}] No {nameof(WaveHandler)} reference found.");
+                return;
             }
+            
+            playerSpawner.Setup();
+            waveHandler.Setup();
         }
     }
 }
