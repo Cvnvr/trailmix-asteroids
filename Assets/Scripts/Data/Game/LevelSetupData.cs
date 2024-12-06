@@ -17,11 +17,14 @@ namespace Asteroids
         [Tooltip("The max number that can be spawned at any point")]
         [SerializeField] private uint maxNumberToSpawn;
         
-        [Tooltip("Timed delay between waves (seconds)")]
+        [Tooltip("Timed delay (in seconds) between waves")]
         [SerializeField] private float timeBetweenWaves;
         
-        [Tooltip("The odds that a UFO will spawn ")]
+        [Tooltip("The odds that a UFO will spawn")]
         [SerializeField] private float chanceToSpawnUfo;
+        
+        [Tooltip("Timed delay (in seconds) between UFO spawn checks")]
+        [SerializeField] private float timeBetweenUfoSpawnChecks;
         
         public AsteroidData AsteroidToSpawn => asteroidToSpawn;
         public uint InitialNumberToSpawn => initialNumberToSpawn;
@@ -29,5 +32,6 @@ namespace Asteroids
         public uint MaxNumberToSpawn => maxNumberToSpawn;
         public float TimeBetweenWaves => timeBetweenWaves;
         public float ChanceToSpawnUfo => chanceToSpawnUfo;
+        public float TimeBetweenUfoSpawnChecks => timeBetweenUfoSpawnChecks;
     }
 }

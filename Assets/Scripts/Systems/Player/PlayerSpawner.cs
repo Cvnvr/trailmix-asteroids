@@ -59,7 +59,7 @@ namespace Asteroids
 
             activePlayer = container.InstantiatePrefab(
                 playerData.Prefab, 
-                Vector3.zero, 
+                Vector2.zero, 
                 Quaternion.identity, 
                 null
             );

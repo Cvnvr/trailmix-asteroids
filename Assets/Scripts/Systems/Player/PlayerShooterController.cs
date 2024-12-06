@@ -10,7 +10,7 @@ namespace Asteroids
     public struct WeaponSpawnData
     {
         public Transform SpawnTransform;
-        public Action<Vector3, Quaternion> PopCallback;
+        public Action<Vector2, Quaternion> PopCallback;
     }
     
     public class PlayerShooterController : BasePooler<Projectile>

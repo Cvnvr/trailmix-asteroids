@@ -90,7 +90,7 @@ namespace Asteroids
             var xPos = Random.Range(screenBoundsCalculator.LeftSide, screenBoundsCalculator.RightSide);
             var yPos = Random.Range(screenBoundsCalculator.BottomSide, screenBoundsCalculator.TopSide);
 
-            transform.position = new Vector3(xPos, yPos, transform.position.z);
+            transform.position = new Vector2(xPos, yPos);
         }
         
         private void OnDisable()

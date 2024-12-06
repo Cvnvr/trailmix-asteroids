@@ -48,7 +48,7 @@ namespace Asteroids
             if (rigidbody2d == null)
                 return;
             
-            rigidbody2d.velocity = Vector3.ClampMagnitude(rigidbody2d.velocity, data.MaxForwardSpeed);
+            rigidbody2d.velocity = Vector2.ClampMagnitude(rigidbody2d.velocity, data.MaxForwardSpeed);
 
             var direction = thrustInput * data.ForwardThrust * Time.deltaTime * transform.up;
             rigidbody2d.AddForce(direction);

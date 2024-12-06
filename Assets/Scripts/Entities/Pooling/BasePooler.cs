@@ -68,7 +68,7 @@ namespace Asteroids
             return obj;
         }
 
-        public T Pop(Vector3 position, Quaternion rotation)
+        public T Pop(Vector2 position, Quaternion rotation)
         {
             T obj;
             if (PooledCount > 0)

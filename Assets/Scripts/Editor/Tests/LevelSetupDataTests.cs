@@ -77,6 +77,75 @@ namespace Asteroids.Editor.Tests
             Assert.IsTrue(isValid, $"The following {nameof(LevelSetupData)} objects have an invalid 'MaxNumberToSpawn' value set!");
         }
         
+        [Test]
+        public void Validate_TimeBetweenWavesIsValid()
+        {
+            var levelSetupData = GetLevelSetupData();
+            if (levelSetupData == null)
+            {
+                Assert.Pass($"No {nameof(LevelSetupData)} found.");
+                return;
+            }
+            
+            var isValid = true;
+            foreach (var data in levelSetupData)
+            {
+                if (data.TimeBetweenWaves < 0)
+                {
+                    Debug.LogError($"{data.name} - TimeBetweenWaves is less than 0.");
+                    isValid = false;
+                }
+            }
+            
+            Assert.IsTrue(isValid, $"The following {nameof(LevelSetupData)} objects have an invalid 'TimeBetweenWaves' value set!");
+        }
+        
+        [Test]
+        public void Validate_ChanceToSpawnUfoIsValid()
+        {
+            var levelSetupData = GetLevelSetupData();
+            if (levelSetupData == null)
+            {
+                Assert.Pass($"No {nameof(LevelSetupData)} found.");
+                return;
+            }
+            
+            var isValid = true;
+            foreach (var data in levelSetupData)
+            {
+                if (data.ChanceToSpawnUfo < 0)
+                {
+                    Debug.LogError($"{data.name} - ChanceToSpawnUfo is less than 0.");
+                    isValid = false;
+                }
+            }
+            
+            Assert.IsTrue(isValid, $"The following {nameof(LevelSetupData)} objects have an invalid 'ChanceToSpawnUfo' value set!");
+        }
+        
+        [Test]
+        public void Validate_TimeBetweenUfoSpawnsIsValid()
+        {
+            var levelSetupData = GetLevelSetupData();
+            if (levelSetupData == null)
+            {
+                Assert.Pass($"No {nameof(LevelSetupData)} found.");
+                return;
+            }
+            
+            var isValid = true;
+            foreach (var data in levelSetupData)
+            {
+                if (data.TimeBetweenUfoSpawnChecks < 0)
+                {
+                    Debug.LogError($"{data.name} - TimeBetweenUfoSpawnChecks is less than 0.");
+                    isValid = false;
+                }
+            }
+            
+            Assert.IsTrue(isValid, $"The following {nameof(LevelSetupData)} objects have an invalid 'TimeBetweenUfoSpawnChecks' value set!");
+        }
+        
         private LevelSetupData[] GetLevelSetupData()
         {
             var levelSetupData = ScriptableObjectFinder.GetScriptableObjectsOfTypeInFolder<LevelSetupData>(AssetPaths.LevelSetupDataPath);

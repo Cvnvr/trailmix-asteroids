@@ -32,10 +32,9 @@ namespace Asteroids
                 return;
             }
             
-            screenBounds = screenCamera.ScreenToWorldPoint(new Vector3(
+            screenBounds = screenCamera.ScreenToWorldPoint(new Vector2(
                 Screen.width,
-                Screen.height,
-                screenCamera.transform.position.z
+                Screen.height
                 )
             );
             

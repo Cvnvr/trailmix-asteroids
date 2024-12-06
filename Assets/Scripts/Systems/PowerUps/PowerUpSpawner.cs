@@ -29,7 +29,7 @@ namespace Asteroids
         {
             return container.InstantiatePrefab(
                 prefab, 
-                Vector3.zero, 
+                Vector2.zero, 
                 Quaternion.identity, 
                 transform
             ).GetComponent<PowerUpItem>(); 

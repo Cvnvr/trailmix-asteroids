@@ -35,7 +35,10 @@ namespace Asteroids
         private void OnAsteroidSpawn(AsteroidSpawnEvent evt)
         {
             if (evt.AsteroidData == null)
+            {
+                Debug.LogWarning($"[{nameof(UfoPoolController)}.{nameof(OnAsteroidSpawn)}] Attempted to spawn an Asteroid with invalid data");
                 return;
+            }
             
             if (!pools.TryGetValue(evt.AsteroidData.AsteroidType, out var pool)) 
                 return;
@@ -89,6 +92,7 @@ namespace Asteroids
         private void OnDisable()
         {
             signalBus.TryUnsubscribe<AsteroidSpawnEvent>(OnAsteroidSpawn);
+            signalBus.TryUnsubscribe<AsteroidDestroyedEvent>(OnAsteroidDestroyed);
         }
     }
 }

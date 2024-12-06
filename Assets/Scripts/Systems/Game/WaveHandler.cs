@@ -79,7 +79,7 @@ namespace Asteroids
             SpawnWave(levelSetupData.InitialNumberToSpawn);
         }
 
-        private Vector3 GetRandomOffScreenPosition()
+        private Vector2 GetRandomOffScreenPosition()
         {
             var xPos = 0f;
             var yPos = 0f;
@@ -109,7 +109,7 @@ namespace Asteroids
                     break;
             }
 
-            return new Vector3(xPos, yPos, 0);
+            return new Vector2(xPos, yPos);
         }
 
         private void OnDisable()

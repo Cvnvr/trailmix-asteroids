@@ -4,6 +4,6 @@ namespace Asteroids
     {
         public AsteroidData AsteroidData;
         public uint NumberToSpawn;
-        public UnityEngine.Vector3 Position;
+        public UnityEngine.Vector2 Position;
     }
 }

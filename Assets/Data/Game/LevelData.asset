@@ -16,5 +16,6 @@ MonoBehaviour:
   initialNumberToSpawn: 4
   additionalNumberToSpawnEachWave: 2
   maxNumberToSpawn: 10
-  timeBetweenWaves: 2
-  chanceToSpawnUfo: 0
+  timeBetweenWaves: 1
+  chanceToSpawnUfo: 0.2
+  timeBetweenUfoSpawnChecks: 5
