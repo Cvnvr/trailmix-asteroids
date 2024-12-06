@@ -15,7 +15,7 @@ namespace Asteroids
                 return;
             }
 
-            if (waveHandler)
+            if (waveHandler == null)
             {
                 Debug.LogError($"[{nameof(Game)}.{nameof(Start)}] No {nameof(WaveHandler)} reference found.");
                 return;

@@ -38,10 +38,10 @@ namespace Asteroids
 			diContainer.DeclareSignal<ScoreAwardedEvent>();
 			
 			// Input
-			diContainer.DeclareSignal<ThrustInputEvent>();
-			diContainer.DeclareSignal<RotateInputEvent>();
-			diContainer.DeclareSignal<ShootInputEvent>();
-			diContainer.DeclareSignal<HyperspaceInputEvent>();
+			diContainer.DeclareSignal<ThrustInputEvent>().OptionalSubscriber();
+			diContainer.DeclareSignal<RotateInputEvent>().OptionalSubscriber();
+			diContainer.DeclareSignal<ShootInputEvent>().OptionalSubscriber();
+			diContainer.DeclareSignal<HyperspaceInputEvent>().OptionalSubscriber();
 			
 			// Player
 			diContainer.DeclareSignal<PlayerSpawnEvent>();

@@ -22,6 +22,12 @@ namespace Asteroids
 
         public void Setup()
         {
+            if (GameObject.FindWithTag(EntityTags.Player) != null)
+            {
+                Debug.LogWarning($"[{nameof(PlayerSpawner)}.{nameof(Setup)}] Player already exists in the scene, skipping spawn!");
+                return;
+            }
+            
             SpawnPlayer();
         }
 
@@ -51,7 +57,12 @@ namespace Asteroids
             
             Debug.Log($"[{nameof(PlayerSpawner)}.{nameof(SpawnPlayer)}] Spawning new player");
 
-            activePlayer = container.InstantiatePrefab(playerData.Prefab, Vector3.zero, Quaternion.identity, null);
+            activePlayer = container.InstantiatePrefab(
+                playerData.Prefab, 
+                Vector3.zero, 
+                Quaternion.identity, 
+                null
+            );
         }
         
         private IEnumerator SpawnAfterTimer()
