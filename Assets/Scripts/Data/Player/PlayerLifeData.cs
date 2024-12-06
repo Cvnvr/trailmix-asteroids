@@ -6,12 +6,12 @@ namespace Asteroids
     public class PlayerLifeData : ScriptableObject
     {
         [Tooltip("The number of lives the player starts with")]
-        [SerializeField] private int numberOfLives;
+        [SerializeField] private uint numberOfLives;
        
         [Tooltip("The timed delay (in seconds) before the player respawns")]
         [SerializeField] private float respawnDelay;
         
-        public int NumberOfLives => numberOfLives;
+        public uint NumberOfLives => numberOfLives;
         public float RespawnDelay => respawnDelay;
     }
 }

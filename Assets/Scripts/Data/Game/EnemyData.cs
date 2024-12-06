@@ -12,10 +12,10 @@ namespace Asteroids
         [SerializeField] private float movementSpeed;
         
         [Tooltip("How much score gets rewarded for destroying this enemy")]
-        [SerializeField] private int score;
+        [SerializeField] private uint score;
         
         public GameObject Prefab => prefab;
         public float MovementSpeed => movementSpeed;
-        public int Score => score;
+        public uint Score => score;
     }
 }

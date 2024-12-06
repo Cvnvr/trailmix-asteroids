@@ -3,7 +3,7 @@ namespace Asteroids
     public struct AsteroidSpawnEvent
     {
         public AsteroidData AsteroidData;
-        public int NumberToSpawn;
+        public uint NumberToSpawn;
         public UnityEngine.Vector3 Position;
     }
 }

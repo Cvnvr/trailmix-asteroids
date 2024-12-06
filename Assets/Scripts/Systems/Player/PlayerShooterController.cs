@@ -147,7 +147,7 @@ namespace Asteroids
             base.ActivateObject(item);
             
             item.SetProjectileData(activeWeaponData.ProjectileData);
-            item.Move(shipNozzle.up * activeWeaponData.Speed);
+            item.Fire(shipNozzle.up * activeWeaponData.Speed);
         }
         
         private void OnDisable()

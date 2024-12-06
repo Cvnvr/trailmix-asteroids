@@ -5,10 +5,10 @@ namespace Asteroids
     [CreateAssetMenu(menuName = "Data/Pooling/Data", fileName = "New Data")]
     public class PoolData : ScriptableObject
     {
-        [SerializeField] private int initialPoolSize;
-        [SerializeField] private int maxPoolSize;
+        [SerializeField] private uint initialPoolSize;
+        [SerializeField] private uint maxPoolSize;
         
-        public int InitialPoolSize => initialPoolSize;
-        public int MaxPoolSize => maxPoolSize;
+        public uint InitialPoolSize => initialPoolSize;
+        public uint MaxPoolSize => maxPoolSize;
     }
 }

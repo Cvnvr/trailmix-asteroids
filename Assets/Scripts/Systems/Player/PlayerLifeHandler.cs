@@ -12,7 +12,7 @@ namespace Asteroids
         [Inject] private DiContainer container;
         [Inject] private SignalBus signalBus;
 
-        private int currentLivesCount;
+        private uint currentLivesCount;
 
         [Inject]
         private void OnInject()
@@ -41,17 +41,17 @@ namespace Asteroids
 
         private void OnPlayerDestroyed()
         {
-            if (currentLivesCount == 0)
+            if (currentLivesCount <= 0)
                 return;
 
+            var previousLivesCount = currentLivesCount;
             currentLivesCount--;
-            currentLivesCount = Mathf.Max(currentLivesCount, 0);
             
             Debug.Log($"[{nameof(PlayerLifeHandler)}.{nameof(OnPlayerDestroyed)}] Player destroyed. Remaining lives: {currentLivesCount}");
 
             signalBus.TryFire(new PlayerLivesCountUpdatedEvent()
             {
-                PreviousLivesCount = currentLivesCount + 1,
+                PreviousLivesCount = previousLivesCount,
                 NewLivesCount = currentLivesCount
             });
 

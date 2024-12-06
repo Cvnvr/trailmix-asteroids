@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62236f5081b84e0fba8211c48a44ec3e, type: 3}
   m_Name: SmallUFO
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
-  movementSpeed: 0
-  score: 0
+  prefab: {fileID: 3396729593589980013, guid: 425a43555aa034913bacf788fb170121, type: 3}
+  movementSpeed: 2
+  score: 1000
   ufoType: 0
-  timeBetweenShots: 0
-  changeDirectionInterval: 0
+  timeBetweenShots: 1
+  changeDirectionInterval: 1

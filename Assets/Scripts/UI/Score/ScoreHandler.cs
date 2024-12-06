@@ -10,7 +10,7 @@ namespace Asteroids
         
         [Inject] private SignalBus signalBus;
 
-        private int currentScore;
+        private uint currentScore;
         
         [Inject]
         private void OnInject()

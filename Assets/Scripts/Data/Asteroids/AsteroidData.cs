@@ -16,7 +16,7 @@ namespace Asteroids
         [SerializeField] private bool doesSpawnMoreOnDestruction;
         
         [Tooltip("How many this asteroid spawns when destroyed")]
-        [SerializeField] private int numberToSpawn;
+        [SerializeField] private uint numberToSpawn;
         
         [Tooltip("The data of the asteroids that get spawned")]
         [SerializeField] private AsteroidData spawnedAsteroidData;
@@ -25,7 +25,7 @@ namespace Asteroids
         public List<Sprite> Sprites => sprites;
         
         public bool DoesSpawnMoreOnDestruction => doesSpawnMoreOnDestruction;
-        public int NumberToSpawn => numberToSpawn;
+        public uint NumberToSpawn => numberToSpawn;
         public AsteroidData SpawnedAsteroidData => spawnedAsteroidData;
     }
 }

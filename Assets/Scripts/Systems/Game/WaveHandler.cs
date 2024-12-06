@@ -28,12 +28,12 @@ namespace Asteroids
         private void OnSpawnNewWave()
         {
             var numberToSpawn = levelSetupData.InitialNumberToSpawn + (levelSetupData.AdditionalNumberToSpawnEachWave * currentWave);
-            var cappedNumberToSpawn = Mathf.Min(numberToSpawn, levelSetupData.MaxNumberToSpawn);
+            var cappedNumberToSpawn = (uint)Mathf.Min(numberToSpawn, levelSetupData.MaxNumberToSpawn);
             SpawnWave(cappedNumberToSpawn);
             currentWave++;
         }
 
-        private void SpawnWave(int numberToSpawn)
+        private void SpawnWave(uint numberToSpawn)
         {
             for (var i = 0; i < numberToSpawn; i++)
             {
