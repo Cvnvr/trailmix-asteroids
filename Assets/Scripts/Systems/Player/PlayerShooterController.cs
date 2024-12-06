@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Asteroids
 {
-    // TODO change this
+    // TODO change this?
     public struct WeaponSpawnData
     {
         public Transform SpawnTransform;
@@ -28,7 +28,7 @@ namespace Asteroids
         private bool canShoot = true;
         private Coroutine shootDelayCoroutine;
 
-        private bool areBehavioursSet;
+        private bool hasAddedBehaviours;
         
         [Inject]
         private void OnInject()
@@ -45,7 +45,7 @@ namespace Asteroids
 
         private void Update()
         {
-            if (!areBehavioursSet)
+            if (!hasAddedBehaviours)
                 return;
             
             if (additionalComponents == null || additionalComponents.Count == 0)
@@ -59,7 +59,7 @@ namespace Asteroids
         
         private void UpdateWeaponSetup(WeaponData weaponData)
         {
-            areBehavioursSet = false;
+            hasAddedBehaviours = false;
             
             activeWeaponData = weaponData;
 
@@ -76,7 +76,7 @@ namespace Asteroids
                 additionalComponents.Add(behaviourData, behaviourComponent);
             }
 
-            areBehavioursSet = true;
+            hasAddedBehaviours = true;
         }
 
         private WeaponSpawnData GetWeaponSpawnData()
@@ -115,7 +115,7 @@ namespace Asteroids
 
         private void OnFire()
         {
-            if (!areBehavioursSet)
+            if (!hasAddedBehaviours)
                 return;
             
             if (additionalComponents == null || additionalComponents.Count == 0)
