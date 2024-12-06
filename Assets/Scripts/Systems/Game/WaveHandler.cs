@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
@@ -12,6 +13,7 @@ namespace Asteroids
         [Inject] private SignalBus signalBus;
 
         private uint currentWave = 0;
+        private Coroutine spawnWaveCoroutine;
 
         [Inject]
         private void OnInject()
@@ -41,10 +43,22 @@ namespace Asteroids
                 cappedNumberToSpawn = (uint)Mathf.Min(numberToSpawn, levelSetupData.MaxNumberToSpawn);
             }
             
-            SpawnWave(cappedNumberToSpawn);
+            if (levelSetupData.TimeBetweenWaves > 0)
+            {
+                if (spawnWaveCoroutine != null)
+                {
+                    StopCoroutine(spawnWaveCoroutine);
+                }
+                spawnWaveCoroutine = StartCoroutine(SpawnWaveAfterDelay(levelSetupData.TimeBetweenWaves));
+            }
+            else
+            {
+                SpawnWave(cappedNumberToSpawn);
+            }
+            
             currentWave++;
         }
-
+        
         private void SpawnWave(uint numberToSpawn)
         {
             for (var i = 0; i < numberToSpawn; i++)
@@ -56,6 +70,13 @@ namespace Asteroids
                     Position = GetRandomOffScreenPosition()
                 });
             }
+        }
+
+        private IEnumerator SpawnWaveAfterDelay(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            
+            SpawnWave(levelSetupData.InitialNumberToSpawn);
         }
 
         private Vector3 GetRandomOffScreenPosition()
@@ -94,6 +115,12 @@ namespace Asteroids
         private void OnDisable()
         {
             signalBus.TryUnsubscribe<SpawnNewWaveEvent>(OnSpawnNewWave);
+            
+            if (spawnWaveCoroutine != null)
+            {
+                StopCoroutine(spawnWaveCoroutine);
+                spawnWaveCoroutine = null;
+            }
         }
     }
 }
