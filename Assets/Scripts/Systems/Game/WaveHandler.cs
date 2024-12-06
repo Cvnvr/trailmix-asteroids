@@ -19,7 +19,7 @@ namespace Asteroids
             signalBus.Subscribe<SpawnNewWaveEvent>(OnSpawnNewWave);
         }
         
-        private void Start()
+        public void Setup()
         {
             SpawnWave(levelSetupData.InitialNumberToSpawn);
             currentWave++;

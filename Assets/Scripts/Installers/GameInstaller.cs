@@ -44,6 +44,7 @@ namespace Asteroids
 			diContainer.DeclareSignal<HyperspaceInputEvent>();
 			
 			// Player
+			diContainer.DeclareSignal<PlayerSpawnEvent>();
 			diContainer.DeclareSignal<PlayerDestroyedEvent>();
 			diContainer.DeclareSignal<PlayerLivesCountUpdatedEvent>();
 			

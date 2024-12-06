@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using Zenject;
 
@@ -7,9 +6,7 @@ namespace Asteroids
     public class PlayerLifeHandler : MonoBehaviour
     {
         [SerializeField] private PlayerLifeData lifeData;
-        [SerializeField] private GameObject playerPrefab;
 
-        [Inject] private DiContainer container;
         [Inject] private SignalBus signalBus;
 
         private uint currentLivesCount;
@@ -30,13 +27,6 @@ namespace Asteroids
                 PreviousLivesCount = currentLivesCount,
                 NewLivesCount = currentLivesCount
             });
-            
-            SpawnPlayer();
-        }
-
-        private void SpawnPlayer()
-        {
-            container.InstantiatePrefab(playerPrefab, Vector3.zero, Quaternion.identity, null);
         }
 
         private void OnPlayerDestroyed()
@@ -57,22 +47,12 @@ namespace Asteroids
 
             if (currentLivesCount > 0)
             {
-                if (lifeData.RespawnDelay > 0)
-                {
-                    StartCoroutine(RespawnAfterTimer());
-                }
+                signalBus.TryFire<PlayerSpawnEvent>();
             }
             else
             {
                 signalBus.TryFire<GameOverEvent>();
             }
-        }
-
-        private IEnumerator RespawnAfterTimer()
-        {
-            yield return new WaitForSeconds(lifeData.RespawnDelay);
-            
-            SpawnPlayer();
         }
 
         private void OnDisable()

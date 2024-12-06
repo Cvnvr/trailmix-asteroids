@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2343d5db39e2434d85b89dfec541fcc9, type: 3}
   m_Name: DefaultPlayer
   m_EditorClassIdentifier: 
+  prefab: {fileID: 4428095690128823452, guid: b0dd5c47b482a4858af737e75ad1e373, type: 3}
   lifeData: {fileID: 11400000, guid: fcde1c3acb893450ca6969d1ace09172, type: 2}
   movementData: {fileID: 11400000, guid: 27d218b7311af466c82b93950c43ed9d, type: 2}
   hyperspaceData: {fileID: 11400000, guid: 78d13949a81e942c2980e32b95327ca9, type: 2}
-  playerSprite: {fileID: 21300000, guid: f14cf8f25f94ca54789aa1f1911d5290, type: 3}
