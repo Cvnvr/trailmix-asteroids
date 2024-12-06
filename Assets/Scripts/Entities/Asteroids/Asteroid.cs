@@ -5,7 +5,7 @@ using Zenject;
 namespace Asteroids
 {
     [RequireComponent(typeof(SpriteRenderer), typeof(Rigidbody2D), typeof(Collider2D))]
-    public class Asteroid : MonoBehaviour, IPoolable<Asteroid>, IPlayerCollideable
+    public class Asteroid : MonoBehaviour, IPoolable<Asteroid>, IDestructible, IPlayerCollideable
     {
         [Inject] private SignalBus signalBus;
         
@@ -48,14 +48,6 @@ namespace Asteroids
         public void Move(Vector2 direction)
         {
             rigidbody2d.velocity = direction * data.MovementSpeed;
-        }
-        
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            if (collision.gameObject.CompareTag(EntityTags.Projectile))
-            {
-                Destroy();
-            }
         }
 
         public void OnPlayerCollision(GameObject player)
