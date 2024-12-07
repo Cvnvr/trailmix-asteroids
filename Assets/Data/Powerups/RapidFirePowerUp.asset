@@ -15,5 +15,5 @@ MonoBehaviour:
   powerUpName: Rapid Fire
   weaponData: {fileID: 11400000, guid: fca3cc187dd7544cfa02bd8eace5347f, type: 2}
   sprite: {fileID: 21300000, guid: 7494b3eb599c74b049a89d063e3304a2, type: 3}
-  timerEnabled: 0
-  timer: 0
+  timerEnabled: 1
+  timer: 3

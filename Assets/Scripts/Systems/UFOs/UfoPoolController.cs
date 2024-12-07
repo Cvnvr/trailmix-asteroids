@@ -8,7 +8,7 @@ namespace Asteroids
     {
         [SerializeField] private PoolData poolData;
         [SerializeField] private UfoData[] ufoData;
-        
+
         [Inject] private DiContainer container;
         [Inject] private SignalBus signalBus;
 
@@ -35,7 +35,7 @@ namespace Asteroids
         {
             var randomUfoData = ufoData[Random.Range(0, ufoData.Length)];
 
-            if (!pools.TryGetValue(randomUfoData.UfoType, out var pool))
+            if (pools == null || !pools.TryGetValue(randomUfoData.UfoType, out var pool))
             {
                 evt.SuccessCallback?.Invoke(false);
                 return;
@@ -48,12 +48,11 @@ namespace Asteroids
                 return;
             }
             
-            ufo.Setup(randomUfoData);
-            ufo.Move(ufo.transform.up);
+            ufo.Setup(randomUfoData, evt.Direction);
                 
             evt.SuccessCallback?.Invoke(true);
         }
-
+        
         private void OnDisable()
         {
             signalBus.TryUnsubscribe<UfoSpawnEvent>(OnTrySpawnUfo);

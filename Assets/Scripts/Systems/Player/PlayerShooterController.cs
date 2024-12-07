@@ -129,6 +129,9 @@ namespace Asteroids
 
         private void OnPowerUpCollected(PowerUpCollectedEvent evt)
         {
+            if (evt.PowerUp == null)
+                return;
+            
             UpdateWeaponSetup(evt.PowerUp);
         }
 

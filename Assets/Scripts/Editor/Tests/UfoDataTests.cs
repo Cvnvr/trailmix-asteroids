@@ -75,6 +75,29 @@ namespace Asteroids.Editor.Tests
         }
         
         [Test]
+        public void Validate_ChangeDirectionToleranceIsValid()
+        {
+            var data = GetUfoData();
+            if (data == null || data.Length == 0)
+            {
+                Assert.Pass($"No {nameof(UfoData)} found.");
+                return;
+            }
+            
+            var isValid = true;
+            foreach (var ufo in data)
+            {
+                if (ufo.ChangeDirectionTolerance < 0)
+                {
+                    Debug.LogError($"{ufo.name} - ChangeDirectionTolerance is less than zero!");
+                    isValid = false;
+                }
+            }
+            
+            Assert.IsTrue(isValid, $"The following {nameof(UfoData)} objects have an invalid 'ChangeDirectionTolerance' value!");
+        }
+        
+        [Test]
         public void Validate_ChanceOfDroppingPowerUpIsValid()
         {
             var data = GetUfoData();

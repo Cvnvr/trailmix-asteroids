@@ -48,5 +48,13 @@ namespace Asteroids
             
             return position.x > RightSide || position.x < LeftSide || position.y > TopSide || position.y < BottomSide;
         }
+
+        public Vector2 GetCenterOfScreen()
+        {
+            if (!isInitialised)
+                return Vector2.zero;
+            
+            return screenCamera.ScreenToWorldPoint(new Vector2(screenBounds.x / 2, screenBounds.y / 2));
+        }
     }
 }

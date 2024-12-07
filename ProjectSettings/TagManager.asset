@@ -7,6 +7,7 @@ TagManager:
   - Asteroid
   - UFO
   - Projectile
+  - PowerUp
   layers:
   - Default
   - TransparentFX

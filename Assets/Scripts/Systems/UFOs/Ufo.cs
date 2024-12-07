@@ -15,6 +15,7 @@ namespace Asteroids
         private Action<Ufo> pushEvent;
 
         private bool isInitialised;
+        private Vector2 originalDirection;
         private float cachedChangeDirectionInterval;
         
         private void Awake()
@@ -34,12 +35,15 @@ namespace Asteroids
             }
         }
 
-        public void Setup(UfoData ufoData)
+        public void Setup(UfoData ufoData, Vector2 direction)
         {
             isInitialised = false;
             
             data = ufoData;
+            originalDirection = direction;
             cachedChangeDirectionInterval = ufoData.ChangeDirectionInterval;
+            
+            Move(direction);
 
             isInitialised = true;
         }
@@ -64,16 +68,21 @@ namespace Asteroids
 
         private void ChangeDirection()
         {
-            // TODO make new direction within tolerance of original direction
-            
-            var newDirection = new Vector2(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f));
+            var newDirection = originalDirection + GetRandomValueWithinTolerance(data.ChangeDirectionTolerance);
             Move(newDirection.normalized);
             
             // Reset interval timer
             cachedChangeDirectionInterval = data.ChangeDirectionInterval;
         }
+        
+        private Vector2 GetRandomValueWithinTolerance(float tolerance)
+        {
+            return new Vector2(
+                UnityEngine.Random.Range(-tolerance, tolerance), 
+                UnityEngine.Random.Range(-tolerance, tolerance));
+        }
 
-        public void Move(Vector2 direction)
+        private void Move(Vector2 direction)
         {
             rigidbody2d.velocity = direction * data.MovementSpeed;
         }

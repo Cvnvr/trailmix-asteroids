@@ -73,7 +73,7 @@ namespace Asteroids
                 {
                     StopCoroutine(spawnWaveCoroutine);
                 }
-                spawnWaveCoroutine = StartCoroutine(SpawnWaveAfterDelay(levelSetupData.TimeBetweenWaves));
+                spawnWaveCoroutine = StartCoroutine(SpawnWaveAfterDelay(cappedNumberToSpawn, levelSetupData.TimeBetweenWaves));
             }
             else
             {
@@ -96,11 +96,11 @@ namespace Asteroids
             }
         }
 
-        private IEnumerator SpawnWaveAfterDelay(float delay)
+        private IEnumerator SpawnWaveAfterDelay(uint numberToSpawn, float delay)
         {
             yield return new WaitForSeconds(delay);
             
-            SpawnWave(levelSetupData.AsteroidsInitialSpawnCount);
+            SpawnWave(numberToSpawn);
         }
 
         private Vector2 GetRandomOffScreenPosition()
@@ -136,14 +136,24 @@ namespace Asteroids
             return new Vector2(xPos, yPos);
         }
 
+        private Vector2 GetRandomDirection(Vector2 position)
+        {
+            var direction = (screenBoundsCalculator.GetCenterOfScreen() - position).normalized;
+            var tolerance = 0.5f;
+            direction += new Vector2(Random.Range(-tolerance, tolerance), Random.Range(-tolerance, tolerance));
+            return direction.normalized;
+        }
+
         private void TryAndSpawnUfo()
         {
             if (Random.value > levelSetupData.UfoChanceToSpawn)
                 return;
             
+            var ufoSpawnPosition = GetRandomOffScreenPosition();
             signalBus.TryFire(new UfoSpawnEvent()
             {
-                Position = GetRandomOffScreenPosition(),
+                Position = ufoSpawnPosition,
+                Direction = GetRandomDirection(ufoSpawnPosition),
                 SuccessCallback = (onSuccess) =>
                 {
                     if (onSuccess)

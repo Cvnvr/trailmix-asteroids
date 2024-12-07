@@ -40,7 +40,7 @@ namespace Asteroids
                 return;
             }
             
-            if (!pools.TryGetValue(evt.AsteroidData.AsteroidType, out var pool)) 
+            if (pools == null || !pools.TryGetValue(evt.AsteroidData.AsteroidType, out var pool)) 
                 return;
             
             for (var i = 0; i < evt.NumberToSpawn; i++)
