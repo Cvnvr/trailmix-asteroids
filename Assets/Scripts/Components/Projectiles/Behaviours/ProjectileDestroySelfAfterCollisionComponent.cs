@@ -18,9 +18,6 @@ namespace Asteroids
 
         public void OnCollision(GameObject collision)
         {
-            if (collision.CompareTag(EntityTags.Projectile))
-                return;
-            
             pushEvent?.Invoke();
         }
     }

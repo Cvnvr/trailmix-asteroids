@@ -3,7 +3,7 @@ using Zenject;
 
 namespace Asteroids
 {
-    public class RemoveIfLeaveScreenBounds : MonoBehaviour
+    public class RemoveSelfIfLeaveScreenBounds : MonoBehaviour
     {
         [Inject] private ScreenBoundsCalculator screenBoundsCalculator;
 
@@ -19,7 +19,7 @@ namespace Asteroids
             if (removable == null)
                 return;
             
-            if (screenBoundsCalculator.IsOutsideScreenBounds(transform.position))
+            if (screenBoundsCalculator.IsOutsideOffScreenBounds(transform.position))
             {
                 removable.RemoveSelf();
             }

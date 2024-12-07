@@ -6,13 +6,18 @@ namespace Asteroids
     {
         public bool IsInitialised => isInitialised;
         
-        public float TopSide => screenBounds.y * screenPadding;
-        public float BottomSide => -screenBounds.y * screenPadding;
-        public float RightSide => screenBounds.x * screenPadding;
-        public float LeftSide => -screenBounds.x * screenPadding;
+        public float TopSide => screenBounds.y;
+        public float RightSide => screenBounds.x;
+        public float BottomSide => -screenBounds.y;
+        public float LeftSide => -screenBounds.x;
+
+        public float TopSidePadded => screenBounds.y * outerScreenPadding;
+        public float RightSidePadded => screenBounds.x * outerScreenPadding;
+        public float BottomSidePadded => -screenBounds.y * outerScreenPadding;
+        public float LeftSidePadded => -screenBounds.x * outerScreenPadding;
         
         [SerializeField] private Camera screenCamera;
-        [SerializeField] private float screenPadding = 1.15f;
+        [SerializeField] private float outerScreenPadding = 1.15f;
         
         private bool isInitialised;
         private Vector2 screenBounds;
@@ -41,12 +46,15 @@ namespace Asteroids
             isInitialised = true;
         }
         
-        public bool IsOutsideScreenBounds(Vector2 position)
+        public bool IsOutsideOffScreenBounds(Vector2 position)
         {
             if (!isInitialised)
                 return false;
             
-            return position.x > RightSide || position.x < LeftSide || position.y > TopSide || position.y < BottomSide;
+            return position.x > RightSidePadded || 
+                   position.x < LeftSidePadded || 
+                   position.y > TopSidePadded || 
+                   position.y < BottomSidePadded;
         }
         
         public Vector2 GetRandomOffScreenPosition()
@@ -58,20 +66,20 @@ namespace Asteroids
             switch (edge)
             {
                 case 0: // Top edge
-                    xPos = Random.Range(LeftSide, RightSide);
-                    yPos = TopSide;
+                    xPos = Random.Range(LeftSidePadded, RightSidePadded);
+                    yPos = TopSidePadded;
                     break;
                 case 1: // Bottom edge
-                    xPos = Random.Range(LeftSide, RightSide);
-                    yPos = BottomSide;
+                    xPos = Random.Range(LeftSidePadded, RightSidePadded);
+                    yPos = BottomSidePadded;
                     break;
                 case 2: // Left edge
-                    xPos = LeftSide;
-                    yPos = Random.Range(BottomSide, TopSide);
+                    xPos = LeftSidePadded;
+                    yPos = Random.Range(BottomSidePadded, TopSidePadded);
                     break;
                 case 3: // Right edge
-                    xPos = RightSide;
-                    yPos = Random.Range(BottomSide, TopSide);
+                    xPos = RightSidePadded;
+                    yPos = Random.Range(BottomSidePadded, TopSidePadded);
                     break;
                 default:
                     xPos = 0f;

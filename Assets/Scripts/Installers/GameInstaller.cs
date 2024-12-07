@@ -13,6 +13,7 @@ namespace Asteroids
 			
 			// Game
 			Container.Bind<ScreenBoundsCalculator>().FromInstance(screenBoundsCalculator).AsSingle();
+			Container.Bind<PlayerLocator>().AsSingle();
 			
 			// Player
 			Container.BindInterfacesAndSelfTo<PlayerInputHandler>().AsSingle();
@@ -44,7 +45,8 @@ namespace Asteroids
 			diContainer.DeclareSignal<HyperspaceInputEvent>().OptionalSubscriber();
 			
 			// Player
-			diContainer.DeclareSignal<PlayerSpawnEvent>();
+			diContainer.DeclareSignal<PlayerTriggerSpawnEvent>();
+			diContainer.DeclareSignal<PlayerNewSpawnEvent>();
 			diContainer.DeclareSignal<PlayerDestroyedEvent>();
 			diContainer.DeclareSignal<PlayerLivesCountUpdatedEvent>();
 			

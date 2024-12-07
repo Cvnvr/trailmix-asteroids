@@ -1218,7 +1218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   screenCamera: {fileID: 519420031}
-  screenPadding: 1.05
+  outerScreenPadding: 1.05
 --- !u!4 &1168465132
 Transform:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ namespace Asteroids
     [RequireComponent(typeof(SpriteRenderer), typeof(Rigidbody2D), typeof(Collider2D))]
     public class Ufo : BaseEnemy, IDestructible, IRemovable, IPlayerCollideable
     {
+        [Inject] private PlayerLocator playerLocator;
         [Inject] private SignalBus signalBus;
 
         private Rigidbody2D rigidbody2d;

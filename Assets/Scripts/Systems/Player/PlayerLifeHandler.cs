@@ -47,7 +47,7 @@ namespace Asteroids
 
             if (currentLivesCount > 0)
             {
-                signalBus.TryFire<PlayerSpawnEvent>();
+                signalBus.TryFire<PlayerTriggerSpawnEvent>();
             }
             else
             {

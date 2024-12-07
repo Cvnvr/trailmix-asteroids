@@ -6,7 +6,7 @@ namespace Asteroids
     public class AutoScreenWrapper : MonoBehaviour
     {
         [Inject] private ScreenBoundsCalculator screenBoundsCalculator;
-
+        
         private void Update()
         {
             if (!screenBoundsCalculator.IsInitialised)
@@ -15,22 +15,22 @@ namespace Asteroids
             var position = transform.position;
             var newPosition = position;
 
-            if (position.y > screenBoundsCalculator.TopSide)
+            if (position.y > screenBoundsCalculator.TopSidePadded)
             {
-                newPosition.y = screenBoundsCalculator.BottomSide;
+                newPosition.y = screenBoundsCalculator.BottomSidePadded;
             }
-            else if (position.y < screenBoundsCalculator.BottomSide)
+            else if (position.y < screenBoundsCalculator.BottomSidePadded)
             {
-                newPosition.y = screenBoundsCalculator.TopSide;
+                newPosition.y = screenBoundsCalculator.TopSidePadded;
             }
             
-            if (position.x > screenBoundsCalculator.RightSide)
+            if (position.x > screenBoundsCalculator.RightSidePadded)
             {
-                newPosition.x = screenBoundsCalculator.LeftSide;
+                newPosition.x = screenBoundsCalculator.LeftSidePadded;
             }
-            else if (position.x < screenBoundsCalculator.LeftSide)
+            else if (position.x < screenBoundsCalculator.LeftSidePadded)
             {
-                newPosition.x = screenBoundsCalculator.RightSide;
+                newPosition.x = screenBoundsCalculator.RightSidePadded;
             }
 
             transform.position = newPosition;

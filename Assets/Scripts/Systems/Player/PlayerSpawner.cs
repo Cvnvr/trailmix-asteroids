@@ -11,18 +11,20 @@ namespace Asteroids
         [Inject] private DiContainer container;
         [Inject] private SignalBus signalBus;
 
+        private const string PlayerTag = "Player";
+
         private GameObject activePlayer;
         private Coroutine respawnCoroutine;
         
         [Inject]
         private void OnInject()
         {
-            signalBus.Subscribe<PlayerSpawnEvent>(OnPlayerSpawn);
+            signalBus.Subscribe<PlayerTriggerSpawnEvent>(OnTriggeredSpawn);
         }
 
         public void Setup()
         {
-            if (GameObject.FindWithTag(EntityTags.Player) != null)
+            if (GameObject.FindWithTag(PlayerTag) != null)
             {
                 Debug.LogWarning($"[{nameof(PlayerSpawner)}.{nameof(Setup)}] Player already exists in the scene, skipping spawn!");
                 return;
@@ -31,7 +33,7 @@ namespace Asteroids
             SpawnPlayer();
         }
 
-        private void OnPlayerSpawn()
+        private void OnTriggeredSpawn()
         {
             if (playerData.LifeData.RespawnDelay > 0)
             {
@@ -63,6 +65,8 @@ namespace Asteroids
                 Quaternion.identity, 
                 null
             );
+            
+            signalBus.TryFire(new PlayerNewSpawnEvent() { Player = activePlayer});
         }
         
         private IEnumerator SpawnAfterTimer()
@@ -74,7 +78,7 @@ namespace Asteroids
 
         private void OnDisable()
         {
-            signalBus.TryUnsubscribe<PlayerSpawnEvent>(OnPlayerSpawn);
+            signalBus.TryUnsubscribe<PlayerTriggerSpawnEvent>(OnTriggeredSpawn);
             
             if (respawnCoroutine != null)
             {
