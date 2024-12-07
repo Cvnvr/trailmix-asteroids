@@ -1,4 +1,5 @@
 using System;
+using Asteroids.Utils;
 using UnityEngine;
 using Zenject;
 
@@ -14,6 +15,8 @@ namespace Asteroids
 
         private AsteroidData data;
         private Action<Asteroid> pushEvent;
+        
+        private Vector2 originalDirection;
 
         private void Awake()
         {
@@ -21,10 +24,13 @@ namespace Asteroids
             rigidbody2d = GetComponent<Rigidbody2D>();
         }
 
-        public void Setup(AsteroidData data)
+        public void Setup(AsteroidData data, Vector2 direction)
         {
             this.data = data;
             spriteRenderer.sprite = data.Sprites[UnityEngine.Random.Range(0, data.Sprites.Length)];
+
+            originalDirection = direction;
+            Move(direction);
         }
         
         public void InitPoolable(Action<Asteroid> pushCallback)
@@ -70,7 +76,8 @@ namespace Asteroids
             signalBus.TryFire(new AsteroidDestroyedEvent()
             {
                 AsteroidData = data,
-                Position = transform.position
+                Position = transform.position,
+                Direction = originalDirection
             });
 
             if (data.Score > 0)

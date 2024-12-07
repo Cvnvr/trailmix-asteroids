@@ -1,4 +1,5 @@
 using System.Collections;
+using Asteroids.Utils;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
@@ -87,11 +88,13 @@ namespace Asteroids
         {
             for (var i = 0; i < numberToSpawn; i++)
             {
+                var randomSpawnPosition = screenBoundsCalculator.GetRandomOffScreenPosition();
                 signalBus.TryFire(new AsteroidSpawnEvent()
                 {
                     AsteroidData = levelSetupData.AsteroidToSpawn,
                     NumberToSpawn = 1,
-                    Position = GetRandomOffScreenPosition()
+                    Position = randomSpawnPosition,
+                    Direction = GetRandomDirection(randomSpawnPosition, levelSetupData.SpawnDirectionTolerance)
                 });
             }
         }
@@ -103,44 +106,10 @@ namespace Asteroids
             SpawnWave(numberToSpawn);
         }
 
-        private Vector2 GetRandomOffScreenPosition()
-        {
-            var xPos = 0f;
-            var yPos = 0f;
-            
-            var edge = Random.Range(0, 4);
-            switch (edge)
-            {
-                case 0: // Top edge
-                    xPos = Random.Range(screenBoundsCalculator.LeftSide, screenBoundsCalculator.RightSide);
-                    yPos = screenBoundsCalculator.TopSide;
-                    break;
-                case 1: // Bottom edge
-                    xPos = Random.Range(screenBoundsCalculator.LeftSide, screenBoundsCalculator.RightSide);
-                    yPos = screenBoundsCalculator.BottomSide;
-                    break;
-                case 2: // Left edge
-                    xPos = screenBoundsCalculator.LeftSide;
-                    yPos = Random.Range(screenBoundsCalculator.BottomSide, screenBoundsCalculator.TopSide);
-                    break;
-                case 3: // Right edge
-                    xPos = screenBoundsCalculator.RightSide;
-                    yPos = Random.Range(screenBoundsCalculator.BottomSide, screenBoundsCalculator.TopSide);
-                    break;
-                default:
-                    xPos = 0f;
-                    yPos = 0f;
-                    break;
-            }
-
-            return new Vector2(xPos, yPos);
-        }
-
-        private Vector2 GetRandomDirection(Vector2 position)
+        private Vector2 GetRandomDirection(Vector2 position, float tolerance)
         {
             var direction = (screenBoundsCalculator.GetCenterOfScreen() - position).normalized;
-            var tolerance = 0.5f;
-            direction += new Vector2(Random.Range(-tolerance, tolerance), Random.Range(-tolerance, tolerance));
+            direction += VectorUtils.GetRandomVectorWithinTolerance(tolerance);
             return direction.normalized;
         }
 
@@ -149,11 +118,11 @@ namespace Asteroids
             if (Random.value > levelSetupData.UfoChanceToSpawn)
                 return;
             
-            var ufoSpawnPosition = GetRandomOffScreenPosition();
+            var randomSpawnPosition = screenBoundsCalculator.GetRandomOffScreenPosition();
             signalBus.TryFire(new UfoSpawnEvent()
             {
-                Position = ufoSpawnPosition,
-                Direction = GetRandomDirection(ufoSpawnPosition),
+                Position = randomSpawnPosition,
+                Direction = GetRandomDirection(randomSpawnPosition, levelSetupData.SpawnDirectionTolerance),
                 SuccessCallback = (onSuccess) =>
                 {
                     if (onSuccess)

@@ -1,11 +1,11 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Asteroids
 {
     [CreateAssetMenu(menuName = "Data/Game/LevelSetupData", fileName = "LevelSetupData")]
     public class LevelSetupData : ScriptableObject
     {
+        [Header("Asteroids")]
         [Tooltip("The type of Asteroid that spawns each wave")]
         [SerializeField] private AsteroidData asteroidToSpawn;
         
@@ -21,6 +21,7 @@ namespace Asteroids
         [Tooltip("Timed delay (in seconds) between waves")]
         [SerializeField] private float timeBetweenWaves;
         
+        [Header("UFOs")]
         [Tooltip("The odds that a UFO will spawn")]
         [SerializeField] private float ufoChanceToSpawn;
 
@@ -29,14 +30,21 @@ namespace Asteroids
 
         [Tooltip("Timed delay (in seconds) between UFO spawn checks")]
         [SerializeField] private float ufoSpawnCheckTimeDelay;
+
+        [Header("Other")]
+        [Tooltip("The amount of tolerance (either side) to apply to the direction after spawning")]
+        [SerializeField] private float spawnDirectionTolerance;
         
         public AsteroidData AsteroidToSpawn => asteroidToSpawn;
         public uint AsteroidsInitialSpawnCount => asteroidsInitialSpawnCount;
         public uint AsteroidsAdditionalWaveSpawnCount => asteroidsAdditionalWaveSpawnCount;
         public uint AsteroidsMaxSpawnCount => asteroidsMaxSpawnCount;
         public float TimeBetweenWaves => timeBetweenWaves;
+        
         public float UfoChanceToSpawn => ufoChanceToSpawn;
         public uint UfoMaxSpawnCount => ufoMaxSpawnCount;
         public float UfoSpawnCheckTimeDelay => ufoSpawnCheckTimeDelay;
+        
+        public float SpawnDirectionTolerance => spawnDirectionTolerance;
     }
 }

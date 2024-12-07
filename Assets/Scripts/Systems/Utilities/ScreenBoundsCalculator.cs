@@ -48,13 +48,46 @@ namespace Asteroids
             
             return position.x > RightSide || position.x < LeftSide || position.y > TopSide || position.y < BottomSide;
         }
+        
+        public Vector2 GetRandomOffScreenPosition()
+        {
+            var xPos = 0f;
+            var yPos = 0f;
+            
+            var edge = Random.Range(0, 4);
+            switch (edge)
+            {
+                case 0: // Top edge
+                    xPos = Random.Range(LeftSide, RightSide);
+                    yPos = TopSide;
+                    break;
+                case 1: // Bottom edge
+                    xPos = Random.Range(LeftSide, RightSide);
+                    yPos = BottomSide;
+                    break;
+                case 2: // Left edge
+                    xPos = LeftSide;
+                    yPos = Random.Range(BottomSide, TopSide);
+                    break;
+                case 3: // Right edge
+                    xPos = RightSide;
+                    yPos = Random.Range(BottomSide, TopSide);
+                    break;
+                default:
+                    xPos = 0f;
+                    yPos = 0f;
+                    break;
+            }
+
+            return new Vector2(xPos, yPos);
+        }
 
         public Vector2 GetCenterOfScreen()
         {
             if (!isInitialised)
                 return Vector2.zero;
             
-            return screenCamera.ScreenToWorldPoint(new Vector2(screenBounds.x / 2, screenBounds.y / 2));
+            return screenCamera.ScreenToWorldPoint(new Vector2((float)Screen.width / 2, (float)Screen.height / 2));
         }
     }
 }

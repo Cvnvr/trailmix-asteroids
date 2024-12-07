@@ -1,4 +1,5 @@
 using System;
+using Asteroids.Utils;
 using UnityEngine;
 using Zenject;
 
@@ -68,18 +69,11 @@ namespace Asteroids
 
         private void ChangeDirection()
         {
-            var newDirection = originalDirection + GetRandomValueWithinTolerance(data.ChangeDirectionTolerance);
+            var newDirection = originalDirection + VectorUtils.GetRandomVectorWithinTolerance(data.ChangeDirectionTolerance);
             Move(newDirection.normalized);
             
             // Reset interval timer
             cachedChangeDirectionInterval = data.ChangeDirectionInterval;
-        }
-        
-        private Vector2 GetRandomValueWithinTolerance(float tolerance)
-        {
-            return new Vector2(
-                UnityEngine.Random.Range(-tolerance, tolerance), 
-                UnityEngine.Random.Range(-tolerance, tolerance));
         }
 
         private void Move(Vector2 direction)

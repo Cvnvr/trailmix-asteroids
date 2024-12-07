@@ -20,3 +20,4 @@ MonoBehaviour:
   ufoChanceToSpawn: 0.2
   ufoMaxSpawnCount: 2
   ufoSpawnCheckTimeDelay: 5
+  spawnDirectionTolerance: 1

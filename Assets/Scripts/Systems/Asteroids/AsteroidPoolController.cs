@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Asteroids.Utils;
 using UnityEngine;
 using Zenject;
 
@@ -49,8 +50,7 @@ namespace Asteroids
                 var asteroid = pool.Pop(evt.Position, randomRotation) as Asteroid;
                 if (asteroid)
                 {
-                    asteroid.Setup(evt.AsteroidData);
-                    asteroid.Move(asteroid.transform.up);
+                    asteroid.Setup(evt.AsteroidData, evt.Direction);
                 }
             }
         }
@@ -59,12 +59,16 @@ namespace Asteroids
         {
             if (evt.AsteroidData.DoesSpawnMoreOnDestruction)
             {
-                OnAsteroidSpawn(new AsteroidSpawnEvent()
+                for (var i = 0; i < evt.AsteroidData.NumberToSpawn; i++)
                 {
-                    AsteroidData = evt.AsteroidData.SpawnedAsteroidData,
-                    NumberToSpawn = evt.AsteroidData.NumberToSpawn,
-                    Position = evt.Position
-                });
+                    OnAsteroidSpawn(new AsteroidSpawnEvent()
+                    {
+                        AsteroidData = evt.AsteroidData.SpawnedAsteroidData,
+                        NumberToSpawn = 1,
+                        Position = evt.Position,
+                        Direction = (evt.Direction + VectorUtils.GetRandomVectorWithinTolerance(1f)).normalized
+                    });
+                }
                 return;
             }
 
