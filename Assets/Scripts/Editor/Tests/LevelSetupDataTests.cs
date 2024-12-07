@@ -29,7 +29,7 @@ namespace Asteroids.Editor.Tests
         }
         
         [Test]
-        public void Validate_InitialNumberToSpawnIsSet()
+        public void Validate_AsteroidsInitialSpawnCountIsSet()
         {
             var levelSetupData = GetLevelSetupData();
             if (levelSetupData == null)
@@ -41,18 +41,18 @@ namespace Asteroids.Editor.Tests
             var isValid = true;
             foreach (var data in levelSetupData)
             {
-                if (data.InitialNumberToSpawn == 0)
+                if (data.AsteroidsInitialSpawnCount == 0)
                 {
-                    Debug.LogError($"{data.name} - InitialNumberToSpawn is set to 0.");
+                    Debug.LogError($"{data.name} - AsteroidsInitialSpawnCount is set to 0.");
                     isValid = false;
                 }
             }
             
-            Assert.IsTrue(isValid, $"The following {nameof(LevelSetupData)} objects have an invalid 'InitialNumberToSpawn' value set!");
+            Assert.IsTrue(isValid, $"The following {nameof(LevelSetupData)} objects have an invalid 'AsteroidsInitialSpawnCount' value set!");
         }
         
         [Test]
-        public void Validate_MaxNumberToSpawnIsValid()
+        public void Validate_AsteroidsMaxSpawnCountIsValid()
         {
             var levelSetupData = GetLevelSetupData();
             if (levelSetupData == null)
@@ -64,17 +64,17 @@ namespace Asteroids.Editor.Tests
             var isValid = true;
             foreach (var data in levelSetupData)
             {
-                if (data.MaxNumberToSpawn == 0)
+                if (data.AsteroidsMaxSpawnCount == 0)
                     continue;
                 
-                if (data.MaxNumberToSpawn < data.InitialNumberToSpawn)
+                if (data.AsteroidsMaxSpawnCount < data.AsteroidsInitialSpawnCount)
                 {
-                    Debug.LogError($"{data.name} - MaxNumberToSpawn is less than InitialNumberToSpawn.");
+                    Debug.LogError($"{data.name} - AsteroidsMaxSpawnCount is less than AsteroidsInitialSpawnCount.");
                     isValid = false;
                 }
             }
             
-            Assert.IsTrue(isValid, $"The following {nameof(LevelSetupData)} objects have an invalid 'MaxNumberToSpawn' value set!");
+            Assert.IsTrue(isValid, $"The following {nameof(LevelSetupData)} objects have an invalid 'AsteroidsMaxSpawnCount' value set!");
         }
         
         [Test]
@@ -101,7 +101,7 @@ namespace Asteroids.Editor.Tests
         }
         
         [Test]
-        public void Validate_ChanceToSpawnUfoIsValid()
+        public void Validate_UfoChanceToSpawnIsValid()
         {
             var levelSetupData = GetLevelSetupData();
             if (levelSetupData == null)
@@ -113,18 +113,18 @@ namespace Asteroids.Editor.Tests
             var isValid = true;
             foreach (var data in levelSetupData)
             {
-                if (data.ChanceToSpawnUfo < 0)
+                if (data.UfoChanceToSpawn < 0)
                 {
-                    Debug.LogError($"{data.name} - ChanceToSpawnUfo is less than 0.");
+                    Debug.LogError($"{data.name} - UfoChanceToSpawn is less than 0.");
                     isValid = false;
                 }
             }
             
-            Assert.IsTrue(isValid, $"The following {nameof(LevelSetupData)} objects have an invalid 'ChanceToSpawnUfo' value set!");
+            Assert.IsTrue(isValid, $"The following {nameof(LevelSetupData)} objects have an invalid 'UfoChanceToSpawn' value set!");
         }
         
         [Test]
-        public void Validate_TimeBetweenUfoSpawnsIsValid()
+        public void Validate_UfoSpawnCheckTimeDelayIsValid()
         {
             var levelSetupData = GetLevelSetupData();
             if (levelSetupData == null)
@@ -136,14 +136,14 @@ namespace Asteroids.Editor.Tests
             var isValid = true;
             foreach (var data in levelSetupData)
             {
-                if (data.TimeBetweenUfoSpawnChecks < 0)
+                if (data.UfoSpawnCheckTimeDelay < 0)
                 {
-                    Debug.LogError($"{data.name} - TimeBetweenUfoSpawnChecks is less than 0.");
+                    Debug.LogError($"{data.name} - UfoSpawnCheckTimeDelay is less than 0.");
                     isValid = false;
                 }
             }
             
-            Assert.IsTrue(isValid, $"The following {nameof(LevelSetupData)} objects have an invalid 'TimeBetweenUfoSpawnChecks' value set!");
+            Assert.IsTrue(isValid, $"The following {nameof(LevelSetupData)} objects have an invalid 'UfoSpawnCheckTimeDelay' value set!");
         }
         
         private LevelSetupData[] GetLevelSetupData()

@@ -52,6 +52,8 @@ namespace Asteroids
 			diContainer.DeclareSignal<AsteroidSpawnEvent>();
 			diContainer.DeclareSignal<AsteroidDestroyedEvent>();
 			diContainer.DeclareSignal<UfoSpawnEvent>();
+			diContainer.DeclareSignal<UfoDestroyedEvent>();
+			diContainer.DeclareSignal<UfoRemovedSelfEvent>();
 			
 			// Power-ups
 			diContainer.DeclareSignal<PowerUpCollectedEvent>();

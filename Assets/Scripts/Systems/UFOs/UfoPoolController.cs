@@ -17,7 +17,7 @@ namespace Asteroids
         [Inject]
         private void OnInject()
         {
-            signalBus.Subscribe<UfoSpawnEvent>(OnUfoSpawn);
+            signalBus.Subscribe<UfoSpawnEvent>(OnTrySpawnUfo);
         }
 
         private void Awake()
@@ -31,28 +31,32 @@ namespace Asteroids
             }
         }
 
-        private void OnUfoSpawn(UfoSpawnEvent evt)
+        private void OnTrySpawnUfo(UfoSpawnEvent evt)
         {
-            if (evt.UfoData == null)
+            var randomUfoData = ufoData[Random.Range(0, ufoData.Length)];
+
+            if (!pools.TryGetValue(randomUfoData.UfoType, out var pool))
             {
-                Debug.LogWarning($"[{nameof(UfoPoolController)}.{nameof(OnUfoSpawn)}] Attempted to spawn a UFO with invalid data");
+                evt.SuccessCallback?.Invoke(false);
                 return;
             }
-            
-            if (!pools.TryGetValue(evt.UfoData.UfoType, out var pool)) 
-                return;
             
             var ufo = pool.Pop(evt.Position, Quaternion.identity) as Ufo;
-            if (ufo)
+            if (!ufo)
             {
-                ufo.Setup(evt.UfoData);
-                ufo.Move(ufo.transform.up);
+                evt.SuccessCallback?.Invoke(false);
+                return;
             }
+            
+            ufo.Setup(randomUfoData);
+            ufo.Move(ufo.transform.up);
+                
+            evt.SuccessCallback?.Invoke(true);
         }
 
         private void OnDisable()
         {
-            signalBus.TryUnsubscribe<UfoSpawnEvent>(OnUfoSpawn);
+            signalBus.TryUnsubscribe<UfoSpawnEvent>(OnTrySpawnUfo);
         }
     }
 }

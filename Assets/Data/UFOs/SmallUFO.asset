@@ -18,3 +18,4 @@ MonoBehaviour:
   ufoType: 0
   timeBetweenShots: 1
   changeDirectionInterval: 1
+  chanceOfDroppingPowerUp: 0.5

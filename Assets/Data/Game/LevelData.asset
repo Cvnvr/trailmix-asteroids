@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: LevelData
   m_EditorClassIdentifier: 
   asteroidToSpawn: {fileID: 11400000, guid: 81a9c7c35b4974433baa36c13411f125, type: 2}
-  initialNumberToSpawn: 4
-  additionalNumberToSpawnEachWave: 2
-  maxNumberToSpawn: 10
+  asteroidsInitialSpawnCount: 4
+  asteroidsAdditionalWaveSpawnCount: 2
+  asteroidsMaxSpawnCount: 10
   timeBetweenWaves: 1
-  chanceToSpawnUfo: 0.2
-  timeBetweenUfoSpawnChecks: 5
+  ufoChanceToSpawn: 0.2
+  ufoMaxSpawnCount: 2
+  ufoSpawnCheckTimeDelay: 5

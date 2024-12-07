@@ -40,5 +40,13 @@ namespace Asteroids
             
             isInitialised = true;
         }
+        
+        public bool IsOutsideScreenBounds(Vector2 position)
+        {
+            if (!isInitialised)
+                return false;
+            
+            return position.x > RightSide || position.x < LeftSide || position.y > TopSide || position.y < BottomSide;
+        }
     }
 }
