@@ -34,6 +34,8 @@ namespace Asteroids
             SpawnWave(levelSetupData.AsteroidsInitialSpawnCount);
             currentWave++;
 
+            cachedTimeBetweenUfoSpawnChecks = levelSetupData.UfoSpawnCheckTimeDelay;
+
             isInitialised = true;
         }
 
@@ -41,15 +43,8 @@ namespace Asteroids
         {
             if (!isInitialised)
                 return;
-
-            if (spawnedUfoCount >= levelSetupData.UfoMaxSpawnCount)
-                return;
             
-            cachedTimeBetweenUfoSpawnChecks -= Time.deltaTime;
-            if (cachedTimeBetweenUfoSpawnChecks <= 0)
-            {
-                TryAndSpawnUfo();
-            }
+            TryAndSpawnUfo();
         }
 
         private void OnSpawnNewWave()
@@ -106,18 +101,25 @@ namespace Asteroids
             SpawnWave(numberToSpawn);
         }
 
-        private Vector2 GetRandomDirection(Vector2 position, float tolerance)
-        {
-            var direction = (screenBoundsCalculator.GetCenterOfScreen() - position).normalized;
-            direction += VectorUtils.GetRandomVectorWithinTolerance(tolerance);
-            return direction.normalized;
-        }
-
         private void TryAndSpawnUfo()
         {
-            if (Random.value > levelSetupData.UfoChanceToSpawn)
+            if (spawnedUfoCount >= levelSetupData.UfoMaxSpawnCount)
                 return;
             
+            cachedTimeBetweenUfoSpawnChecks -= Time.deltaTime;
+            if (cachedTimeBetweenUfoSpawnChecks <= 0)
+            {
+                if (Random.value <= levelSetupData.UfoChanceToSpawn)
+                {
+                    SpawnUfo();
+                }
+                
+                cachedTimeBetweenUfoSpawnChecks = levelSetupData.UfoSpawnCheckTimeDelay;
+            }
+        }
+
+        private void SpawnUfo()
+        {
             var randomSpawnPosition = screenBoundsCalculator.GetRandomOffScreenPosition();
             signalBus.TryFire(new UfoSpawnEvent()
             {
@@ -131,8 +133,13 @@ namespace Asteroids
                     }
                 }
             });
-            
-            cachedTimeBetweenUfoSpawnChecks = levelSetupData.UfoSpawnCheckTimeDelay;
+        }
+        
+        private Vector2 GetRandomDirection(Vector2 position, float tolerance)
+        {
+            var direction = (screenBoundsCalculator.GetCenterOfScreen() - position).normalized;
+            direction += VectorUtils.GetRandomVectorWithinTolerance(tolerance);
+            return direction.normalized;
         }
         
         private void UpdateUfoSpawnChecks()
@@ -146,8 +153,8 @@ namespace Asteroids
         private void OnDisable()
         {
             signalBus.TryUnsubscribe<SpawnNewWaveEvent>(OnSpawnNewWave);
-            signalBus.TryUnsubscribe<UfoDestroyedEvent>(OnSpawnNewWave);
-            signalBus.TryUnsubscribe<UfoRemovedSelfEvent>(OnSpawnNewWave);
+            signalBus.TryUnsubscribe<UfoDestroyedEvent>(UpdateUfoSpawnChecks);
+            signalBus.TryUnsubscribe<UfoRemovedSelfEvent>(UpdateUfoSpawnChecks);
             
             if (spawnWaveCoroutine != null)
             {
