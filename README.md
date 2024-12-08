@@ -1,37 +1,57 @@
-# trailmix-asteroids
-Clone of the class arcade game Asteroids (1979) for the Trailmix take-home assignment.
+# **Trailmix-Asteroids**  
+A clone of the classic arcade game **Asteroids (1979)**, developed as a take-home assignment for Trailmix.
 
-### Controls:
-**Movement**
-- 'W' / 'Up arrow' -> forward thrust
-- 'A' / 'Left arrow' -> rotate left
-- 'D' / 'Right arrow' -> rotate Right
-- 'S' / 'Down arrow' -> hyperspace
+---
 
-**Firing**
-- 'Spacebar' / 'LMB' -> fire projectile
+## **Controls**
 
-### Implementation details
+### **Movement**  
+- **`W` / `Up Arrow`**: Forward thrust  
+- **`A` / `Left Arrow`**: Rotate left  
+- **`D` / `Right Arrow`**: Rotate right  
+- **`S` / `Down Arrow`**: Hyperspace  
 
-#### Core mechanics:
-All core game mechanics have been implemented, such as:
-- Player ship and all functionality (movement, projectile firing, 'hyperspace' travel)
-- Asteroids and all functionality (three sizes, movement, splitting after being destroyed)
-- UFOs and all functionality (two sizes, dynamic movement, projectile firing)
+### **Firing**  
+- **`Spacebar` / `Left Mouse Button (LMB)`**: Fire projectile  
 
-#### Additional feature:
+---
 
-**Power-ups!**
-- After destroying a UFO, there is a chance that they will drop a power-up at their position.
-- Driving into this with your ship will then apply that power-up, changing your active weapon's behaviour (e.g. instead of the default fire, you will be able to fire rapidly instead).
-- Implemented power-ups: rapid fire, shotgun
+## **Implementation details**  
 
-#### Other work:
-- Extensive content tests covering all data objects (Window > General > Test Runner)
-- Score (rewarded for destroying asteroids + UFOs which is reflected in the UI)
+### **Primary game mode**  
+All core game mechanics from the original game mode have been implemented, including:  
 
-#### Plugins used:
-- **Zenject** -> third-party dependency injection framework (implementation)
-- Unity’s **Input System** -> used for movement, shooting, etc.
-- Unity’s **TextMeshPro** -> used for UI
-- Unity’s **Testing Framework** -> to enable Editor tests
+- **Controllable player ship**: Movement, projectile firing, and hyperspace travel.  
+- **Asteroids**: Three different sizes with movement and splitting behaviour after being destroyed.  
+- **UFOs**: Two different sizes with dynamic movement and the ability to fire projectiles.
+- **Lives system**: Displayed in the UI. If the player has any additional lives, they will respawn after being destroyed.
+
+### **New feature**  
+
+#### **Power-ups!**
+Power-ups that change the player ship's projectile firing behaviour.
+
+After destroying a UFO, there’s a random chance that it will drop a power-up at its position.  
+
+To activate it, simply drive it with your ship.
+
+The power-up will disappear if the player fails to reach it in time.
+
+**Implemented power-ups**:
+
+- **Rapid fire**: Increases firing speed.
+- **Shotgun**: Fires multiple projectiles in a spread pattern.
+
+### **Additional work**  
+
+- **Content tests**: Comprehensive test coverage of all data objects (accessible via **Window > General > Test Runner**).  
+- **Scoring system**: Points are awarded for destroying asteroids and UFOs, displayed in the UI.
+
+---
+
+## **Plugins & frameworks used**  
+
+- **Zenject**: Third-party dependency injection framework.  
+- **Unity Input System**: Handles player input for movement, shooting, and power-ups.  
+- **TextMeshPro**: Manages UI elements like the score display.  
+- **Unity Test Framework**: Enables automated Editor tests.
