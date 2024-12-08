@@ -21,7 +21,7 @@ namespace Asteroids
             pushEvent = pushCallback;
         }
         
-        public void SetProjectileData(ProjectileData data)
+        public void SetProjectileData(ProjectileData data, Vector2 direction)
         {
             projectileData = data;
             
@@ -37,6 +37,8 @@ namespace Asteroids
                     behaviours.Add(behaviourData, behaviourComponent);
                 }
             }
+            
+            Fire(direction);
         }
         
         private void Awake()
@@ -79,9 +81,9 @@ namespace Asteroids
             }
         }
         
-        public void Fire(Vector2 velocity)
+        public void Fire(Vector2 direction)
         {
-            rigidbody2d.velocity = velocity;
+            rigidbody2d.velocity = direction;
         }
     }
 }

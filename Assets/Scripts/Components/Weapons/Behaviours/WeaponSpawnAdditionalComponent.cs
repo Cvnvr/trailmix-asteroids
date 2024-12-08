@@ -26,12 +26,14 @@ namespace Asteroids
         {
             canSpawn = false;
             hasSpawned = true;
+            
+            // Fire the left projectile
+            var leftRotation = Quaternion.AngleAxis(angleOffset, Vector3.forward) * spawnData.SpawnTransform.rotation;
+            spawnData.PopCallback?.Invoke(spawnData.SpawnTransform.position, leftRotation, leftRotation * Vector2.up);
 
-            var leftRotation = Quaternion.Euler(0, 0, spawnData.SpawnTransform.rotation.eulerAngles.z - angleOffset);
-            var rightRotation = Quaternion.Euler(0, 0, spawnData.SpawnTransform.rotation.eulerAngles.z + angleOffset);
-
-            spawnData.PopCallback?.Invoke(spawnData.SpawnTransform.position, leftRotation);
-            spawnData.PopCallback?.Invoke(spawnData.SpawnTransform.position, rightRotation);
+            // Fire the right projectile
+            var rightRotation = Quaternion.AngleAxis(-angleOffset, Vector3.forward) * spawnData.SpawnTransform.rotation;
+            spawnData.PopCallback?.Invoke(spawnData.SpawnTransform.position, rightRotation, rightRotation * Vector2.up);
 
             Reset();
         }

@@ -10,7 +10,7 @@ namespace Asteroids
     public struct WeaponSpawnData
     {
         public Transform SpawnTransform;
-        public Action<Vector2, Quaternion> PopCallback;
+        public Action<Vector2, Quaternion, Vector2> PopCallback;
     }
     
     public class PlayerShooterController : BasePooler<Projectile>
@@ -84,8 +84,14 @@ namespace Asteroids
             return new WeaponSpawnData
             {
                 SpawnTransform = shipNozzle,
-                PopCallback = (position, rotation) => Pop(position, rotation)
+                PopCallback = SpawnFromBehaviourComponent
             };
+        }
+
+        private void SpawnFromBehaviourComponent(Vector2 position, Quaternion rotation, Vector2 direction)
+        {
+            var projectile = Pop(position, rotation);
+            projectile.SetProjectileData(activeWeaponData.ProjectileData, direction * activeWeaponData.Speed);
         }
 
         private void TryShoot()
@@ -96,7 +102,9 @@ namespace Asteroids
             if (activeWeaponData == null)
                 return;
             
-            Pop(shipNozzle.position, shipNozzle.rotation);
+            var projectile = Pop(shipNozzle.position, shipNozzle.rotation);
+            projectile.SetProjectileData(activeWeaponData.ProjectileData, shipNozzle.up * activeWeaponData.Speed);
+            
             OnFire();
             
             if (shootDelayCoroutine != null)
@@ -143,14 +151,6 @@ namespace Asteroids
                 shipNozzle.rotation, 
                 null
             ).GetComponent<Projectile>(); 
-        }
-
-        protected override void ActivateObject(Projectile item)
-        {
-            base.ActivateObject(item);
-            
-            item.SetProjectileData(activeWeaponData.ProjectileData);
-            item.Fire(shipNozzle.up * activeWeaponData.Speed);
         }
         
         private void OnDisable()

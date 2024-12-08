@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileData: {fileID: 11400000, guid: b9c92b0ebe77d4941a8332723a456fda, type: 2}
   speed: 14
-  delay: 0.1
+  delay: 0.2
   behaviourData: []

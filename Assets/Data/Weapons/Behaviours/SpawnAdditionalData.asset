@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19f0865c31594f82953ac9155aaad43a, type: 3}
   m_Name: SpawnAdditionalData
   m_EditorClassIdentifier: 
-  angleOffset: 35
-  spawnDelay: 0.15
+  angleOffset: 15
+  spawnDelay: 0
