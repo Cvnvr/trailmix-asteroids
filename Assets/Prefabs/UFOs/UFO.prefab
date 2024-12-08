@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2327050465814444982}
   m_Layer: 6
   m_Name: UFO
-  m_TagString: Asteroid
+  m_TagString: UFO
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -16,8 +16,10 @@ namespace Asteroids
                     var collisionComponent = new ProjectileDestroySelfAfterCollisionComponent();
                     collisionComponent.Init(pushCallback);
                     return collisionComponent;
-                case ProjectileDestroyOtherAfterCollisionData:
-                    return new ProjectileDestroyOtherAfterCollisionComponent();
+                case ProjectileDestroyOtherAfterCollisionData destroyOtherAfterCollision:
+                    var destroyOtherComponent = new ProjectileDestroyOtherAfterCollisionComponent();
+                    destroyOtherComponent.Setup(pushCallback, destroyOtherAfterCollision.TagsToIgnore);
+                    return destroyOtherComponent;
                 default:
                     return null;
             }

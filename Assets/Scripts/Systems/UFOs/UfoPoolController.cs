@@ -6,13 +6,19 @@ namespace Asteroids
 {
     public class UfoPoolController : MonoBehaviour
     {
+        [Header("UFOs")]
         [SerializeField] private PoolData poolData;
         [SerializeField] private UfoData[] ufoData;
 
+        [Header("UFO Projectiles")]
+        [SerializeField] private PoolData projectilePoolData;
+        [SerializeField] private WeaponData weaponData;
+        
         [Inject] private DiContainer container;
         [Inject] private SignalBus signalBus;
 
         private Dictionary<UfoType, EnemyPooler> pools;
+        private UfoProjectilePooler projectilePool;
         
         [Inject]
         private void OnInject()
@@ -29,6 +35,9 @@ namespace Asteroids
                 pool.Init(data, poolData);
                 pools.Add(data.UfoType, pool);
             }
+            
+            projectilePool = container.InstantiateComponent<UfoProjectilePooler>(gameObject);
+            projectilePool.Init(weaponData, poolData);
         }
 
         private void OnTrySpawnUfo(UfoSpawnEvent evt)
@@ -48,7 +57,7 @@ namespace Asteroids
                 return;
             }
             
-            ufo.Setup(randomUfoData, evt.Direction);
+            ufo.Setup(randomUfoData, evt.Direction, projectilePool.SpawnProjectile);
                 
             evt.SuccessCallback?.Invoke(true);
         }

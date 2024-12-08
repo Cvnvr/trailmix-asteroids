@@ -76,14 +76,12 @@ namespace Asteroids
             return new WeaponSpawnComponent
             {
                 SpawnTransform = shipNozzle,
-                PopCallback = SpawnFromBehaviourComponent
+                PopCallback = projectileSpawnData =>
+                {
+                    var projectile = Pop(projectileSpawnData.Position, projectileSpawnData.Rotation);
+                    projectile.SetProjectileData(activeWeaponData.ProjectileData, projectileSpawnData.Direction * activeWeaponData.Speed);
+                }
             };
-        }
-
-        private void SpawnFromBehaviourComponent(ProjectileSpawnData data)
-        {
-            var projectile = Pop(data.Position, data.Rotation);
-            projectile.SetProjectileData(activeWeaponData.ProjectileData, data.Direction * activeWeaponData.Speed);
         }
 
         private void TryShoot()

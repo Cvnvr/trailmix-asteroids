@@ -9,11 +9,4 @@ namespace Asteroids
         public Transform SpawnTransform;
         public System.Action<ProjectileSpawnData> PopCallback;
     }
-
-    public struct ProjectileSpawnData
-    {
-        public Vector2 Position;
-        public Quaternion Rotation;
-        public Vector2 Direction;
-    }
 }

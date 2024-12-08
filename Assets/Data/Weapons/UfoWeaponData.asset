@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ea9fda7758c4bf8ba3ebeb4a7242c11, type: 3}
-  m_Name: DefaultDestroyOtherAfterCollision
+  m_Script: {fileID: 11500000, guid: 11033555135a4c8da048176e05ddafc7, type: 3}
+  m_Name: UfoWeaponData
   m_EditorClassIdentifier: 
-  tagsToIgnore:
-  - Player
+  projectileData: {fileID: 11400000, guid: 208dd7265239f4ddba5f8618d1b5bdf3, type: 2}
+  speed: 8
+  delay: 0.4
+  behaviourData: []

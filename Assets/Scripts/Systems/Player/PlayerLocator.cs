@@ -21,9 +21,16 @@ namespace Asteroids
             player = evt.Player;
         }
         
-        public Vector2 GetPlayerPosition()
+        public bool TryGetPlayerPosition(out Vector2 position)
         {
-            return player == null ? Vector2.zero : player.transform.position;
+            if (player == null)
+            {
+                position = Vector2.zero;
+                return false;
+            }
+
+            position = player.transform.position;
+            return true;
         }
         
         public void Dispose()
