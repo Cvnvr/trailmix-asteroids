@@ -19,6 +19,6 @@ MonoBehaviour:
   changeDirectionInterval: 2
   changeDirectionTolerance: 0.75
   chanceOfDroppingPowerUp: 0.5
-  timeBetweenShots: 1
+  timeBetweenShots: 2.5
   shouldTargetPlayer: 1
   playerTargetDirectionTolerance: 0.5

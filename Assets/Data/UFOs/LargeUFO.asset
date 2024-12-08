@@ -18,7 +18,7 @@ MonoBehaviour:
   ufoType: 1
   changeDirectionInterval: 3
   changeDirectionTolerance: 0.5
-  chanceOfDroppingPowerUp: 0.2
-  timeBetweenShots: 1.2
+  chanceOfDroppingPowerUp: 0.5
+  timeBetweenShots: 2
   shouldTargetPlayer: 0
   playerTargetDirectionTolerance: 0
