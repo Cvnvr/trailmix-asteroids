@@ -37,8 +37,8 @@ All core game mechanics from the original game mode have been implemented, inclu
 #### **Power-ups!**
 Power-ups that change the player ship's projectile firing behaviour.
 
-- After destroying a UFO, there’s a random chance that it will drop a power-up at its position.  
-- To activate it, simply drive it with your ship.
+- After destroying a UFO, there’s a chance that it will drop a power-up at its position.  
+- To activate it, simply drive through it with your ship.
 - The power-up will disappear if the player fails to reach it in time.
 
 - **Implemented power-ups**:
