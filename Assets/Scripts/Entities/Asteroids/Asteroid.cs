@@ -1,4 +1,5 @@
 using System;
+using Asteroids.Utils;
 using UnityEngine;
 using Zenject;
 
@@ -28,8 +29,8 @@ namespace Asteroids
             this.data = data;
             spriteRenderer.sprite = data.Sprites[UnityEngine.Random.Range(0, data.Sprites.Length)];
 
-            originalDirection = direction;
-            Move(direction);
+            originalDirection = (direction + VectorUtils.GetRandomVectorWithinTolerance(1f)).normalized;
+            Move(originalDirection);
         }
         
         public void InitPoolable(Action<Asteroid> pushCallback)

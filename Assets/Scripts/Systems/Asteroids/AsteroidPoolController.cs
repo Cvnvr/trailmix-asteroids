@@ -40,9 +40,12 @@ namespace Asteroids
                 Debug.LogWarning($"[{nameof(UfoPoolController)}.{nameof(OnAsteroidSpawn)}] Attempted to spawn an Asteroid with invalid data");
                 return;
             }
-            
-            if (pools == null || !pools.TryGetValue(evt.AsteroidData.AsteroidType, out var pool)) 
+
+            if (pools == null || !pools.TryGetValue(evt.AsteroidData.AsteroidType, out var pool))
+            {
+                Debug.LogWarning($"[{nameof(UfoPoolController)}.{nameof(OnAsteroidSpawn)}] Attempted to spawn an Asteroid with invalid pool");
                 return;
+            }
             
             for (var i = 0; i < evt.NumberToSpawn; i++)
             {
@@ -57,22 +60,20 @@ namespace Asteroids
 
         private void OnAsteroidDestroyed(AsteroidDestroyedEvent evt)
         {
-            if (evt.AsteroidData.DoesSpawnMoreOnDestruction)
+            // If this asteroid doesn't spawn anymore, check to see if it was the last one
+            if (!evt.AsteroidData.DoesSpawnMoreOnDestruction)
             {
-                for (var i = 0; i < evt.AsteroidData.NumberToSpawn; i++)
-                {
-                    OnAsteroidSpawn(new AsteroidSpawnEvent()
-                    {
-                        AsteroidData = evt.AsteroidData.SpawnedAsteroidData,
-                        NumberToSpawn = 1,
-                        Position = evt.Position,
-                        Direction = (evt.Direction + VectorUtils.GetRandomVectorWithinTolerance(1f)).normalized
-                    });
-                }
+                ValidateIfEndOfWave();
                 return;
             }
 
-            ValidateIfEndOfWave();
+            OnAsteroidSpawn(new AsteroidSpawnEvent()
+            {
+                AsteroidData = evt.AsteroidData.SpawnedAsteroidData,
+                NumberToSpawn = evt.AsteroidData.NumberToSpawn,
+                Position = evt.Position,
+                Direction = evt.Direction
+            });
         }
 
         private void ValidateIfEndOfWave()

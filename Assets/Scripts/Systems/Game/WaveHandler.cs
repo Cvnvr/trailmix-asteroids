@@ -81,6 +81,8 @@ namespace Asteroids
         
         private void SpawnWave(uint numberToSpawn)
         {
+            Debug.Log($"[{nameof(WaveHandler)}.{nameof(SpawnWave)}] Starting wave {currentWave}. Spawning {numberToSpawn} asteroids");
+            
             for (var i = 0; i < numberToSpawn; i++)
             {
                 var randomSpawnPosition = screenBoundsCalculator.GetRandomOffScreenPosition();

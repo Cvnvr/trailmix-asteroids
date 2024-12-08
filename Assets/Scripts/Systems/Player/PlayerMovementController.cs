@@ -65,7 +65,7 @@ namespace Asteroids
                 data.MaxRotationalSpeed);
             rigidbody2d.AddTorque(rotation);
             
-            if (Mathf.Abs(rotationalInput) < Mathf.Epsilon)
+            if (Mathf.Abs(rotationalInput) <= 0)
             {
                 rigidbody2d.angularVelocity = 0;
             }
