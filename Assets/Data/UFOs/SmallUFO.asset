@@ -16,9 +16,9 @@ MonoBehaviour:
   movementSpeed: 2
   score: 1000
   ufoType: 0
-  timeBetweenShots: 1
   changeDirectionInterval: 2
   changeDirectionTolerance: 0.75
   chanceOfDroppingPowerUp: 0.5
+  timeBetweenShots: 1
   shouldTargetPlayer: 1
-  playerTargetDirectionTolerance: -1
+  playerTargetDirectionTolerance: 0.5

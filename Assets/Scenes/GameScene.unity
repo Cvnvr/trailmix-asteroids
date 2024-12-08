@@ -863,6 +863,8 @@ MonoBehaviour:
   ufoData:
   - {fileID: 11400000, guid: eabdbed0d385440d7a3284c7ad369810, type: 2}
   - {fileID: 11400000, guid: 0fae20cc7f5844ac3ad0c4413ee6c2d4, type: 2}
+  projectilePoolData: {fileID: 11400000, guid: deb3962012fbc4490b3e21609bccc339, type: 2}
+  weaponData: {fileID: 11400000, guid: d5a28d5406a6f4c2aae5c6041893ae19, type: 2}
 --- !u!1 &913307796
 GameObject:
   m_ObjectHideFlags: 0

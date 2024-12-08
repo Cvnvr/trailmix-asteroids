@@ -9,6 +9,7 @@ namespace Asteroids
     public class Ufo : BaseEnemy, IDestructible, IRemovable, IPlayerCollideable
     {
         [Inject] private PlayerLocator playerLocator;
+        [Inject] private ScreenBoundsCalculator screenBoundsCalculator;
         [Inject] private SignalBus signalBus;
 
         private Rigidbody2D rigidbody2d;
@@ -41,12 +42,16 @@ namespace Asteroids
             {
                 ChangeDirection();
             }
-
-            cachedTimeBetweenShots -= Time.deltaTime;
-            if (cachedTimeBetweenShots <= 0)
+            
+            // Only fire when the ufo is visible on the screen
+            if (!screenBoundsCalculator.IsOutsideScreenBounds(transform.position))
             {
-                Shoot();
-                cachedTimeBetweenShots = data.TimeBetweenShots;
+                cachedTimeBetweenShots -= Time.deltaTime;
+                if (cachedTimeBetweenShots <= 0)
+                {
+                    Shoot();
+                    cachedTimeBetweenShots = data.TimeBetweenShots;
+                }
             }
         }
 
