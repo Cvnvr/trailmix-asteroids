@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,13 +5,6 @@ using Zenject;
 
 namespace Asteroids
 {
-    // TODO change this?
-    public struct WeaponSpawnData
-    {
-        public Transform SpawnTransform;
-        public Action<Vector2, Quaternion, Vector2> PopCallback;
-    }
-    
     public class PlayerShooterController : BasePooler<Projectile>
     {
         [SerializeField] private WeaponData defaultWeaponData;
@@ -71,27 +63,27 @@ namespace Asteroids
             foreach (var behaviourData in weaponData.BehaviourData)
             {
                 var behaviourComponent = weaponBehaviourFactory.GetBoundComponent(
-                    GetWeaponSpawnData(),
+                    GetWeaponSpawnComponent(),
                     behaviourData);
                 additionalComponents.Add(behaviourData, behaviourComponent);
             }
 
             hasAddedBehaviours = true;
         }
-
-        private WeaponSpawnData GetWeaponSpawnData()
+        
+        private WeaponSpawnComponent GetWeaponSpawnComponent()
         {
-            return new WeaponSpawnData
+            return new WeaponSpawnComponent
             {
                 SpawnTransform = shipNozzle,
                 PopCallback = SpawnFromBehaviourComponent
             };
         }
 
-        private void SpawnFromBehaviourComponent(Vector2 position, Quaternion rotation, Vector2 direction)
+        private void SpawnFromBehaviourComponent(ProjectileSpawnData data)
         {
-            var projectile = Pop(position, rotation);
-            projectile.SetProjectileData(activeWeaponData.ProjectileData, direction * activeWeaponData.Speed);
+            var projectile = Pop(data.Position, data.Rotation);
+            projectile.SetProjectileData(activeWeaponData.ProjectileData, data.Direction * activeWeaponData.Speed);
         }
 
         private void TryShoot()

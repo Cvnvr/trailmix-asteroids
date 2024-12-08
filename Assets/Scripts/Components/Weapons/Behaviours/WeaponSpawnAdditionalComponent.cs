@@ -11,11 +11,11 @@ namespace Asteroids
         private bool hasSpawned;
         private float delay;
 
-        private WeaponSpawnData spawnData;
+        private WeaponSpawnComponent weaponSpawnComponent;
         
-        public void Setup(WeaponSpawnData spawnData, float angleOffset, float spawnDelay)
+        public void Setup(WeaponSpawnComponent weaponSpawnComponent, float angleOffset, float spawnDelay)
         {
-            this.spawnData = spawnData;
+            this.weaponSpawnComponent = weaponSpawnComponent;
             this.angleOffset = angleOffset;
             originalSpawnDelay = spawnDelay;
 
@@ -28,12 +28,22 @@ namespace Asteroids
             hasSpawned = true;
             
             // Fire the left projectile
-            var leftRotation = Quaternion.AngleAxis(angleOffset, Vector3.forward) * spawnData.SpawnTransform.rotation;
-            spawnData.PopCallback?.Invoke(spawnData.SpawnTransform.position, leftRotation, leftRotation * Vector2.up);
+            var leftRotation = Quaternion.AngleAxis(angleOffset, Vector3.forward) * weaponSpawnComponent.SpawnTransform.rotation;
+            weaponSpawnComponent.PopCallback?.Invoke(new ProjectileSpawnData()
+            {
+                Position = weaponSpawnComponent.SpawnTransform.position,
+                Rotation = leftRotation, 
+                Direction = leftRotation * Vector2.up
+            });
 
             // Fire the right projectile
-            var rightRotation = Quaternion.AngleAxis(-angleOffset, Vector3.forward) * spawnData.SpawnTransform.rotation;
-            spawnData.PopCallback?.Invoke(spawnData.SpawnTransform.position, rightRotation, rightRotation * Vector2.up);
+            var rightRotation = Quaternion.AngleAxis(-angleOffset, Vector3.forward) * weaponSpawnComponent.SpawnTransform.rotation;
+            weaponSpawnComponent.PopCallback?.Invoke(new ProjectileSpawnData()
+            {
+                Position = weaponSpawnComponent.SpawnTransform.position,
+                Rotation = rightRotation, 
+                Direction = rightRotation * Vector2.up
+            });
 
             Reset();
         }

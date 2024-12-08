@@ -2,14 +2,14 @@ namespace Asteroids
 {
     public class WeaponBehaviourFactory : IWeaponBehaviourFactory
     {
-        public IWeaponBehaviour GetBoundComponent(WeaponSpawnData spawnData, WeaponBehaviourData weaponBehaviourData)
+        public IWeaponBehaviour GetBoundComponent(WeaponSpawnComponent weaponSpawnComponent, WeaponBehaviourData weaponBehaviourData)
         {
             switch (weaponBehaviourData)
             {
                 case WeaponSpawnAdditionalData spawnAdditionalData:
                     var spawnAdditionalComponent = new WeaponSpawnAdditionalComponent();
                     spawnAdditionalComponent.Setup(
-                        spawnData,
+                        weaponSpawnComponent,
                         spawnAdditionalData.AngleOffset, 
                         spawnAdditionalData.SpawnDelay);
                     return spawnAdditionalComponent;

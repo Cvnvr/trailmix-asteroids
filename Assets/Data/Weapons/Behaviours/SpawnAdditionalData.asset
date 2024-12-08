@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: SpawnAdditionalData
   m_EditorClassIdentifier: 
   angleOffset: 15
-  spawnDelay: 0
+  spawnDelay: 0.02
