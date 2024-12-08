@@ -15,6 +15,7 @@ MonoBehaviour:
   prefab: {fileID: 8720733016505894913, guid: 6789b04ca911b4b45800c256dd8f715c, type: 3}
   movementSpeed: 1.2
   score: 50
+  spawnDirectionTolerance: 1.5
   asteroidType: 1
   sprites:
   - {fileID: 21300000, guid: 189b09e5e2de25048ac5a5dcf80f9119, type: 3}

@@ -17,7 +17,7 @@ MonoBehaviour:
   asteroidsAdditionalWaveSpawnCount: 2
   asteroidsMaxSpawnCount: 10
   timeBetweenWaves: 1
-  ufoChanceToSpawn: 0.5
-  ufoMaxSpawnCount: 2
+  ufoChanceToSpawn: 0.4
+  ufoMaxSpawnCount: 1
   ufoSpawnCheckTimeDelay: 3
   spawnDirectionTolerance: 1

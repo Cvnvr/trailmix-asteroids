@@ -83,17 +83,11 @@ namespace Asteroids
         {
             Debug.Log($"[{nameof(WaveHandler)}.{nameof(SpawnWave)}] Starting wave {currentWave}. Spawning {numberToSpawn} asteroids");
             
-            for (var i = 0; i < numberToSpawn; i++)
+            signalBus.TryFire(new AsteroidSpawnEvent()
             {
-                var randomSpawnPosition = screenBoundsCalculator.GetRandomOffScreenPosition();
-                signalBus.TryFire(new AsteroidSpawnEvent()
-                {
-                    AsteroidData = levelSetupData.AsteroidToSpawn,
-                    NumberToSpawn = 1,
-                    Position = randomSpawnPosition,
-                    Direction = GetRandomDirection(randomSpawnPosition, levelSetupData.SpawnDirectionTolerance)
-                });
-            }
+                AsteroidData = levelSetupData.AsteroidToSpawn,
+                NumberToSpawn = numberToSpawn
+            });
         }
 
         private IEnumerator SpawnWaveAfterDelay(uint numberToSpawn, float delay)
@@ -122,11 +116,8 @@ namespace Asteroids
 
         private void SpawnUfo()
         {
-            var randomSpawnPosition = screenBoundsCalculator.GetRandomOffScreenPosition();
             signalBus.TryFire(new UfoSpawnEvent()
             {
-                Position = randomSpawnPosition,
-                Direction = GetRandomDirection(randomSpawnPosition, levelSetupData.SpawnDirectionTolerance),
                 SuccessCallback = (onSuccess) =>
                 {
                     if (onSuccess)
@@ -135,13 +126,6 @@ namespace Asteroids
                     }
                 }
             });
-        }
-        
-        private Vector2 GetRandomDirection(Vector2 position, float tolerance)
-        {
-            var direction = (screenBoundsCalculator.GetCenterOfScreen() - position).normalized;
-            direction += VectorUtils.GetRandomVectorWithinTolerance(tolerance);
-            return direction.normalized;
         }
         
         private void UpdateUfoSpawnChecks()

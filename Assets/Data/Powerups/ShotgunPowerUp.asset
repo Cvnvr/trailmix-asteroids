@@ -16,4 +16,4 @@ MonoBehaviour:
   weaponData: {fileID: 11400000, guid: 79591c731c44941c182c5c56a31549ec, type: 2}
   sprite: {fileID: 21300000, guid: 68ac173d4f6c14db1b525758c69a4456, type: 3}
   timerEnabled: 1
-  timer: 3
+  timer: 5

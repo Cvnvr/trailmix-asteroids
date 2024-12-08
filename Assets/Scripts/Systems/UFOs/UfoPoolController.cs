@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Asteroids.Utils;
 using UnityEngine;
 using Zenject;
 
@@ -15,6 +16,7 @@ namespace Asteroids
         [SerializeField] private WeaponData weaponData;
         
         [Inject] private DiContainer container;
+        [Inject] private ScreenBoundsCalculator screenBoundsCalculator;
         [Inject] private SignalBus signalBus;
 
         private Dictionary<UfoType, EnemyPooler> pools;
@@ -46,20 +48,31 @@ namespace Asteroids
 
             if (pools == null || !pools.TryGetValue(randomUfoData.UfoType, out var pool))
             {
+                Debug.LogWarning($"[{nameof(UfoPoolController)}.{nameof(OnTrySpawnUfo)}] Failed to spawn a UFO");
                 evt.SuccessCallback?.Invoke(false);
                 return;
             }
             
-            var ufo = pool.Pop(evt.Position, Quaternion.identity) as Ufo;
+            var randomSpawnPosition = screenBoundsCalculator.GetRandomOffScreenPosition();
+            var ufo = (Ufo)pool.Pop(randomSpawnPosition, Quaternion.identity);
             if (!ufo)
             {
+                Debug.LogWarning($"[{nameof(UfoPoolController)}.{nameof(OnTrySpawnUfo)}] Failed to spawn a UFO");
                 evt.SuccessCallback?.Invoke(false);
                 return;
             }
             
-            ufo.Setup(randomUfoData, evt.Direction, projectilePool.SpawnProjectile);
+            var randomDirection = GetRandomDirection(randomSpawnPosition, randomUfoData.SpawnDirectionTolerance);
+            ufo.Setup(randomUfoData, randomDirection, projectilePool.SpawnProjectile);
                 
             evt.SuccessCallback?.Invoke(true);
+        }
+        
+        private Vector2 GetRandomDirection(Vector2 position, float tolerance)
+        {
+            var direction = (screenBoundsCalculator.GetCenterOfScreen() - position).normalized;
+            direction += VectorUtils.GetRandomVectorWithinTolerance(tolerance);
+            return direction.normalized;
         }
         
         private void OnDisable()

@@ -30,10 +30,6 @@ namespace Asteroids
 
         [Tooltip("Timed delay (in seconds) between UFO spawn checks")]
         [SerializeField] private float ufoSpawnCheckTimeDelay;
-
-        [Header("Other")]
-        [Tooltip("The amount of tolerance (either side) to apply to the direction after spawning")]
-        [SerializeField] private float spawnDirectionTolerance;
         
         public AsteroidData AsteroidToSpawn => asteroidToSpawn;
         public uint AsteroidsInitialSpawnCount => asteroidsInitialSpawnCount;
@@ -44,7 +40,5 @@ namespace Asteroids
         public float UfoChanceToSpawn => ufoChanceToSpawn;
         public uint UfoMaxSpawnCount => ufoMaxSpawnCount;
         public float UfoSpawnCheckTimeDelay => ufoSpawnCheckTimeDelay;
-        
-        public float SpawnDirectionTolerance => spawnDirectionTolerance;
     }
 }

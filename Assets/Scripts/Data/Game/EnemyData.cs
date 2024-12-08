@@ -14,8 +14,12 @@ namespace Asteroids
         [Tooltip("How much score gets rewarded for destroying this enemy")]
         [SerializeField] private uint score;
         
+        [Tooltip("The amount of tolerance (either side) to apply to the direction after spawning")]
+        [SerializeField] private float spawnDirectionTolerance;
+        
         public GameObject Prefab => prefab;
         public float MovementSpeed => movementSpeed;
         public uint Score => score;
+        public float SpawnDirectionTolerance => spawnDirectionTolerance;
     }
 }

@@ -71,8 +71,6 @@ namespace Asteroids
         
         public void Destroy()
         {
-            ReturnToPool();
-
             signalBus.TryFire(new AsteroidDestroyedEvent()
             {
                 AsteroidData = data,
@@ -84,6 +82,8 @@ namespace Asteroids
             {
                 signalBus.TryFire(new ScoreAwardedEvent() { Score = data.Score });
             }
+            
+            ReturnToPool();
         }
     }
 }

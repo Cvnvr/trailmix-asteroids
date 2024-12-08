@@ -27,6 +27,29 @@ namespace Asteroids.Editor.Tests
             
             Assert.IsTrue(isValid, $"The following {nameof(UfoData)} objects are missing a 'Prefab' reference!");
         }
+        
+        [Test]
+        public void Validate_SpawnDirectionToleranceIsValid()
+        {
+            var data = GetUfoData();
+            if (data == null)
+            {
+                Assert.Pass($"No {nameof(UfoData)} found.");
+                return;
+            }
+            
+            var isValid = true;
+            foreach (var ufo in data)
+            {
+                if (ufo.SpawnDirectionTolerance < 0)
+                {
+                    Debug.LogError($"{ufo.name} - SpawnDirectionTolerance is less than 0.");
+                    isValid = false;
+                }
+            }
+            
+            Assert.IsTrue(isValid, $"The following {nameof(UfoData)} objects have an invalid 'SpawnDirectionTolerance' value set!");
+        }
 
         [Test]
         public void Validate_TimeBetweenShotsIsValid()

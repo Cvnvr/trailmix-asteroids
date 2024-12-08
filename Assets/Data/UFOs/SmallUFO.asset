@@ -15,6 +15,7 @@ MonoBehaviour:
   prefab: {fileID: 3396729593589980013, guid: 425a43555aa034913bacf788fb170121, type: 3}
   movementSpeed: 2
   score: 1000
+  spawnDirectionTolerance: 1
   ufoType: 0
   changeDirectionInterval: 2
   changeDirectionTolerance: 0.75

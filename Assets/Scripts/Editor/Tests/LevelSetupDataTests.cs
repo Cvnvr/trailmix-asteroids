@@ -146,29 +146,6 @@ namespace Asteroids.Editor.Tests
             Assert.IsTrue(isValid, $"The following {nameof(LevelSetupData)} objects have an invalid 'UfoSpawnCheckTimeDelay' value set!");
         }
         
-        [Test]
-        public void Validate_SpawnDirectionToleranceIsValid()
-        {
-            var levelSetupData = GetLevelSetupData();
-            if (levelSetupData == null)
-            {
-                Assert.Pass($"No {nameof(LevelSetupData)} found.");
-                return;
-            }
-            
-            var isValid = true;
-            foreach (var data in levelSetupData)
-            {
-                if (data.SpawnDirectionTolerance < 0)
-                {
-                    Debug.LogError($"{data.name} - SpawnDirectionTolerance is less than 0.");
-                    isValid = false;
-                }
-            }
-            
-            Assert.IsTrue(isValid, $"The following {nameof(LevelSetupData)} objects have an invalid 'SpawnDirectionTolerance' value set!");
-        }
-        
         private LevelSetupData[] GetLevelSetupData()
         {
             var levelSetupData = ScriptableObjectFinder.GetScriptableObjectsOfTypeInFolder<LevelSetupData>(AssetPaths.LevelSetupDataPath);

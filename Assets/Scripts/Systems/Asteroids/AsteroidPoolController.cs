@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Asteroids.Utils;
 using UnityEngine;
 using Zenject;
@@ -11,6 +12,7 @@ namespace Asteroids
         [SerializeField] private AsteroidData[] asteroidData;
 
         [Inject] private DiContainer container;
+        [Inject] private ScreenBoundsCalculator screenBoundsCalculator;
         [Inject] private SignalBus signalBus;
         
         private Dictionary<AsteroidType, EnemyPooler> pools;
@@ -37,25 +39,42 @@ namespace Asteroids
         {
             if (evt.AsteroidData == null)
             {
-                Debug.LogWarning($"[{nameof(UfoPoolController)}.{nameof(OnAsteroidSpawn)}] Attempted to spawn an Asteroid with invalid data");
+                Debug.LogWarning($"[{nameof(AsteroidPoolController)}.{nameof(OnAsteroidSpawn)}] Attempted to spawn an Asteroid with invalid data");
                 return;
             }
 
-            if (pools == null || !pools.TryGetValue(evt.AsteroidData.AsteroidType, out var pool))
+            for (var i = 0; i < evt.NumberToSpawn; i++)
             {
-                Debug.LogWarning($"[{nameof(UfoPoolController)}.{nameof(OnAsteroidSpawn)}] Attempted to spawn an Asteroid with invalid pool");
+                var randomSpawnPosition = screenBoundsCalculator.GetRandomOffScreenPosition();
+                var randomDirection = GetRandomDirection(randomSpawnPosition, evt.AsteroidData.SpawnDirectionTolerance);
+                SpawnAsteroid(evt.AsteroidData, randomSpawnPosition, randomDirection);
+            }
+        }
+
+        private void SpawnAsteroid(AsteroidData data, Vector2 position, Vector2 direction)
+        {
+            if (pools == null || !pools.TryGetValue(data.AsteroidType, out var pool))
+            {
+                Debug.LogWarning($"[{nameof(AsteroidPoolController)}.{nameof(OnAsteroidSpawn)}] Attempted to spawn an Asteroid with invalid pool");
                 return;
             }
             
-            for (var i = 0; i < evt.NumberToSpawn; i++)
+            var randomRotation = Quaternion.Euler(0, 0, Random.Range(0f, 361f));
+            var asteroid = (Asteroid)pool.Pop(position, randomRotation);
+            if (!asteroid)
             {
-                var randomRotation = Quaternion.Euler(0, 0, Random.Range(0f, 361f));
-                var asteroid = pool.Pop(evt.Position, randomRotation) as Asteroid;
-                if (asteroid)
-                {
-                    asteroid.Setup(evt.AsteroidData, evt.Direction);
-                }
+                Debug.LogWarning($"[{nameof(AsteroidPoolController)}.{nameof(OnAsteroidSpawn)}] Failed to spawn an Asteroid");
+                return;
             }
+
+            asteroid.Setup(data, direction);
+        }
+        
+        private Vector2 GetRandomDirection(Vector2 position, float tolerance)
+        {
+            var direction = (screenBoundsCalculator.GetCenterOfScreen() - position).normalized;
+            direction += VectorUtils.GetRandomVectorWithinTolerance(tolerance);
+            return direction.normalized;
         }
 
         private void OnAsteroidDestroyed(AsteroidDestroyedEvent evt)
@@ -67,31 +86,20 @@ namespace Asteroids
                 return;
             }
 
-            OnAsteroidSpawn(new AsteroidSpawnEvent()
+            for (var i = 0; i < evt.AsteroidData.NumberToSpawn; i++)
             {
-                AsteroidData = evt.AsteroidData.SpawnedAsteroidData,
-                NumberToSpawn = evt.AsteroidData.NumberToSpawn,
-                Position = evt.Position,
-                Direction = evt.Direction
-            });
+                SpawnAsteroid(evt.AsteroidData.SpawnedAsteroidData, evt.Position, evt.Direction);
+            }
         }
 
         private void ValidateIfEndOfWave()
         {
-            var isEmpty = true;
-            foreach (var pool in pools)
-            {
-                if (pool.Value.PushedCount > 0)
-                {
-                    isEmpty = false;
-                    break;
-                }
-            }
-
-            if (isEmpty)
-            {
-                signalBus.TryFire<SpawnNewWaveEvent>();
-            }
+            // get total count for all pools pushed count 
+            var totalPushedCount = pools.Values.Sum(pool => pool.PushedCount) - 1; // -1 for the asteroid that was just destroyed
+            if (totalPushedCount > 0)
+                return;
+            
+            signalBus.TryFire<SpawnNewWaveEvent>();
         }
 
         private void OnDisable()
