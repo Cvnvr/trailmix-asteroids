@@ -21,10 +21,7 @@ namespace Asteroids
         private void Start()
         {
             // Init the score value and UI
-            OnScoreAwarded(new ScoreAwardedEvent()
-            {
-                Score = 0
-            });
+            OnScoreAwarded(new ScoreAwardedEvent() { Score = 0 });
         }
 
         private void OnScoreAwarded(ScoreAwardedEvent evt)

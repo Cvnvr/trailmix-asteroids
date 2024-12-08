@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Asteroids
 {
-    [CreateAssetMenu(menuName = "Data/Player/HyperspaceData", fileName = "HyperspaceData")]
+    [CreateAssetMenu(menuName = "Data/Player/HyperspaceData", order = 4, fileName = "HyperspaceData")]
     public class PlayerHyperspaceData : ScriptableObject
     {
         [Tooltip("The duration of the hyperspace travel (in seconds)")]

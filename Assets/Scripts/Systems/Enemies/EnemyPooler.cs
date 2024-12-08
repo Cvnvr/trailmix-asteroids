@@ -11,7 +11,7 @@ namespace Asteroids
 
         protected override void Start()
         {
-            // Do nothing as Init() handles prefilling
+            // Do nothing as Init() handles pre-filling
         }
 
         public void Init(EnemyData data, PoolData poolData)

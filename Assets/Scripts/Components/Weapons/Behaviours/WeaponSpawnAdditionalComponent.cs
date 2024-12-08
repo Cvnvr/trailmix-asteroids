@@ -50,7 +50,6 @@ namespace Asteroids
         
         public void OnFire()
         {
-            // Begin counting down from the initial delay
             canSpawn = true;
         }
 

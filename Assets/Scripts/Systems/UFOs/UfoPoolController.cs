@@ -53,7 +53,7 @@ namespace Asteroids
                 return;
             }
             
-            var randomSpawnPosition = screenBoundsCalculator.GetRandomOffScreenPosition();
+            var randomSpawnPosition = screenBoundsCalculator.GetRandomPaddedScreenPosition();
             var ufo = (Ufo)pool.Pop(randomSpawnPosition, Quaternion.identity);
             if (!ufo)
             {

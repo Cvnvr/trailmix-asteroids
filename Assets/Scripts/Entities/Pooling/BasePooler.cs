@@ -44,7 +44,7 @@ namespace Asteroids
         {
             for (var i = 0; i < cachedPoolData.InitialPoolSize; i++)
             {
-                T obj = CreateObject();
+                var obj = CreateObject();
                 Push(obj);
             }
         }
@@ -122,11 +122,11 @@ namespace Asteroids
         
         public void Clear()
         {
-            foreach (T obj in inactiveObjects)
+            foreach (var obj in inactiveObjects)
             {
                 DestroyObject(obj);
             }
-            foreach (T obj in activeObjects)
+            foreach (var obj in activeObjects)
             {
                 DestroyObject(obj);
             }

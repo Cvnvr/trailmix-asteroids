@@ -8,10 +8,7 @@ namespace Asteroids
             {
                 case WeaponSpawnAdditionalData spawnAdditionalData:
                     var spawnAdditionalComponent = new WeaponSpawnAdditionalComponent();
-                    spawnAdditionalComponent.Setup(
-                        weaponSpawnComponent,
-                        spawnAdditionalData.AngleOffset, 
-                        spawnAdditionalData.SpawnDelay);
+                    spawnAdditionalComponent.Setup(weaponSpawnComponent, spawnAdditionalData.AngleOffset, spawnAdditionalData.SpawnDelay);
                     return spawnAdditionalComponent;
                 default:
                     return null;

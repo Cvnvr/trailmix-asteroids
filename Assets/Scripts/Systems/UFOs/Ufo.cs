@@ -32,6 +32,22 @@ namespace Asteroids
             collider2d = GetComponent<Collider2D>();
         }
 
+        public void Setup(UfoData ufoData, Vector2 direction, Action<ProjectileSpawnData> fireProjectileCallback)
+        {
+            isInitialised = false;
+            
+            data = ufoData;
+            originalDirection = direction;
+            fireProjectileEvent = fireProjectileCallback;
+
+            cachedChangeDirectionInterval = ufoData.ChangeDirectionInterval;
+            cachedTimeBetweenShots = ufoData.TimeBetweenShots;
+            
+            Move(direction);
+
+            isInitialised = true;
+        }
+        
         private void Update()
         {
             if (!isInitialised)
@@ -53,22 +69,6 @@ namespace Asteroids
                     cachedTimeBetweenShots = data.TimeBetweenShots;
                 }
             }
-        }
-
-        public void Setup(UfoData ufoData, Vector2 direction, Action<ProjectileSpawnData> fireProjectileCallback)
-        {
-            isInitialised = false;
-            
-            data = ufoData;
-            originalDirection = direction;
-            fireProjectileEvent = fireProjectileCallback;
-
-            cachedChangeDirectionInterval = ufoData.ChangeDirectionInterval;
-            cachedTimeBetweenShots = ufoData.TimeBetweenShots;
-            
-            Move(direction);
-
-            isInitialised = true;
         }
         
         public override void InitPoolable(Action<BaseEnemy> pushCallback)
@@ -112,11 +112,12 @@ namespace Asteroids
             
             if (data.ShouldTargetPlayer)
             {
+                // Fire at player
                 direction = GetPlayerDirection(playerPosition);
             }
             else
             {
-                // random direction
+                // Fire in random direction
                 direction = VectorUtils.GetRandomVector().normalized;
             }
 
@@ -157,7 +158,7 @@ namespace Asteroids
                 signalBus.TryFire(new PowerUpSpawnEvent() { Position = transform.position });
             }
 
-            signalBus.TryFire(new UfoDestroyedEvent() { Position = transform.position});
+            signalBus.TryFire<UfoDestroyedEvent>();
             
             if (data.Score > 0)
             {

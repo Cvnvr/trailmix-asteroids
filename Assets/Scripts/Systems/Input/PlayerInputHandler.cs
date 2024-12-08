@@ -69,13 +69,16 @@ namespace Asteroids
         public void Dispose()
         {
             if (playerInput == null)
-            {
                 return;
-            }
 
             playerInput.Player.ForwardThrust.performed -= OnForwardThrustInput;
+            playerInput.Player.ForwardThrust.canceled -= OnForwardThrustInput;
+
             playerInput.Player.Rotate.performed -= OnRotateInput;
+            playerInput.Player.Rotate.canceled -= OnRotateInput;
+
             playerInput.Player.Shoot.performed -= OnShootInput;
+            
             playerInput.Player.Hyperspace.performed -= OnHyperspaceInput;
             
             playerInput.Disable();

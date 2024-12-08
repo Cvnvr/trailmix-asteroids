@@ -57,7 +57,7 @@ namespace Asteroids
                    position.y < BottomSide;
         }
         
-        public bool IsOutsideOffScreenBounds(Vector2 position)
+        public bool IsOutsidePaddedScreenBounds(Vector2 position)
         {
             if (!isInitialised)
                 return false;
@@ -68,7 +68,7 @@ namespace Asteroids
                    position.y < BottomSidePadded;
         }
         
-        public Vector2 GetRandomOffScreenPosition()
+        public Vector2 GetRandomPaddedScreenPosition()
         {
             var xPos = 0f;
             var yPos = 0f;

@@ -19,7 +19,7 @@ namespace Asteroids
             if (removable == null)
                 return;
             
-            if (screenBoundsCalculator.IsOutsideOffScreenBounds(transform.position))
+            if (screenBoundsCalculator.IsOutsidePaddedScreenBounds(transform.position))
             {
                 removable.RemoveSelf();
             }

@@ -45,7 +45,7 @@ namespace Asteroids
 
             for (var i = 0; i < evt.NumberToSpawn; i++)
             {
-                var randomSpawnPosition = screenBoundsCalculator.GetRandomOffScreenPosition();
+                var randomSpawnPosition = screenBoundsCalculator.GetRandomPaddedScreenPosition();
                 var randomDirection = GetRandomDirection(randomSpawnPosition, evt.AsteroidData.SpawnDirectionTolerance);
                 SpawnAsteroid(evt.AsteroidData, randomSpawnPosition, randomDirection);
             }
@@ -55,7 +55,7 @@ namespace Asteroids
         {
             if (pools == null || !pools.TryGetValue(data.AsteroidType, out var pool))
             {
-                Debug.LogWarning($"[{nameof(AsteroidPoolController)}.{nameof(OnAsteroidSpawn)}] Attempted to spawn an Asteroid with invalid pool");
+                Debug.LogWarning($"[{nameof(AsteroidPoolController)}.{nameof(SpawnAsteroid)}] Attempted to spawn an Asteroid with invalid pool");
                 return;
             }
             
@@ -63,7 +63,7 @@ namespace Asteroids
             var asteroid = (Asteroid)pool.Pop(position, randomRotation);
             if (!asteroid)
             {
-                Debug.LogWarning($"[{nameof(AsteroidPoolController)}.{nameof(OnAsteroidSpawn)}] Failed to spawn an Asteroid");
+                Debug.LogWarning($"[{nameof(AsteroidPoolController)}.{nameof(SpawnAsteroid)}] Failed to spawn an Asteroid");
                 return;
             }
 
@@ -94,7 +94,7 @@ namespace Asteroids
 
         private void ValidateIfEndOfWave()
         {
-            // get total count for all pools pushed count 
+            // Get total count for all pools pushed count 
             var totalPushedCount = pools.Values.Sum(pool => pool.PushedCount) - 1; // -1 for the asteroid that was just destroyed
             if (totalPushedCount > 0)
                 return;

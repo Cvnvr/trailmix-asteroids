@@ -66,7 +66,7 @@ namespace Asteroids
                 null
             );
             
-            signalBus.TryFire(new PlayerNewSpawnEvent() { Player = activePlayer});
+            signalBus.TryFire(new PlayerNewSpawnEvent() { Player = activePlayer });
         }
         
         private IEnumerator SpawnAfterTimer()

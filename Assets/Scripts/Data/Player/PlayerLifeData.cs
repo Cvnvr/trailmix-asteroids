@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Asteroids
 {
-    [CreateAssetMenu(menuName = "Data/Player/LifeData", order = 3, fileName = "LifeData")]
+    [CreateAssetMenu(menuName = "Data/Player/LifeData", order = 2, fileName = "LifeData")]
     public class PlayerLifeData : ScriptableObject
     {
         [Tooltip("The number of lives the player starts with")]
