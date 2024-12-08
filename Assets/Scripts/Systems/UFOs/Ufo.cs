@@ -12,7 +12,8 @@ namespace Asteroids
         [Inject] private SignalBus signalBus;
 
         private Rigidbody2D rigidbody2d;
-
+        private Collider2D collider2d;
+        
         private UfoData data;
         private Action<Ufo> pushEvent;
 
@@ -27,6 +28,7 @@ namespace Asteroids
         private void Awake()
         {
             rigidbody2d = GetComponent<Rigidbody2D>();
+            collider2d = GetComponent<Collider2D>();
         }
 
         private void Update()
@@ -101,17 +103,36 @@ namespace Asteroids
             if (!playerLocator.TryGetPlayerPosition(out var playerPosition))
                 return;
 
-            var directionToPlayer = (playerPosition - (Vector2)transform.position).normalized;
+            Vector2 direction;
             
+            if (data.ShouldTargetPlayer)
+            {
+                direction = GetPlayerDirection(playerPosition);
+            }
+            else
+            {
+                // random direction
+                direction = VectorUtils.GetRandomVector().normalized;
+            }
+
             // Offset the spawn position to prevent collision with the UFO itself
-            var spawnPosition = (Vector2)transform.position + directionToPlayer * 1.0f;
+            var spawnPosition = (Vector2)transform.position + direction * (collider2d.bounds.extents.magnitude + 0.1f);
             
             fireProjectileEvent?.Invoke(new ProjectileSpawnData()
             {
                 Position = spawnPosition,
-                Rotation = Quaternion.LookRotation(Vector3.forward, directionToPlayer),
-                Direction = directionToPlayer
+                Rotation = Quaternion.LookRotation(Vector3.forward, direction),
+                Direction = direction
             });
+        }
+
+        private Vector2 GetPlayerDirection(Vector2 playerPosition)
+        {
+            var playerDirection = playerPosition - (Vector2)transform.position;
+            
+            playerDirection += VectorUtils.GetRandomVectorWithinTolerance(data.PlayerTargetDirectionTolerance);
+
+            return playerDirection.normalized;
         }
         
         public void OnPlayerCollision(GameObject player)

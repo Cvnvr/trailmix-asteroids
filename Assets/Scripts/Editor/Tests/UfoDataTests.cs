@@ -126,6 +126,35 @@ namespace Asteroids.Editor.Tests
             Assert.IsTrue(isValid, $"The following {nameof(UfoData)} objects have an invalid 'ChanceOfDroppingPowerUp' value!");
         }
         
+        [Test]
+        public void Validate_PlayerTargetDirectionToleranceIsValid()
+        {
+            var data = GetUfoData();
+            if (data == null || data.Length == 0)
+            {
+                Assert.Pass($"No {nameof(UfoData)} found.");
+                return;
+            }
+            
+            var isValid = true;
+            foreach (var ufo in data)
+            {
+                if (ufo.PlayerTargetDirectionTolerance < 0)
+                {
+                    Debug.LogError($"{ufo.name} - PlayerTargetDirectionTolerance is less than zero!");
+                    isValid = false;
+                }
+                
+                if (!ufo.ShouldTargetPlayer && ufo.PlayerTargetDirectionTolerance > 0)
+                {
+                    Debug.LogError($"{ufo.name} - PlayerTargetDirectionTolerance is greater than zero but won't be used because ShouldTargetPlayer is false!");
+                    isValid = false;
+                }
+            }
+            
+            Assert.IsTrue(isValid, $"The following {nameof(UfoData)} objects have an invalid 'PlayerTargetDirectionTolerance' value!");
+        }
+        
         private UfoData[] GetUfoData()
         {
             var ufoData = ScriptableObjectFinder.GetScriptableObjectsOfTypeInFolder<UfoData>(AssetPaths.UfoDataPath);

@@ -12,5 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ea9fda7758c4bf8ba3ebeb4a7242c11, type: 3}
   m_Name: UfoDestroyOtherAfterCollision
   m_EditorClassIdentifier: 
-  tagsToIgnore:
-  - UFO
+  tagsToIgnore: []

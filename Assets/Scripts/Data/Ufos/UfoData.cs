@@ -19,11 +19,19 @@ namespace Asteroids
 
         [Tooltip("The chance of dropping a power-up after being destroyed (between 0 and 1)")]
         [SerializeField] private float chanceOfDroppingPowerUp;
+
+        [Tooltip("Whether or not the UFO should fire AT the player")]
+        [SerializeField] private bool shouldTargetPlayer;
+
+        [Tooltip("How much the UFO has a chance to miss the player by")]
+        [SerializeField] private float playerTargetDirectionTolerance;
         
         public UfoType UfoType => ufoType;
         public float TimeBetweenShots => timeBetweenShots;
         public float ChangeDirectionInterval => changeDirectionInterval;
         public float ChangeDirectionTolerance => changeDirectionTolerance;
         public float ChanceOfDroppingPowerUp => chanceOfDroppingPowerUp;
+        public bool ShouldTargetPlayer => shouldTargetPlayer;
+        public float PlayerTargetDirectionTolerance => playerTargetDirectionTolerance;
     }
 }

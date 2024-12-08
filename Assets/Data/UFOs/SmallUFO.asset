@@ -20,3 +20,5 @@ MonoBehaviour:
   changeDirectionInterval: 2
   changeDirectionTolerance: 0.75
   chanceOfDroppingPowerUp: 0.5
+  shouldTargetPlayer: 1
+  playerTargetDirectionTolerance: -1

@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 224703963409911671, guid: 83a59a1705f904785b3a98a44803406e, type: 3}
   behaviours:
-  - {fileID: 11400000, guid: e0aae3535cecc42bfb952a02ef9fd613, type: 2}
+  - {fileID: 11400000, guid: ad4c3da36cb2849099e4f9eb9443e0dd, type: 2}
   - {fileID: 11400000, guid: c49ece9ce36004fa38d4d8aab61fb3c3, type: 2}
   - {fileID: 11400000, guid: 7f6493ccae3264a01928811d8b4f0770, type: 2}

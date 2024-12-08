@@ -11,5 +11,10 @@ namespace Asteroids.Utils
                 Random.Range(-tolerance, tolerance)
             );
         }
+
+        public static Vector2 GetRandomVector()
+        {
+            return new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+        }
     }
 }
