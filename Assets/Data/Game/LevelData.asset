@@ -19,4 +19,4 @@ MonoBehaviour:
   timeBetweenWaves: 1
   ufoChanceToSpawn: 0.5
   ufoMaxSpawnCount: 2
-  ufoSpawnCheckTimeDelay: 3
+  ufoSpawnCheckTimeDelay: 5
