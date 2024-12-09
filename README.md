@@ -5,7 +5,9 @@ Spec:
 
 > Implement for us its **primary game mode** and add a **new feature** of your own design. You do not need to implement any meta features like high scores, a title screen, sound, etc, just the core game mode when we start it up.
 
-> You can use any plugins you like, and any publicly available art. Art will be ignored for evaluation purposes, unless you say you made it and then we'll be super impressed because we're programmers and those skills are mutually exclusive. You can use any recent version of Unity (we're currently on 2021.3.20f1 LTS).
+> You can use any plugins you like, and any publicly available art. Art will be ignored for evaluation purposes, unless you say you made it and then we'll be super impressed because we're programmers and those skills are mutually exclusive.
+
+> You can use any recent version of Unity (we're currently on 2021.3.20f1 LTS).
 
 ---
 
@@ -30,7 +32,7 @@ All core game mechanics from the original game mode have been implemented, inclu
 - **Controllable player ship**: Movement, projectile firing, and hyperspace travel.  
 - **Asteroids**: Three different sizes with movement and splitting behaviour after being destroyed.  
 - **UFOs**: Two different sizes with dynamic movement and the ability to fire projectiles.
-- **Lives system**: Displayed in the UI. If the player has any additional lives, they will respawn after being destroyed.
+- **Lives system**: If the player has any remaining lives (displayed in the UI), they will respawn after being destroyed.
 
 ### **New feature**  
 
@@ -41,7 +43,7 @@ Power-ups that change the player ship's projectile firing behaviour.
 - To activate it, simply drive through it with your ship.
 - The power-up will disappear if the player fails to reach it in time.
 
-- **Implemented power-ups**:
+- Implemented power-ups:
 
     - **Rapid fire**: Increases firing speed.
     - **Shotgun**: Fires multiple projectiles in a spread pattern.
@@ -49,7 +51,7 @@ Power-ups that change the player ship's projectile firing behaviour.
 ### **Additional work**  
 
 - **Content tests**: Comprehensive test coverage of all data objects (accessible via **Window > General > Test Runner**).  
-- **Scoring system**: Points are awarded for destroying asteroids and UFOs, displayed in the UI.
+- **Scoring system**: Score (displayed in the UI) is awarded for destroying asteroids and UFOs.
 - **Art assets**: All assets made in Figma.
 
 ---
@@ -63,3 +65,7 @@ Power-ups that change the player ship's projectile firing behaviour.
 
 ## **Unity version**
 Unity **2021.3.20f1** LTS.
+
+## **Design document**
+
+Google Doc -> [Trailmix Asteroids Take-Home Design Document](https://docs.google.com/document/d/1TEvvFLSHON-0VSeRYl6WAP7o1Yh5a18CFmvvzdWM7Sc/edit?tab=t.0)
