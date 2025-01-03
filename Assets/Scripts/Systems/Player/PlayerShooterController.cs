@@ -51,6 +51,9 @@ namespace Asteroids
         
         private void UpdateWeaponSetup(WeaponData weaponData)
         {
+            if (activeWeaponData == weaponData)
+                return;
+            
             hasAddedBehaviours = false;
             
             activeWeaponData = weaponData;

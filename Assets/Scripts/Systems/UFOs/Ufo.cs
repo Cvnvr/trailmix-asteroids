@@ -118,7 +118,7 @@ namespace Asteroids
             else
             {
                 // Fire in random direction
-                direction = VectorUtils.GetRandomVector().normalized;
+                direction = VectorUtils.GetRandomVectorWithinTolerance().normalized;
             }
 
             // Offset the spawn position to prevent collision with the UFO itself

@@ -17,9 +17,15 @@ namespace Asteroids
         {
             signalBus.Subscribe<PowerUpSpawnEvent>(OnPowerUpSpawned);
         }
-        
+
         private void OnPowerUpSpawned(PowerUpSpawnEvent evt)
         {
+            if (powerUps.Length == 0)
+            {
+                Debug.Log($"{nameof(PowerUpSpawner)}.{nameof(OnPowerUpSpawned)}: No power ups available to spawn.");
+                return;
+            }
+            
             var powerUp = powerUps[Random.Range(0, powerUps.Length)];
             var powerUpItem = Pop(evt.Position, Quaternion.identity);
             powerUpItem.Init(powerUp);

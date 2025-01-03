@@ -32,11 +32,6 @@ namespace Asteroids
             originalDirection = (direction + VectorUtils.GetRandomVectorWithinTolerance(1f)).normalized;
             Move(originalDirection);
         }
-        
-        public void InitPoolable(Action<Asteroid> pushCallback)
-        {
-            pushEvent = pushCallback;
-        }
 
         public override void InitPoolable(Action<BaseEnemy> pushCallback)
         {
@@ -56,7 +51,7 @@ namespace Asteroids
             pushEvent?.Invoke(this);
         }
         
-        public void Move(Vector2 direction)
+        private void Move(Vector2 direction)
         {
             rigidbody2d.velocity = direction * data.MovementSpeed;
         }
