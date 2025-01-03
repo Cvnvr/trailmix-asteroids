@@ -31,7 +31,7 @@ namespace Asteroids
                 if (behaviours.ContainsKey(behaviourData))
                     continue;
 
-                var behaviourComponent = projectileBehaviourFactory.GetBoundComponent(ReturnToPool, behaviourData);
+                var behaviourComponent = projectileBehaviourFactory.GetBoundComponent(this, ReturnToPool, behaviourData);
                 if (behaviourComponent != null)
                 {
                     behaviours.Add(behaviourData, behaviourComponent);
